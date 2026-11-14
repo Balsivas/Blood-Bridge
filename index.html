@@ -1529,7 +1529,6 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
         <div class="row" style="gap:8px"><button class="btn btn-ghost btn-sm" type="button" data-quick="reset">↺ Reset sample data</button><span class="muted small">Sample data lives only in this browser.</span></div></div>
       </div>
       <div class="panel" id="signupBox"><h3><span data-i18n>Sign up</span></h3>
-        <div class="field"><label for="su-phone">Your mobile number (optional)</label><input id="su-phone" inputmode="tel" placeholder="10-digit mobile" autocomplete="tel"></div>
         <div class="su-roles">
           <button class="su-role" type="button" data-act="signup-go" data-role="patient"><i aria-hidden="true">🩸</i><b>I need blood</b><span>For a patient, family member or friend</span></button>
           <button class="su-role" type="button" data-act="signup-go" data-role="donor"><i aria-hidden="true">❤️</i><b>I want to donate</b><span>Register as a donor and get alerts near you</span></button>
@@ -3655,7 +3654,7 @@ async function notifOn(){ if(!('Notification' in window)){ toast(t('Notification
 // another tab (for example the patient) changed the data: refresh this view live
 
 function alertMsgs(rid){ showDispatch(rid); }
-function signupGo(role){ const ph=digits(($('#su-phone')||{}).value||''); navTo(role==='donor'?'#register-donor':'#register-patient');
+function signupGo(role){ const ph=digits(($('#su-phone')||{}).value||($('#lg-phone')||{}).value||''); navTo(role==='donor'?'#register-donor':'#register-patient');
   setTimeout(()=>{ if(role==='donor'){ if(ph) $('#dr-phone').value=ph; const n=$('#dr-name'); if(n) n.focus(); } else { const rel=$('#pr-relation'); if(rel){ rel.value=role==='staff'?'staff':'family'; applySelf('pr'); } if(ph) $('#pr-phone').value=ph; const n=$('#pr-name'); if(n) n.focus(); } },150); }
 
 
