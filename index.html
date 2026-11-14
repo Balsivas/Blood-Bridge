@@ -1136,6 +1136,30 @@ body:not(.is-admin) #footReset,body:not(.is-admin) #resetBtn{display:none!import
 .otp-ch label{flex-direction:row!important;flex-wrap:nowrap;white-space:nowrap;margin:0!important;font-size:.86rem;width:auto!important}
 .otp-ch label>*{display:inline!important;margin:0!important}
 .otp-ch label input{width:auto!important;height:auto!important;min-height:0!important;padding:0!important}
+
+/* ===== presentation helper ===== */
+.demo-helper{margin-top:14px;border:1.5px dashed var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:8px;background:var(--sunk,rgba(127,127,127,.05))}
+.demo-helper .dh-h{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.demo-helper .dh-b{display:flex;flex-wrap:wrap;gap:6px}
+
+/* ===== demo accounts panel + switcher ===== */
+.demo-helper .dh-roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.dh-role{display:grid;gap:3px;text-align:left;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;font:inherit;color:inherit;transition:border-color .15s,transform .15s}
+.dh-role:hover,.dh-role:focus-visible{border-color:var(--accent);transform:translateY(-1px)}
+.dh-role i{font-style:normal;font-size:1.2rem}
+.dh-role b{font-size:.92rem}
+.dh-role span{font-size:.76rem;color:var(--muted);line-height:1.35}
+.dh-role small{font-size:.7rem;color:var(--muted)}
+.demo-switch{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:58;display:flex;align-items:center;gap:4px;padding:4px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px -14px rgba(0,0,0,.4);font-size:.78rem;max-width:calc(100vw - 16px);overflow-x:auto;scrollbar-width:none}
+.demo-switch::-webkit-scrollbar{display:none}
+.demo-switch .ds-l{padding:0 8px;font-weight:700;color:var(--accent-fg,var(--accent));white-space:nowrap}
+.demo-switch button{border:0;background:none;padding:6px 10px;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;color:inherit;white-space:nowrap}
+.demo-switch button[aria-pressed=true]{background:var(--accent);color:#fff}
+.demo-switch .ds-x{color:var(--muted)}
+body.gated .demo-switch{display:none!important}
+@media (max-width:560px){.demo-switch .ds-l{display:none}.demo-switch{left:8px;bottom:10px;max-width:calc(100vw - 92px)}.demo-switch button{padding:6px 8px}}
+body.demo-run .dlog{bottom:64px}
+@media (max-width:480px){body:not(.gated) .live-net{display:none}.userchip .av{display:none}body:not(.gated) header.top .brand{flex:0 0 36px;max-width:36px;overflow:hidden}}
 </style>
 </head>
 <body>
@@ -1496,6 +1520,13 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
         <div class="field full"><p class="err" id="lgErr"></p><div class="row"><button class="btn btn-primary" type="submit"><span data-i18n>Send OTP</span></button><span class="muted small">New here? <a href="#register-patient"><span data-i18n>Register as patient</span></a> · <a href="#register-donor"><span data-i18n>Register as donor</span></a></span></div></div>
       </form>
       <div id="loginOtp" hidden></div>
+      <div class="demo-helper" id="demoHelper"><div class="dh-h"><b>🎬 Try the demo accounts</b><span class="muted small">One tap · the WhatsApp OTP appears and fills itself</span></div>
+        <div class="dh-roles">
+          <button class="dh-role" type="button" data-quick="patient"><i aria-hidden="true">🩸</i><b>Patient demo</b><span>Raise a blood request, track matched donors, see a donor after they accept</span><small class="mono">9000000101</small></button>
+          <button class="dh-role" type="button" data-quick="donor"><i aria-hidden="true">❤️</i><b>Donor demo</b><span>Profile &amp; eligibility, live alerts, accept a request, certificate</span><small class="mono">9000000001</small></button>
+          <button class="dh-role" type="button" data-quick="admin"><i aria-hidden="true">🛡️</i><b>Admin demo</b><span>Full tracking: all donors, patients, requests, slips, OTP &amp; alert logs</span><small class="mono">9000000999</small></button>
+        </div>
+        <div class="row" style="gap:8px"><button class="btn btn-ghost btn-sm" type="button" data-quick="reset">↺ Reset sample data</button><span class="muted small">Sample data lives only in this browser.</span></div></div>
       </div>
       <div class="panel" id="signupBox"><h3><span data-i18n>Sign up</span></h3>
         <div class="field"><label for="su-phone">Your mobile number (optional)</label><input id="su-phone" inputmode="tel" placeholder="10-digit mobile" autocomplete="tel"></div>
@@ -1684,7 +1715,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
 <section class="view" data-view="admin" hidden>
   <div class="admin-greet" id="adGreet" hidden></div>
   <div class="panel-head" style="margin:0"><div><div class="eyebrow">Admin</div><h2>Network dashboard</h2></div>
-    <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Clear this device's data</button></div>
+    <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset sample data</button></div>
   <div class="stats" id="adStats"></div>
   <div class="cols">
     <div class="panel chart"><h3>Donors by blood group</h3><p class="muted small" style="margin-bottom:10px">Registered donors (eligible today in brackets)</p><div id="groupChart"></div></div>
@@ -1771,7 +1802,7 @@ document.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closes
 let USERLOC=null;
 const REASONS={accident:'Road accident / trauma',surgery:'Surgery',delivery:'Pregnancy / delivery',gyn:'Heavy menstrual / gynaecological bleeding',thalassemia:'Thalassemia',dengue:'Dengue / low platelets',cancer:'Cancer / chemotherapy',anaemia:'Severe anaemia',burns:'Burns',other:'Other'};
 const COMPONENTS={whole:'Whole blood',prbc:'Packed red cells (PRBC)',platelets:'Platelets',plasma:'Plasma (FFP)'};
-const DB_KEY='bloodbridge-live-v1', SES_KEY='bloodbridge-live-session', DAY=86400000;
+const DB_KEY='bloodbridge-showcase-v2', SES_KEY='bloodbridge-live-session', DAY=86400000;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
@@ -1821,7 +1852,7 @@ function seed(){
   return S0;
 }
 let S, session=null;
-function load(){ try{const x=JSON.parse(localStorage.getItem(DB_KEY)); if(x&&x.donors&&x.patients&&x.requests) S=x;}catch(e){} if(!S){S=emptyDB();saveLocal();} S.notes=S.notes||[]; try{session=JSON.parse(sessionStorage.getItem(SES_KEY)||localStorage.getItem(SES_KEY));}catch(e){} session=sanitizeSession(session); }
+function load(){ try{const x=JSON.parse(localStorage.getItem(DB_KEY)); if(x&&x.donors&&x.patients&&x.requests) S=x;}catch(e){} if(!S){S=showcaseSeed();saveLocal();} S.notes=S.notes||[]; ensureDemo(); try{session=JSON.parse(sessionStorage.getItem(SES_KEY)||localStorage.getItem(SES_KEY));}catch(e){} session=sanitizeSession(session); }
 function save(){ saveLocal(); try{ livePost(); }catch(e){} try{ fbPush(); }catch(e){} }
 function saveLocal(){ try{localStorage.setItem(DB_KEY,JSON.stringify(S));}catch(e){ try{ trimPhotos(); localStorage.setItem(DB_KEY,JSON.stringify(S)); }catch(_){ toast('Browser storage is full. Ask an admin to clear old data in the footer.'); } } }
 function trimPhotos(){ const old=S.requests.filter(r=>r.status!=='open').sort((a,b)=>a.created-b.created); old.forEach(r=>{ if(r.slip&&!r.sample) r.slip=null; Object.values(r.proofs||{}).forEach(p=>p.img=null); Object.values(r.recv||{}).forEach(p=>p.img=null); }); (S.reports||[]).filter(x=>x.status!=='pending').forEach(x=>x.img=null); }
@@ -2050,6 +2081,7 @@ function otpFlow(box,phone,{onOk,onBack,role,purpose}){
     const res=sendOtpMessage(phone,code,channel,role,purpose); mode=res.mode; draw(); countdown(30); ev(again?'resent':'sent');
     res.done.catch(err=>{ ev('send failed'); const e=box.querySelector('[data-e]'); if(e) e.textContent=`Could not send the OTP on ${chName(channel)} (${err.message}). Try ${channel==='sms'?'WhatsApp':'SMS'}.`; });
     if(mode==='inapp'||cfg.demoPreview) otpBanner({phone,otp:code,channel,text:otpText(code,purpose),fill:()=>{ const i=box.querySelector('#'+iid); if(i){ i.value=code; i.dispatchEvent(new Event('input')); } }});
+    if(QUICK_ON){ QUICK_ON=false; setTimeout(()=>{ const i=box.querySelector('#'+iid); if(i&&box.isConnected&&!box.hidden&&code){ i.value=code; i.dispatchEvent(new Event('input')); } },1500); }
     clearTimeout(exTimer); exTimer=setTimeout(()=>{ if(box.isConnected&&!box.hidden&&code){ ev('expired'); const e=box.querySelector('[data-e]'); if(e) e.textContent='This OTP has expired. Tap Resend.'; } },5*60000+500); }
   function draw(){ const demo=mode==='inapp'||cfg.demoPreview;
     box.innerHTML=`<div class="otp"><div><h3 class="otp-h"><span class="otp-ic ${channel==='sms'?'':'wa'}" aria-hidden="true">${channel==='sms'?'✉️':'💬'}</span>${role==='admin'?t('Admin verification'):t('Verify your mobile number')}</h3><p class="muted small" style="margin-top:4px">${t('We sent a 6-digit code on')} <b>${chName(channel)}</b> ${t('to')} <b class="mono">+91 ${esc(ph55(phone))}</b>. ${t('It expires in')} <b class="mono" data-exp>5:00</b>.</p></div>
@@ -2103,7 +2135,7 @@ function route(){
   if(need&&(!session||session.role!==need)){ pendingLoginRole=need; v='login'; if(session) toast(`You are logged in as a ${session.role}. Log out to use the ${need} portal.`); }
   if(!session&&T.step<0&&!GATE_OPEN.includes(v)) v='login';
   if(v==='find-donors'&&!isAdmin()&&T.step<0){ v=session?(session.role==='donor'?'donor':'patient'):'login'; if(session) toast('Donor details are private. We alert matching donors for you.'); }
-  document.body.classList.toggle('is-admin',isAdmin());
+  document.body.classList.toggle('is-admin',isAdmin()); try{ demoBarRender(); }catch(e){}
   document.body.classList.toggle('gated',!session&&T.step<0); if(!session&&T.step<0){ try{ toggleChat(false); }catch(e){} }
   VH=v; if(curHash()!==v) safeHist('replace','#'+v);
   document.querySelectorAll('section.view').forEach(s=>s.hidden=s.dataset.view!==v);
@@ -2147,7 +2179,7 @@ $('#loginForm').addEventListener('submit',async e=>{ e.preventDefault();
   let role=document.querySelector('input[name="lg-role"]:checked').value; const ph=$('#lg-phone').value;
   if(!phoneOk(ph)) return $('#lgErr').textContent='Enter a valid 10-digit Indian mobile number.';
   const adm=await adminLookup(ph);
-  if(role==='admin'){ if(!adm) return $('#lgErr').textContent='This number is not on the admin list.'; const lk=adminLock(); if(lk) return $('#lgErr').textContent=lk; if(!(await adminPassOk($('#lg-pass').value))){ adminFail(); return $('#lgErr').textContent='Wrong admin passcode.'; } adminLockReset(); $('#lg-pass').value='';
+  if(role==='admin'){ if(!adm) return $('#lgErr').textContent='This number is not on the admin list.'; const lk=adminLock(); if(lk) return $('#lgErr').textContent=lk; const demoAdm=QUICK_ADMIN&&!FB_ON&&digits(ph)==='9000000999'; QUICK_ADMIN=false; if(!demoAdm&&!(await adminPassOk($('#lg-pass').value))){ adminFail(); return $('#lgErr').textContent='Wrong admin passcode.'; } adminLockReset(); $('#lg-pass').value='';
     $('#lgErr').textContent=''; $('#loginForm').hidden=true;
     otpFlow($('#loginOtp'),ph,{role:'admin',purpose:'login',onBack:()=>{ $('#loginOtp').hidden=true; $('#loginForm').hidden=false; },
       onOk:()=>{ setSession({role:'admin',id:'admin-'+adm.phone,phone:adm.phone,name:adm.name,team:adm.team,fs:adm.fs}); toast(`Welcome, ${adm.name} · ${adm.team}`); navTo('#admin'); }});
@@ -3252,9 +3284,9 @@ function renderAdmin(){ if(!isAdmin()) return; renderOutbox(); const ai=adminInf
 }
 
 /* ================= demo accounts: always present, one tap ================= */
-function ensureDemo(){ if(!S) return; S.reports=S.reports||[]; S.msgs=S.msgs||[]; if(T.step<0) return; let ch=false;
-  if(!S.patients.some(p=>digits(p.phone)==='9000000101')){ const id=S.patients.some(p=>p.id==='p1')?uid():'p1'; S.patients.push({id,name:'Suresh (sample attendant)',phone:'9000000101',alt:'',relation:'family',verified:true,created:Date.now(),sample:true}); ch=true; }
-  if(!S.donors.some(d=>digits(d.phone)==='9000000001')){ const c=CITY.Kakinada; S.donors.push({id:uid(),name:'Ravi Kumar (sample)',phone:'9000000001',age:24,gender:'M',group:'O+',city:'Kakinada',area:'Jagannaickpur',weight:68,last:daysAgo(140),available:true,lat:c[0],lng:c[1],verified:true,donations:[{date:daysAgo(140),hospital:'Voluntary camp'}],created:Date.now(),sample:true}); ch=true; }
+function ensureDemo(){ if(!S) return; S.reports=S.reports||[]; S.msgs=S.msgs||[]; let ch=false;
+  if(!S.patients.some(p=>digits(p.phone)==='9000000101')){ const id=S.patients.some(p=>p.id==='p1')?uid():'p1'; S.patients.push({id,name:'Suresh',phone:'9000000101',alt:'',relation:'family',verified:true,created:Date.now(),sample:true}); ch=true; }
+  if(!S.donors.some(d=>digits(d.phone)==='9000000001')){ const c=CITY.Kakinada; S.donors.push({id:uid(),name:'Ravi Kumar',phone:'9000000001',age:24,gender:'M',group:'O+',city:'Kakinada',area:'Jagannaickpur',weight:68,last:daysAgo(140),available:true,lat:c[0],lng:c[1],verified:true,donations:[{date:daysAgo(140),hospital:'Voluntary camp'}],created:Date.now(),sample:true}); ch=true; }
   if(ch) save(); }
 function demoLogin(role){ ensureDemo(); const ph=role==='donor'?'9000000001':'9000000101';
   if(session&&session.role!==role){ setSession(null); }
@@ -3604,7 +3636,7 @@ function showDonorAlert(){ try{ if(!session||session.role!=='donor'||T.step>=0||
   let notes=(S.notes||[]).filter(n=>n.to===d.id&&isAlertNote(n)&&!n.popped).sort((a,b)=>b.t-a.t);
   let r=null;
   if(REQ_PARAM&&!REQ_FORCED){ REQ_FORCED=true; r=S.requests.find(q=>q.id===REQ_PARAM&&q.status==='open'&&compatFor(q).includes(d.group)&&!respOf(q,d.id))||null; }
-  if(!r){ if(!notes.length) return; notes.forEach(n=>n.popped=true); save(); r=S.requests.find(q=>q.id===notes[0].reqId); if(!r||r.status!=='open'||respOf(r,d.id)) return; }
+  if(!r){ if(!notes.length) return; notes.forEach(n=>n.popped=true); save(); r=notes.map(n=>S.requests.find(q=>q.id===n.reqId)).filter(q=>q&&q.status==='open'&&!respOf(q,d.id)).sort((a,b)=>(b.created||0)-(a.created||0))[0]; if(!r) return; }
   else { notes.forEach(n=>n.popped=true); save(); }
   const k=km(coords(d),coords(r)).toFixed(1), hp=hospPhone(r), from=d.lat!=null&&d.lat!==''?d.lat+','+d.lng:''; daClose();
   const el=document.createElement('div'); el.className='dalert'+(r.urgency==='critical'?' crit':''); el.id='dalert'; el.setAttribute('role','alertdialog'); el.setAttribute('aria-label',t('Emergency blood request'));
@@ -3697,8 +3729,8 @@ setInterval(()=>{ try{ showDonorAlert(); }catch(e){} },3000);
 
 /* ================= RBAC: admin passcode login + privacy helpers =================
    Change the admin passcode: put the SHA-256 hex of the new passcode in ADMIN_PASS_SHA256
-   (or set window.BB_ADMIN_PASS_SHA256 before this script). Default passcode: BBAdmin@2026 */
-const ADMIN_PASS_SHA256=(window.BB_ADMIN_PASS_SHA256||'becb6aa1db3140069892aef625704b7a3c639cdf53890be8101461b28473f09f').toLowerCase();
+   (or set window.BB_ADMIN_PASS_SHA256 before this script). Showcase passcode is set by the hash below (ask the team lead) */
+const ADMIN_PASS_SHA256=(window.BB_ADMIN_PASS_SHA256||'6e2599062fdf84029c51bd4893b14973879f8e2c8bb64cb644b24dcf34ce2be5').toLowerCase();
 function sha256hex(str){ const b=new TextEncoder().encode(str); const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
   let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]; const l=b.length, n=((l+9+63)>>6)<<6, m=new Uint8Array(n); m.set(b); m[l]=0x80; const dv=new DataView(m.buffer); dv.setUint32(n-4,l*8); dv.setUint32(n-8,Math.floor(l/0x20000000));
   const W=new Uint32Array(64), R=(x,s)=>(x>>>s)|(x<<(32-s));
@@ -3748,6 +3780,77 @@ function fbPush(){ if(!FS) return; clearTimeout(fbTimer); fbTimer=setTimeout(()=
   for(let i=0;i<ops.length;i+=400){ const b=FS.batch(); ops.slice(i,i+400).forEach(f=>f(b)); b.commit().catch(e=>console.warn('[live] write',e.message)); } },120); }
 function netPill(){ const el=document.getElementById('liveNet'); if(!el) return; el.classList.toggle('cloud',FB_ON); el.title=FB_ON?'Live: real-time sync across all devices (Firebase Firestore)':'Live: real-time sync across every tab and window on this device. Add your Firebase keys (firebaseConfig) to sync across devices.'; }
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) livePull(); });
+
+/* ================= SHOWCASE: realistic sample network (Kakinada · Rajamahendravaram) ================= */
+function showcaseSeed(){ const S0=seed(); const clean=n=>String(n||'').replace(/\s*\((sample|sample attendant)\)/,'');
+  S0.donors.forEach(d=>{ d.name=clean(d.name); d.verified=true; d.donations=d.donations||[]; }); S0.patients.forEach(p=>p.name=clean(p.name)); S0.requests.forEach(r=>{ r.attendant=clean(r.attendant); });
+  const jit=()=>(Math.random()-.5)*0.03;
+  const add=(name,phone,age,gender,group,city,area,weight,lastDays)=>{ const c=CITY[city]; S0.donors.push({id:uid(),name,phone,age,gender,group,city,area,weight,last:lastDays==null?'':daysAgo(lastDays),available:true,lat:+(c[0]+jit()).toFixed(5),lng:+(c[1]+jit()).toFixed(5),verified:true,donations:lastDays==null?[]:[{date:daysAgo(lastDays),hospital:'Voluntary blood camp'}],created:Date.now()-Math.floor(Math.random()*60)*86400000,sample:true}); };
+  add('Srinivas Rao','9000000016',34,'M','O+','Rajahmundry','Danavaipeta',74,150);
+  add('Bhavani K.','9000000017',26,'F','O-','Rajahmundry','Prakash Nagar',55,200);
+  add('Manoj Reddy','9000000018',30,'M','A+','Rajahmundry','Kotagummam',70,null);
+  add('Swathi M.','9000000019',24,'F','B+','Rajahmundry','Morampudi',53,180);
+  add('Rahul Varma','9000000020',28,'M','AB+','Rajahmundry','Innespeta',77,120);
+  add('Ganesh P.','9000000021',37,'M','A-','Rajahmundry','Tilak Road',79,null);
+  add('Keerthi S.','9000000022',21,'F','O+','Kakinada','Suryaraopeta',51,null);
+  add('Ajay Kumar','9000000023',32,'M','B-','Kakinada','Ramaraopeta',73,160);
+  add('Pavan T.','9000000024',25,'M','A+','Kakinada','Jagannaickpur',68,110);
+  add('Lavanya D.','9000000025',29,'F','O+','Samalkot','Market Street',58,null);
+  S0.patients.push({id:'p3',name:'Padma',phone:'9000000103',alt:'',relation:'family',verified:true,created:Date.now()-2*3600000,sample:true});
+  const R=CITY.Rajahmundry;
+  const r3={id:uid(),patientId:'p3',pname:'Venkata Rao',page:58,pgender:'M',group:'A+',reason:'surgery',reasonDetail:'Heart bypass surgery',component:'whole',units:2,urgency:'urgent',requiredBy:new Date(Date.now()+12*3600000).toISOString().slice(0,16),hospital:'Government Hospital, Rajamahendravaram',haddr:'Kotagummam, Rajamahendravaram',city:'Rajahmundry',pin:'533101',where:'hospital',lat:R[0],lng:R[1],contact:'9000000103',attendant:'Padma',note:'Cardiac ward, bed 7',status:'open',created:Date.now()-95*60000,alerted:[],responses:{},sample:true,stage:'compatible'};
+  autoAlert(r3,S0,'all'); S0.requests.push(r3);
+  const done=(pid,att,ph,pname,group,hosp,city,days,did)=>{ const c=CITY[city]; S0.requests.push({id:uid(),patientId:pid,pname,page:30,pgender:'F',group,reason:'surgery',reasonDetail:'',component:'whole',units:1,urgency:'urgent',requiredBy:'',hospital:hosp,haddr:city,city,pin:'',where:'hospital',lat:c[0],lng:c[1],contact:ph,attendant:att,note:'',status:'fulfilled',created:Date.now()-days*86400000,alerted:[did],responses:{[did]:{s:'donated',t:Date.now()-days*86400000+3600000}},sample:true,stage:'exact'}); };
+  const byPh=p=>(S0.donors.find(d=>d.phone===p)||{}).id;
+  done('p1','Suresh','9000000101','Kavya S.','O+','Apollo Hospital, Kakinada','Kakinada',6,byPh('9000000007'));
+  done('p2','Anitha','9000000102','Raju B.','B+','GSL Medical College Hospital','Rajahmundry',12,byPh('9000000013'));
+  done('p3','Padma','9000000103','Sita M.','O-','Government Hospital, Rajamahendravaram','Rajahmundry',20,byPh('9000000014'));
+  return enrichShowcase(S0); }
+/* richer showcase data: history, logs, reports and notifications so every dashboard has something to show */
+function enrichShowcase(S0){ const now=Date.now(), H=3600000, D=86400000; const mask=p=>{ const x=String(p); return x.slice(0,2)+'XXX X'+x.slice(6); };
+  S0.reports=[]; S0.outbox=[]; S0.otplog=[]; S0.msgs=[]; S0.notes=S0.notes||[];
+  const byPh=p=>S0.donors.find(d=>d.phone===p);
+  const ravi=byPh('9000000001'); if(ravi){ ravi.last=daysAgo(140); ravi.donations=[{date:daysAgo(390),hospital:'Government General Hospital (GGH), Kakinada',confirmed:true,seen:true},{date:daysAgo(260),hospital:'Apollo Hospital, Kakinada',confirmed:true,seen:true},{date:daysAgo(140),hospital:'Voluntary blood camp, JNTU Kakinada',confirmed:true,seen:true}]; ravi.acc=4; ravi.smsOptIn=true; ravi.whatsappOptIn=true; }
+  S0.donors.forEach((d,i)=>{ if(d!==ravi&&d.last&&!(d.donations||[]).length) d.donations=[{date:d.last,hospital:'Voluntary blood camp',confirmed:true,seen:true}]; });
+  const r1=S0.requests.find(r=>r.patientId==='p1'&&r.status==='open'); if(r1){ r1.bank=1; }
+  const harsha=byPh('9000000008'); const fulfilled=S0.requests.filter(r=>r.status==='fulfilled');
+  if(harsha&&fulfilled[0]){ harsha.hold=true; S0.reports.push({id:uid(),kind:'donor',reqId:fulfilled[0].id,donorId:harsha.id,by:'patient',byId:fulfilled[0].patientId,reason:'noshow',note:'He accepted the request but did not come to the hospital and did not answer calls.',img:null,t:now-5*H,status:'pending'}); }
+  const r3=S0.requests.find(r=>r.patientId==='p3'&&r.status==='open');
+  if(r3) S0.reports.push({id:uid(),kind:'request',reqId:r3.id,donorId:null,by:'donor',byId:(byPh('9000000013')||{}).id,reason:'slip',note:'The slip photo was blurry, please check.',img:null,t:now-2*D,status:'dismissed',decided:now-2*D+2*H});
+  // WhatsApp + SMS alert log for every alerted donor
+  S0.requests.forEach(r=>{ (r.alerted||[]).forEach((id,k)=>{ const d=S0.donors.find(x=>x.id===id); if(!d) return; const t0=(r.created||now)+60000+k*15000;
+    ['whatsapp','sms'].forEach(ch=>S0.outbox.push({id:uid(),t:t0,reqId:r.id,to:'donor',toId:d.id,name:d.name,phone:'+91'+d.phone,channel:ch,dg:d.group,pg:r.group,status:r.status==='open'?'link-ready':'sent',text:`Blood Bridge ${String(r.urgency||'urgent').toUpperCase()}: ${r.units} unit(s) ${pretty(r.group)} needed at ${r.hospital}, ${r.city}.`})); }); });
+  S0.outbox.sort((a,b)=>a.t-b.t);
+  // OTP sign-up / log-in history
+  [['9000000101','patient','login','whatsapp',['sent','verified'],3.2],['9000000013','donor','login','sms',['sent','wrong code','verified'],7],['9000000103','patient','signup','whatsapp',['sent','verified'],26],['9000000999','admin','login','whatsapp',['sent','verified'],30],['9000000020','donor','signup','whatsapp',['sent','expired','resent','verified'],50],['9000000001','donor','login','whatsapp',['sent','verified'],52]]
+    .forEach(([ph,role,purpose,channel,evs,hAgo])=>evs.forEach((ev,i)=>S0.otplog.push({id:uid(),t:now-hAgo*H+i*40000,phone:mask(ph),role,purpose,channel,mode:'inapp',event:ev})));
+  S0.otplog.sort((a,b)=>a.t-b.t);
+  // notifications for the demo accounts
+  const n=(role,to,text,reqId,t,read)=>S0.notes.push({id:uid(),role,to,text,reqId,t,read:!!read,popped:!!read});
+  if(r1){ n('patient','p1',`Request created. ${r1.alerted.length} matching donors alerted.`,r1.id,r1.created+30000,true); n('patient','p1','The hospital blood bank gave 1 unit from its stock.',r1.id,r1.created+25*60000,true); const sv=byPh('9000000002'); if(sv) n('patient','p1',`${sv.name} (${pretty(sv.group)}) accepted and is coming.`,r1.id,now-20*60000,false); }
+  if(ravi&&fulfilled.length){ n('donor',ravi.id,'Thank you! Your donation at Voluntary blood camp, JNTU Kakinada was confirmed. Your certificate is ready.',null,now-140*D,true); }
+  S0.msgs.push({id:uid(),name:'Dr. K. Prasad',from:'prasad.bloodbank@example.com',subject:'Blood bank partnership',msg:'We would like to list our blood bank stock on Blood Bridge.',t:now-6*H},{id:uid(),name:'Anil (NSS volunteer)',from:'anil.nss@example.com',subject:'Campus donation drive',msg:'Can we use Blood Bridge to register donors at our college camp next week?',t:now-30*H});
+  return S0; }
+/* presenter helper: open the site with ?demo=1 (or press Ctrl+Shift+D on the login page) */
+var QUICK_ON=false, QUICK_ADMIN=false; const DEMO_PH=['9000000101','9000000001','9000000999']; const QUICK={patient:'9000000101',donor:'9000000001',admin:'9000000999'};
+(function(){ let on=false; try{ on=!/[?&]demo=0/.test(location.search)&&sessionStorage.getItem('bb-demo-helper')!=='0'; if(on) sessionStorage.setItem('bb-demo-helper','1'); }catch(e){}
+  const show=()=>{ const h=document.getElementById('demoHelper'); if(h) h.hidden=!on; }; show();
+  document.addEventListener('keydown',e=>{ if(e.ctrlKey&&e.shiftKey&&(e.key==='D'||e.key==='d')){ e.preventDefault(); on=!on; try{ sessionStorage.setItem('bb-demo-helper',on?'1':'0'); }catch(_){} show(); toast(on?'Presentation helper on':'Presentation helper off'); } });
+  document.addEventListener('click',e=>{ const b=e.target.closest('[data-quick]'); if(!b) return; const k=b.dataset.quick;
+    if(k==='reset'){ if(!confirm('Reset the sample data on this device?')) return; S=showcaseSeed(); ensureDemo(); save(); setSession(null); toast('Sample data restored.'); navTo('#login'); route(); return; }
+    ensureDemo(); if(session) setSession(null); if(curHash()!=='login'){ navTo('#login'); route(); setTimeout(()=>quickGo(k),180); return; }
+    quickGo(k); });
+  function quickGo(k){ $('#loginForm').hidden=false; $('#loginOtp').hidden=true; const rb=$('#lg-'+k); rb.checked=true; rb.dispatchEvent(new Event('change',{bubbles:true})); $('#lg-phone').value=QUICK[k]; $('#lgErr').textContent='';
+    QUICK_ON=true;
+    if(k==='admin'){ $('#lg-passWrap').hidden=false; const p=$('#lg-pass'); p.value=''; if(FB_ON){ p.focus(); toast('Cloud data is connected: type the admin passcode, then tap Send code.'); return; } QUICK_ADMIN=true; }
+    $('#loginForm').requestSubmit(); } })();
+
+
+function demoBarRender(){ let el=document.getElementById('demoSwitch'); const ph=session?(session.role==='admin'?session.phone:(me()||{}).phone):null; const on=!!(session&&ph&&DEMO_PH.includes(digits(ph)));
+  document.body.classList.toggle('demo-run',on); if(!on){ if(el) el.remove(); return; }
+  if(!el){ el=document.createElement('div'); el.id='demoSwitch'; el.className='demo-switch'; el.setAttribute('role','toolbar'); el.setAttribute('aria-label','Demo: view as'); document.body.appendChild(el); }
+  const r=session.role, b=(k,ic,lb)=>`<button type="button" data-quick="${k}" aria-pressed="${r===k}">${ic} ${lb}</button>`;
+  el.innerHTML=`<span class="ds-l">🎬 Demo · view as</span>${b('patient','🩸','Patient')}${b('donor','❤️','Donor')}${b('admin','🛡️','Admin')}<button type="button" data-act="logout" class="ds-x" title="Leave the demo">Exit</button>`; }
 
 /* ================= actions ================= */
 document.addEventListener('click',e=>{
@@ -3834,8 +3937,8 @@ document.addEventListener('click',e=>{
   }
 });
 function recordDonation(r,d){ if(!d) return; r.responses[d.id]={s:'donated',t:Date.now()}; const today=new Date().toISOString().slice(0,10); d.last=today; d.donations.push({date:today,hospital:r.hospital+', '+r.city,reqId:r.id,group:d.group,confirmed:true,seen:false,proof:!!((r.proofs&&r.proofs[d.id])||(r.recv&&r.recv[d.id])),certNo:'BB-'+today.replace(/-/g,'')+'-'+uid().slice(0,4).toUpperCase()}); save(); }
-$('#resetBtn').addEventListener('click',()=>{ const b=$('#resetBtn'); if(!pendingReset){ pendingReset=true; b.textContent='Click again to reset'; setTimeout(()=>{pendingReset=false;b.textContent="Clear this device's data";},4000); return; }
-  pendingReset=false; b.textContent="Clear this device's data"; S=emptyDB(); save(); setSession(null); toast('Local data cleared.'); renderNav('admin'); renderAdmin(); });
+$('#resetBtn').addEventListener('click',()=>{ const b=$('#resetBtn'); if(!pendingReset){ pendingReset=true; b.textContent='Click again to reset'; setTimeout(()=>{pendingReset=false;b.textContent="Reset sample data";},4000); return; }
+  pendingReset=false; b.textContent="Reset sample data"; S=showcaseSeed(); ensureDemo(); save(); setSession(null); toast('Sample data restored.'); renderNav('admin'); renderAdmin(); });
 
 $('#themeBtn').addEventListener('click',()=>{ const root=document.documentElement; const cur=root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); root.dataset.theme=cur==='dark'?'light':'dark'; try{localStorage.setItem(DB_KEY+'-theme',root.dataset.theme);}catch(e){} });
 try{ const t=localStorage.getItem(DB_KEY+'-theme'); if(t) document.documentElement.dataset.theme=t; }catch(e){}
