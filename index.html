@@ -69,6 +69,16 @@ nav.tabs a{white-space:nowrap;text-decoration:none;color:var(--muted);font-weigh
 nav.tabs a:hover{color:var(--ink);background:var(--sunk)}
 nav.tabs a[aria-current="page"]{color:var(--accent-fg);background:var(--accent-soft)}
 .hdr-right{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.cloudpill{display:inline-flex;align-items:center;gap:6px;font:700 .66rem var(--f-mono);letter-spacing:.07em;padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--accent-fg);background:var(--accent-soft);white-space:nowrap}
+.cloudpill[hidden]{display:none}
+.userchip.admin .nm{display:flex;flex-direction:column;line-height:1.15;max-width:230px}
+.userchip.admin .nm b{font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.userchip.admin .nm small{font-size:.68rem;font-weight:600;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:1180px){.userchip.admin .nm{display:flex}}
+@media (max-width:560px){.userchip.admin .nm{max-width:120px}.cloudpill{font-size:.6rem;padding:4px 8px}}
+.admin-greet{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;margin-bottom:14px;border:1px solid var(--line);border-radius:14px;background:var(--accent-soft)}
+.admin-greet .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font:700 .85rem var(--f-mono)}
+.admin-greet b{display:block}.admin-greet small{color:var(--muted,inherit);opacity:.85}
 .userchip{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;padding:4px 6px 4px 4px;border:1px solid var(--line);border-radius:999px}
 .userchip .av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-fg);font:700 .75rem var(--f-mono)}
 .theme-btn{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;width:36px;height:36px;cursor:pointer;font-size:1rem}
@@ -839,11 +849,6 @@ main{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important}
 footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
 @media (min-width:768px){ footer .foot{padding-right:150px} }
 /* ===== demo role bar ===== */
-.demobar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 16px;background:var(--sunk);border-bottom:1px solid var(--line);font-size:.82rem}
-.demobar b{color:var(--accent-fg);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
-.demobar .btn{padding:4px 10px;min-height:0;font-size:.8rem}
-.demobar .btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.demobar .x{margin-left:auto}
 .eta{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--ok)}
 .eta i{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:micPulse 1.4s infinite}
 /* ===== emergency ID card ===== */
@@ -1019,12 +1024,123 @@ body.fab-dodge .fab,body.fab-dodge .chat-fab{opacity:0;transform:translateY(16px
   .fab{right:calc(12px + env(safe-area-inset-right,0px))!important;bottom:calc(64px + env(safe-area-inset-bottom,0px))!important}
   .hero-cta,.hero-cta+*{position:relative;z-index:1}
 }
+
+/* ===== chat widget: roomy, readable, responsive ===== */
+.chat{display:flex!important;flex-direction:column;height:min(82vh,640px);width:min(400px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:hidden;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.chat[hidden]{display:none!important}
+.chat-h,.chat-tools,.chips,.chat-note,.chat-listen,.chat-f{flex-shrink:0}
+.chat-h{padding:8px 12px;gap:8px}
+.chat-h .av{width:30px;height:30px;border-radius:9px}
+.chat-h small{display:block;line-height:1.2}
+.chat-tools{flex-wrap:nowrap;gap:6px;padding:6px 12px;font-size:12px;overflow-x:auto;scrollbar-width:none}
+.chat-tools::-webkit-scrollbar{display:none}
+.chat-tools select{flex:1 1 110px;min-width:90px;padding:2px 6px!important;font-size:12px!important;height:30px!important;min-height:30px!important;line-height:1.2}
+.chat-tools .btn{height:30px;min-height:30px!important}
+.chat-tools .btn{padding:4px 8px;font-size:12px;min-height:0;flex:0 0 auto}
+.chat-tools .cv-st{display:none}
+.chat.cv-err .chat-tools{flex-wrap:wrap}
+.chat.cv-err .chat-tools .cv-st{display:block;flex-basis:100%}
+.chat-tools .voice-badge{font-size:11px;padding:2px 8px}
+.chat-body{flex:1 1 auto;min-height:160px;overflow-y:auto;padding:12px 14px;overscroll-behavior:contain}
+.chips{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:6px 12px;scrollbar-width:none;border-top:1px solid var(--line);-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chips .chip{white-space:nowrap;flex-shrink:0;padding:5px 10px;font-size:.78rem}
+html.indic .chips .chip{padding-block:6px}
+.chat.chips-off .chips{display:none}
+.chat-note{padding:4px 12px;margin:0;font-size:.7rem}
+.chat-listen{padding:0 12px 4px;margin:0}
+.chat-f{gap:6px;padding:8px 10px;align-items:center}
+.chat-f input{min-width:0;flex:1 1 auto;width:auto}
+.chat-f .btn{flex:0 0 auto}
+@media (max-width:480px){
+  .chat{inset:0;right:0;bottom:0;width:100%;height:100dvh;max-height:none;border-radius:0;border:0}
+  .chat-h{padding-top:calc(8px + env(safe-area-inset-top,0px))}
+  .chat-f{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+}
+
+/* ===== login gate: only Log in / Sign up until a user is signed in ===== */
+body.gated #nav,body.gated #navToggle,body.gated #bellBox,body.gated #userBox,body.gated #cloudPill,body.gated #fab,body.gated #chatFab,body.gated #chat,body.gated #dispatchLog,body.gated #dalert,body.gated .foot-r>*:not(.callpill):not([data-tour-start]){display:none!important}
+body.gated .top .brand{pointer-events:none}
+.gate-emg.hero2{display:block;padding:0;position:static;gap:0;grid-template-columns:none}
+.gate-emg .emg{margin:0}
+
+/* ===== donor alert preferences + dispatch log ===== */
+.alert-prefs{display:flex;flex-wrap:wrap;gap:8px 18px}
+.dalert{max-height:calc(100dvh - 40px);overflow:auto}
+.dalert.crit{border-color:#d10a2b;box-shadow:0 0 0 4px rgba(209,10,43,.18),0 24px 60px -18px rgba(150,0,25,.6)}
+.dalert .da-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.dalert .da-act .btn-ok{flex:1 1 100%;justify-content:center}
+.bell.ring{animation:bellRing .9s ease 2}
+@keyframes bellRing{0%,100%{transform:rotate(0)}20%{transform:rotate(16deg)}40%{transform:rotate(-14deg)}60%{transform:rotate(9deg)}80%{transform:rotate(-5deg)}}
+.dlog{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:59;width:min(430px,calc(100vw - 24px));max-height:min(70vh,560px);display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-left:4px solid #25d366;border-radius:16px;box-shadow:0 22px 50px -20px rgba(0,0,0,.45);padding:12px 14px}
+.dlog .dl-h{display:flex;gap:10px;align-items:center}
+.dlog .dl-h i{font-style:normal;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(37,211,102,.15);font-size:1.1rem;flex-shrink:0}
+.dlog .dl-h b{font-weight:800}
+.dlog .da-x{margin-left:auto;background:none;border:0;font-size:1.1rem;cursor:pointer;color:var(--muted)}
+.dlog .dl-list{overflow-y:auto;display:grid;gap:6px;overscroll-behavior:contain}
+.dl-item{border:1px solid var(--line);border-radius:12px;padding:6px 10px}
+.dl-item summary{display:flex;flex-wrap:wrap;align-items:center;gap:6px;cursor:pointer;list-style:none}
+.dl-item summary::-webkit-details-marker{display:none}
+.dl-item .dl-who{display:flex;flex-direction:column;line-height:1.2;margin-right:auto;min-width:0}
+.dl-item .pill{font-size:.68rem}
+.dl-msg{margin-top:8px;border-radius:10px;padding:8px 10px}
+.dl-msg.wa{background:rgba(37,211,102,.12)}
+.dl-msg.sm{background:var(--bg-2,rgba(127,127,127,.1))}
+.dl-msg pre{margin:0;white-space:pre-wrap;word-break:break-word;font:inherit;font-size:.8rem}
+.dl-cap{font-size:.68rem;font-weight:700;opacity:.7;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+.dl-item .row{margin-top:8px}
+.dl-item a[aria-disabled=true]{opacity:.45}
+body.gated .dlog{display:none!important}
+@media (max-width:560px){.dlog{left:8px;right:8px;width:auto;bottom:8px;max-height:60vh}}
+
+/* ===== RBAC / privacy ===== */
+body:not(.is-admin) #footReset,body:not(.is-admin) #resetBtn{display:none!important}
+.anon-match{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.anon-match p{grid-column:1/-1;margin:0}
+
+/* ===== OTP channel selector + delivery banner ===== */
+.otp-ch{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:.88rem}
+.otp-ch>span{font-weight:600;color:var(--muted)}
+.otp-ch label{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;background:var(--surface)}
+.otp-ch label:has(input:checked){border-color:#25d366;background:rgba(37,211,102,.1);font-weight:700}
+.otp-ch label:has(input[value=sms]:checked){border-color:var(--accent);background:var(--accent-soft)}
+.otp-ch input{accent-color:#128c7e;margin:0}
+.otp-ch small{color:var(--muted);font-weight:500}
+.otp-ic.wa{background:rgba(37,211,102,.15)!important}
+.sms.wa{border-color:rgba(37,211,102,.5);background:rgba(37,211,102,.08)}
+.otp-banner{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:90;width:min(440px,calc(100vw - 20px));background:var(--surface);color:var(--ink,inherit);border-radius:16px;box-shadow:0 18px 50px -12px rgba(0,0,0,.45);padding:12px 14px;border-left:5px solid #25d366;animation:obIn .35s cubic-bezier(.2,.9,.3,1.2)}
+.otp-banner.sm{border-left-color:var(--accent)}
+@keyframes obIn{from{opacity:0;transform:translate(-50%,-24px)}to{opacity:1;transform:translate(-50%,0)}}
+.otp-banner .ob-h{display:flex;align-items:center;gap:10px}
+.otp-banner .ob-h i{font-style:normal;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(37,211,102,.15);flex-shrink:0}
+.otp-banner.sm .ob-h i{background:var(--accent-soft)}
+.otp-banner .ob-h small{display:block;color:var(--muted);font-size:.72rem}
+.otp-banner .ob-x{margin-left:auto;background:none;border:0;font-size:1.05rem;cursor:pointer;color:var(--muted)}
+.otp-banner .ob-msg{margin:8px 0 10px;font-size:.9rem;line-height:1.45}
+.otp-banner .ob-msg b{font-size:1.05rem;letter-spacing:.08em}
+.otp-banner .ob-a{display:flex;flex-wrap:wrap;gap:8px}
+@media (prefers-reduced-motion:reduce){.otp-banner{animation:none}}
+
+/* ===== LIVE production build ===== */
+[data-tour-start],#footReset,[data-act="proof-sample"],[data-act="recv-sample"],[data-demo],.demobar,#demoBar{display:none!important}
+.live-net{display:inline-flex;align-items:center;gap:6px;font:700 .66rem var(--f-mono,monospace);letter-spacing:.08em;padding:6px 11px;border-radius:999px;color:#0b7a43;background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.35);white-space:nowrap}
+.live-net i,.live-dot{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 0 rgba(22,163,74,.6);animation:livePulse 1.6s infinite;display:inline-block}
+.live-net.cloud{color:#0b6b8a;background:rgba(14,165,233,.1);border-color:rgba(14,165,233,.4)}
+.live-net.cloud i{background:#0ea5e9}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.55)}70%{box-shadow:0 0 0 7px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+@media (max-width:640px){.live-net .ln-t{display:none}}
+@media (max-width:440px){.live-net{padding:4px 7px;gap:4px;font-size:.56rem;letter-spacing:.04em}.live-net i{width:6px;height:6px}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .live-net{color:#4ade80}}
+:root[data-theme="dark"] .live-net{color:#4ade80}
+@media (prefers-reduced-motion:reduce){.live-net i,.live-dot{animation:none}}
+.otp-ch label{flex-direction:row!important;flex-wrap:nowrap;white-space:nowrap;margin:0!important;font-size:.86rem;width:auto!important}
+.otp-ch label>*{display:inline!important;margin:0!important}
+.otp-ch label input{width:auto!important;height:auto!important;min-height:0!important;padding:0!important}
 </style>
 </head>
 <body>
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="Welcome to Blood Bridge">
  <canvas class="g-parts" id="gParts" aria-hidden="true"></canvas>
- <button class="g-skip" type="button" data-gate="skip"><span>Skip intro</span> <span aria-hidden="true">›</span></button>
  <div class="g-stage">
   <div class="g-tilt" id="gTilt">
    <div class="g-mark">
@@ -1045,6 +1161,23 @@ body.fab-dodge .fab,body.fab-dodge .chat-fab{opacity:0;transform:translateY(16px
   <button class="g-enter" type="button" data-gate="enter"><span>Enter Blood Bridge</span> <span aria-hidden="true">→</span></button>
  </div>
 </div>
+<script>
+/* ================= Blood Bridge · LIVE configuration =================
+   Paste your Firebase web app keys here (Firebase console > Project settings > Your apps) to sync every device in real time.
+   Leave the YOUR_ values to run live across all tabs/windows of this device only. */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+window.BB_FIREBASE = window.BB_FIREBASE || firebaseConfig;
+/* WhatsApp / SMS providers (optional). Example:
+   window.BB_OTP_CONFIG = { endpoint: "https://<region>-<project>.cloudfunctions.net/sendOtp", provider: "meta" };   // or "fast2sms", "twilio"
+   window.BB_ALERTS     = { endpoint: "https://<region>-<project>.cloudfunctions.net/sendAlert", provider: "meta" }; */
+</script>
 <script>(function(){var g=document.getElementById('gate');if(!g)return;
 var force=/[?&]gate=1/.test(location.search),nav=null;try{nav=(performance.getEntriesByType('navigation')[0]||{}).type;}catch(e){}
 var entered=false;try{entered=sessionStorage.getItem('bb-entered')==='1';}catch(e){}
@@ -1073,9 +1206,9 @@ function enter(quick){if(!alive||g.classList.contains('leave'))return;try{sessio
   try{f.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+dx+'px,'+dy+'px) scale('+sx+')',opacity:1}],{duration:800,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=function(){f.remove();};}catch(e){f.remove();}
   }
  if(quick)g.classList.add('quick');g.classList.add('leave');setTimeout(finish,quick?260:820);}
-function key(e){if(e.key==='Enter'){e.preventDefault();enter(false);}else if(e.key==='Escape'){enter(true);}}
+function key(e){if(e.key==='Enter'){e.preventDefault();enter(false);}}
 document.addEventListener('keydown',key);
-g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(!b)return;enter(b.getAttribute('data-gate')==='skip');});
+g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(!b)return;enter(false);});
 })();</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
 <radialGradient id="bbDrop" cx=".36" cy=".34" r=".78"><stop offset="0" stop-color="#FF8A94"/><stop offset=".28" stop-color="#F0263C"/><stop offset=".68" stop-color="#B8021F"/><stop offset="1" stop-color="#6A0012"/></radialGradient>
@@ -1120,7 +1253,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
     <nav class="tabs" aria-label="Main" id="nav"></nav>
     <button class="nav-toggle" id="navToggle" type="button" aria-controls="nav" aria-expanded="false" aria-label="Menu"><i></i></button>
     <div class="hdr-right">
-      <span id="bellBox"></span><span id="userBox"></span>
+      <span class="live-net" id="liveNet" role="status"><i aria-hidden="true"></i><b>LIVE</b><span class="ln-t"> REAL-TIME NETWORK</span></span><span class="cloudpill" id="cloudPill" role="status" hidden>🟢 LIVE CLOUD SYNC</span><span id="bellBox"></span><span id="userBox"></span>
       <span class="lang-wrap" data-notr><button class="lang-btn" id="langBtn" type="button" data-act="lang" aria-haspopup="menu" aria-expanded="false" aria-controls="langMenu" aria-label="Language · भाषा · భాష"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9M12 3C9.4 5.6 8.2 8.6 8.2 12s1.2 6.4 3.8 9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="lg-cur">English</span><span class="lg-short">EN</span><svg class="lg-car" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
         <div class="lang-menu" id="langMenu" role="menu" hidden aria-label="Choose language">
           <div class="lm-h">Choose language · भाषा चुनें · భాష · மொழி</div>
@@ -1132,7 +1265,6 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
     </div>
   </div>
 </header>
-<div class="demobar" id="demoBar" role="region" aria-label="Demo mode"></div>
 
 <main class="wrap" id="main" tabindex="-1">
 
@@ -1175,7 +1307,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
 </svg>
       <div class="match" id="lpMatch" aria-live="polite" aria-atomic="true"></div>
       <div class="avail"><div class="avail-h"><span>Donors eligible right now</span><span class="mono" id="lpTotal"></span></div><div class="bars" id="lpBars"></div></div>
-      <div class="live-f">Computed from the demo data in this browser. Updates as donors register and respond.</div>
+      <div class="live-f">Live counts from the Blood Bridge network. Updates in real time as donors register and respond.</div>
     </aside>
   </div>
   <div class="ecg-div" aria-hidden="true"><svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path class="ecg-base" d="M0 20 H1200"/><path class="ecg-line slow" pathLength="100" d="M0 20 H520 l10 0 l6 -8 l6 8 l6 0 l7 -16 l8 32 l7 -24 l6 8 l10 0 H1200"/></svg></div>
@@ -1343,6 +1475,11 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
 <!-- ===================== LOGIN ===================== -->
 <section class="view" data-view="login" hidden>
   <div class="acct">
+    <div class="gate-emg hero2"><div class="emg" role="note" aria-label="Emergency numbers">
+        <span class="beacon" aria-hidden="true"></span>
+        <span class="emg-t" data-i18n><b>Life-threatening emergency?</b> Call the ambulance first.</span>
+        <span class="callpills"><a class="callpill" href="tel:108"><span class="ph"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></span><span data-i18n>Ambulance</span><b>108</b></a><a class="callpill alt" href="tel:112"><span class="ph"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></span><span data-i18n>Emergency</span><b>112</b></a></span>
+      </div></div>
     <div><div class="eyebrow"><span data-i18n>Account</span></div><h2><span data-i18n>Log in or sign up</span></h2><p class="muted" style="margin-top:6px"><span data-i18n>Already registered? Log in with your mobile number. New here? Pick who you are and we will take you to the right form.</span></p></div>
     <div class="acct-grid">
       <div class="panel" id="loginBox"><h3><span data-i18n>Log in</span></h3>
@@ -1351,8 +1488,11 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
           <div class="seg" role="radiogroup" aria-label="Account type">
             <label><input type="radio" name="lg-role" id="lg-patient" value="patient" checked> Patient / attendant</label>
             <label><input type="radio" name="lg-role" id="lg-donor" value="donor"> Donor</label>
+            <label><input type="radio" name="lg-role" id="lg-admin" value="admin"> Admin</label>
           </div></div>
         <div class="field full"><label for="lg-phone">Registered mobile number</label><input id="lg-phone" inputmode="tel" placeholder="10-digit mobile" autocomplete="tel"></div>
+        <div class="field full" id="lg-passWrap" hidden><label for="lg-pass">Admin passcode</label><input id="lg-pass" type="password" autocomplete="current-password" placeholder="Admin passcode"><span class="hint">🔒 Only Blood Bridge team members on the admin list can log in here. 5 wrong tries lock it for 5 minutes.</span></div>
+        <div class="field full"><div class="otp-ch" role="radiogroup" aria-label="Send OTP via"><span data-i18n>Send OTP via:</span><label><input type="radio" name="otpch-loginForm" value="whatsapp" checked> <span class="och-wa">💬 WhatsApp</span> <small data-i18n>(Recommended)</small></label><label><input type="radio" name="otpch-loginForm" value="sms"> <span>✉️ SMS</span></label></div></div>
         <div class="field full"><p class="err" id="lgErr"></p><div class="row"><button class="btn btn-primary" type="submit"><span data-i18n>Send OTP</span></button><span class="muted small">New here? <a href="#register-patient"><span data-i18n>Register as patient</span></a> · <a href="#register-donor"><span data-i18n>Register as donor</span></a></span></div></div>
       </form>
       <div id="loginOtp" hidden></div>
@@ -1366,7 +1506,6 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
         </div>
       </div>
     </div>
-    <div class="note"><b>Demo accounts:</b> <button class="btn btn-ghost btn-sm" type="button" data-demo="patient">Patient · 9000000101</button> <button class="btn btn-ghost btn-sm" type="button" data-demo="donor">Donor · 9000000001</button><br><span>One tap logs you in. The demo fills the OTP for you.</span></div>
   </div>
 </section>
 
@@ -1374,7 +1513,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
 <section class="view" data-view="register-patient" hidden>
   <div class="narrow" style="display:grid;gap:18px">
     <div><div class="eyebrow"><span data-i18n>Patient registration</span></div><h2><span data-i18n>Register and request blood</span></h2><p class="muted" style="margin-top:6px"><span data-i18n>Fill in the details once. We verify your mobile number with an OTP, then alert matching donors.</span></p></div>
-    <div class="note"><b>Already registered?</b> <a href="#login" data-login="patient">Log in</a> · <span>Try the demo account:</span> <button class="btn btn-ghost btn-sm" type="button" data-demo="patient">Patient · 9000000101</button></div>
+    <div class="note"><b>Already registered?</b> <a href="#login" data-login="patient">Log in</a></div>
     <div class="stepper" id="prSteps"><span class="stp on"><i>1</i>Details</span><span class="stp"><i>2</i>Verify mobile</span><span class="stp"><i>3</i>Donors alerted</span></div>
     <form id="prForm" novalidate style="display:grid;gap:16px">
       <fieldset><legend data-ic="phone">Your details</legend><div class="grid">
@@ -1385,6 +1524,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
       </div></fieldset>
       <div id="prReq"></div>
       <label class="check"><input type="checkbox" id="pr-consent"> I confirm the details are true. Fake requests may be reported to the authorities.</label>
+      <div class="otp-ch" role="radiogroup" aria-label="Send OTP via"><span data-i18n>Send OTP via:</span><label><input type="radio" name="otpch-prForm" value="whatsapp" checked> <span class="och-wa">💬 WhatsApp</span> <small data-i18n>(Recommended)</small></label><label><input type="radio" name="otpch-prForm" value="sms"> <span>✉️ SMS</span></label></div>
       <p class="err" id="prErr"></p>
       <div class="row"><button class="btn btn-primary btn-lg" type="submit"><span data-i18n>Continue to OTP verification</span></button><a href="#login" data-login="patient" class="small">Already registered? Log in</a></div>
     </form>
@@ -1396,7 +1536,7 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
 <section class="view" data-view="register-donor" hidden>
   <div class="narrow" style="display:grid;gap:18px">
     <div><div class="eyebrow"><span data-i18n>Donor registration</span></div><h2><span data-i18n>Become a blood donor</span></h2><p class="muted" style="margin-top:6px"><span data-i18n>One donation (350–450 ml) can help up to three patients.</span></p></div>
-    <div class="note"><b>Already registered?</b> <a href="#login" data-login="donor">Log in</a> · <span>Try the demo account:</span> <button class="btn btn-ghost btn-sm" type="button" data-demo="donor">Donor · 9000000001</button></div>
+    <div class="note"><b>Already registered?</b> <a href="#login" data-login="donor">Log in</a></div>
     <div class="stepper" id="drSteps"><span class="stp on"><i>1</i>Details</span><span class="stp"><i>2</i>Verify mobile</span><span class="stp"><i>3</i>Ready to donate</span></div>
     <form id="drForm" novalidate style="display:grid;gap:16px">
       <fieldset><legend data-ic="user">Personal details</legend><div class="grid">
@@ -1425,8 +1565,10 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
       </div></fieldset>
       <div style="display:grid;gap:8px">
         <label class="toggle"><input type="checkbox" id="dr-avail" checked> Available for emergency requests</label>
+        <div class="alert-prefs"><label class="toggle"><input type="checkbox" id="dr-sms" checked> <span><span data-i18n>Receive SMS Alerts</span> <small class="muted">(+91 mobile)</small></span></label><label class="toggle"><input type="checkbox" id="dr-wa" checked> <span><span data-i18n>Receive WhatsApp Alerts</span> <small class="muted">(+91 mobile)</small></span></label></div>
         <label class="check"><input type="checkbox" id="dr-consent"> I agree to share my name, blood group, mobile number and area with OTP-verified patients who need blood.</label>
       </div>
+      <div class="otp-ch" role="radiogroup" aria-label="Send OTP via"><span data-i18n>Send OTP via:</span><label><input type="radio" name="otpch-drForm" value="whatsapp" checked> <span class="och-wa">💬 WhatsApp</span> <small data-i18n>(Recommended)</small></label><label><input type="radio" name="otpch-drForm" value="sms"> <span>✉️ SMS</span></label></div>
       <p class="err" id="drErr"></p>
       <div class="row"><button class="btn btn-ok btn-lg" type="submit"><span data-i18n>Continue to OTP verification</span></button><a href="#login" data-login="donor" class="small">Already registered? Log in</a></div>
     </form>
@@ -1540,23 +1682,27 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
 
 <!-- ===================== ADMIN ===================== -->
 <section class="view" data-view="admin" hidden>
+  <div class="admin-greet" id="adGreet" hidden></div>
   <div class="panel-head" style="margin:0"><div><div class="eyebrow">Admin</div><h2>Network dashboard</h2></div>
-    <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Reset demo data</button></div>
+    <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Clear this device's data</button></div>
   <div class="stats" id="adStats"></div>
   <div class="cols">
     <div class="panel chart"><h3>Donors by blood group</h3><p class="muted small" style="margin-bottom:10px">Registered donors (eligible today in brackets)</p><div id="groupChart"></div></div>
     <div class="panel"><h3>Shortage watch</h3><p class="muted small" style="margin-bottom:10px">Open units needed vs. eligible compatible donors</p><div class="tablewrap"><table id="shortTable"></table></div></div>
   </div>
   <div class="panel" id="adReportsWrap"><div class="panel-head"><div><h3>Reports to verify</h3><p class="muted small">Check the photos, then decide. Donors and requests under review get no new alerts.</p></div><span class="muted" id="adRepCount"></span></div><div class="list" id="adReports"></div></div>
+  <div class="panel"><div class="panel-head"><div><h3>Alert &amp; OTP Delivery Log</h3><p class="muted small">WhatsApp and SMS alerts to compatible donors and partner hospitals, plus every sign-up and log-in OTP (patients, donors and admins). Each row has a WhatsApp / SMS link; it switches to automatic sending when a provider is connected.</p></div><span class="muted" id="outCount"></span></div><div class="tablewrap"><table id="outTable"></table></div>
+    <div class="panel-head" style="margin-top:16px"><h3 style="font-size:1rem">🔐 OTP verification events</h3><span class="muted" id="otpCount"></span></div><div class="tablewrap"><table id="otpTable"></table></div></div>
   <div class="panel"><div class="panel-head"><h3>All blood requests</h3></div><div class="tablewrap"><table id="reqTable"></table></div></div>
   <div class="panel"><div class="panel-head"><h3>Registered donors</h3><span class="muted" id="donorCount"></span></div><div class="tablewrap"><table id="donorTable"></table></div></div>
+  <div class="panel"><div class="panel-head"><h3>Registered patients</h3><span class="muted" id="patientCount"></span></div><div class="tablewrap"><table id="patientTable"></table></div></div>
 </section>
 
 </main>
 
 <footer><div class="wrap foot">
-  <div class="foot-l"><a class="brand" href="#welcome" aria-label="Blood Bridge home"><span class="logo3d" aria-hidden="true" style="width:34px;height:32px"><span class="lg"><svg class="l3 b3" viewBox="0 0 120 112"><use href="#bbFlat"/></svg><svg class="l3 b2" viewBox="0 0 120 112"><use href="#bbFlat"/></svg><svg class="l3 b1" viewBox="0 0 120 112"><use href="#bbFlat"/></svg><svg class="l3 fr" viewBox="0 0 120 112"><use href="#bbMark"/></svg></span></span><b>Blood Bridge</b></a><p>Design Thinking using AI project prototype · Data is stored only in this browser.</p></div>
-  <div class="foot-r"><button class="btn btn-ghost btn-sm" type="button" data-act="reset-demo" id="footReset">Reset demo data</button><button class="btn btn-ghost btn-sm" type="button" data-act="sources">Sources</button><button class="btn btn-ghost btn-sm" type="button" data-tour-start><span data-i18n>▶ Guided demo</span></button><a class="btn btn-ghost btn-sm" href="#admin">Admin dashboard</a><a class="callpill sm" href="tel:108"><span class="ph"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></span><span data-i18n>Ambulance</span><b>108</b></a></div>
+  <div class="foot-l"><a class="brand" href="#welcome" aria-label="Blood Bridge home"><span class="logo3d" aria-hidden="true" style="width:34px;height:32px"><span class="lg"><svg class="l3 b3" viewBox="0 0 120 112"><use href="#bbFlat"/></svg><svg class="l3 b2" viewBox="0 0 120 112"><use href="#bbFlat"/></svg><svg class="l3 b1" viewBox="0 0 120 112"><use href="#bbFlat"/></svg><svg class="l3 fr" viewBox="0 0 120 112"><use href="#bbMark"/></svg></span></span><b>Blood Bridge</b></a><p><span class="live-dot" aria-hidden="true"></span> Blood Bridge · Live real-time blood donor network · Kakinada, Andhra Pradesh</p></div>
+  <div class="foot-r"><button class="btn btn-ghost btn-sm" type="button" data-act="sources">Sources</button><a class="callpill sm" href="tel:108"><span class="ph"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></span><span data-i18n>Ambulance</span><b>108</b></a></div>
 </div></footer>
 
 <a class="fab" href="#register-patient" id="fab" data-notr aria-label="Emergency help (SOS)">SOS</a>
@@ -1566,12 +1712,12 @@ g.addEventListener('click',function(e){var b=e.target.closest('[data-gate]');if(
   <div class="chat-h"><span class="av"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2s-7 8.5-7 13a7 7 0 0 0 14 0C19 10.5 12 2 12 2z" fill="var(--accent-ink)"/></svg></span>
     <span><b><span data-i18n>Blood Bridge Assistant</span></b><small id="chatMode">Smart assistant</small></span>
     <button class="btn btn-primary btn-sm" type="button" data-act="guide" style="margin-left:auto"><span aria-hidden="true">🧒 </span><span>Easy guide</span></button><button class="btn btn-ghost btn-sm" id="chatClose" type="button" aria-label="Close assistant">✕</button></div>
-  <div class="chat-tools"><label class="sr-only" for="chatLang">Assistant language</label><span aria-hidden="true">🌐</span><select id="chatLang" data-notr aria-label="Assistant language"></select><button class="btn btn-ghost btn-sm" type="button" data-act="chat-voice" id="chatVoice" aria-pressed="true"><span aria-hidden="true">🔊 </span><span id="chatVoiceLb">Voice on</span></button><button class="btn btn-ghost btn-sm" type="button" data-act="chat-repeat" aria-label="Say again"><span aria-hidden="true">🔁</span></button></div>
+  <div class="chat-tools"><label class="sr-only" for="chatLang">Assistant language</label><span aria-hidden="true">🌐</span><select id="chatLang" data-notr aria-label="Assistant language"></select><button class="btn btn-ghost btn-sm" type="button" data-act="chat-voice" id="chatVoice" aria-pressed="true"><span aria-hidden="true">🔊 </span><span id="chatVoiceLb">Voice on</span></button><button class="btn btn-ghost btn-sm" type="button" data-act="chat-repeat" aria-label="Say again"><span aria-hidden="true">🔁</span></button><button class="btn btn-ghost btn-sm sugg-t" type="button" data-act="chat-sugg" id="chatSugg" aria-controls="chatChips" aria-expanded="true"><span>Suggestions</span><span aria-hidden="true"> ▾</span></button></div>
   <div class="chat-body" id="chatBody" aria-live="polite"></div>
   <div class="chips" id="chatChips"></div>
   <p class="chat-note"><span data-i18n>Not a doctor. In an emergency call 108 or 112.</span></p>
   <p class="chat-listen" id="chatListen" hidden>Listening… speak now</p>
-  <form class="chat-f" id="chatForm"><button class="btn btn-ghost btn-sm mic" type="button" data-act="chat-mic" id="chatMic" aria-pressed="false" aria-label="Speak your question"><span aria-hidden="true">🎤</span></button><input id="chatIn" placeholder="Ask about donors, eligibility, hospitals…" autocomplete="off" aria-label="Message"><button class="btn btn-primary btn-sm" type="submit">Send</button></form>
+  <form class="chat-f" id="chatForm"><button class="btn btn-ghost btn-sm mic" type="button" data-act="chat-mic" id="chatMic" aria-pressed="false" aria-label="Speak your question"><span aria-hidden="true">🎤</span></button><input id="chatIn" placeholder="Ask about donors, eligibility..." autocomplete="off" aria-label="Message"><button class="btn btn-primary btn-sm" type="submit">Send</button></form>
 </div>
 <div class="toast" id="toast" hidden aria-hidden="true"></div>
 <div id="srLive" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -1584,9 +1730,35 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 </script>
 <script>
 (function(){
+/* ================= admin team (only these members can open #admin) ================= */
+const ADMIN_TEAM=[
+ {name:'Blood Bridge Admin',role:'Network administrator',phones:['+919000000999','9000000999']},
+ {name:'Kamana Bala Subhrahmanya Siva Syam',role:'Team Lead & Full-Stack Architecture',phones:['+919515389589','9515389589']},
+ {name:'Meesala Harsha Vardhan Rao',role:'UI/UX & Accessibility Design',phones:['+919133515167','9133515167']},
+ {name:'Kuracha Triguna',role:'Testing, Documentation & Outreach',phones:['+916309682922','6309682922']},
+ {name:'Lalammagari Rahamath',role:'Problem Discovery & Ideation Lead',phones:['+919182385172','9182385172']},
+ {name:'Kovvuri Sameeksha Reddy',role:'Medical Eligibility & Safety Research',phones:['+918978611909','8978611909']},
+ {name:'Marri Puja',role:'Verification & Admin Moderation',phones:['+917670911733','7670911733']}
+];
+/* strip spaces/dashes/brackets; accept +91XXXXXXXXXX, 91XXXXXXXXXX or XXXXXXXXXX; returns 10 digits or '' */
+function normPhone(p){ const x=String(p||'').replace(/[\s\-().]/g,''); const m=/^(?:\+?91)?(\d{10})$/.exec(x); return m?m[1]:''; }
+const ADMIN_MAP={}; ADMIN_TEAM.forEach(m=>m.phones.forEach(ph=>{ const k=normPhone(ph); if(k) ADMIN_MAP[k]={name:m.name,role:m.role,p10:k}; }));
+const initials=n=>{ const w=String(n||'').trim().split(/\s+/); return ((w[0]||'')[0]||'')+((w.length>1?w[w.length-1][0]:'')||''); };
+/* Firestore (optional): works when a compat Firestore instance is exposed as window.db or firebase is initialised */
+function cloudDB(){ try{ if(window.db&&typeof window.db.collection==='function') return window.db; if(window.firebase&&firebase.apps&&firebase.apps.length&&firebase.firestore) return firebase.firestore(); }catch(e){} return null; }
+function setCloud(on){ const el=document.getElementById('cloudPill'); if(el) el.hidden=!on; }
+async function cloudPing(){ const db=cloudDB(); if(!db){ setCloud(false); return; } try{ await db.collection('users').limit(1).get(); setCloud(true); }catch(e){ setCloud(false); } }
+async function cloudGetUser(p10){ const db=cloudDB(); if(!db) return null; try{ const s=await Promise.race([db.collection('users').doc(p10).get(),new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),3000))]); setCloud(true); return s.exists?s.data():null; }catch(e){ return null; } }
+function cloudSetAdmin(p10,m){ const db=cloudDB(); if(!db) return; try{ db.collection('users').doc(p10).set({role:'admin',name:m.name,teamRole:m.role||m.team,phone:'+91'+p10,updatedAt:Date.now()},{merge:true}).then(()=>setCloud(true)).catch(()=>{}); }catch(e){} }
+async function adminLookup(phone){ const k=normPhone(phone); if(!k) return null; const m=ADMIN_MAP[k]; if(m) return {name:m.name,team:m.role,phone:k,fs:false};
+  const d=await cloudGetUser(k); if(d&&d.role==='admin') return {name:String(d.name||'Admin'),team:String(d.teamRole||d.team||'Administrator'),phone:k,fs:true}; return null; }
+window.addEventListener('bb-cloud-ready',cloudPing); setTimeout(cloudPing,800); setTimeout(cloudPing,4000);
 /* ================= constants ================= */
 const GROUPS=['A+','A-','B+','B-','AB+','AB-','O+','O-'];
 const RECEIVE={'A+':['A+','A-','O+','O-'],'A-':['A-','O-'],'B+':['B+','B-','O+','O-'],'B-':['B-','O-'],'AB+':GROUPS.slice(),'AB-':['AB-','A-','B-','O-'],'O+':['O+','O-'],'O-':['O-']};
+/* donor group -> patient groups it can give to (red cells). Single source of truth for alerts. */
+const CAN_GIVE_TO={'O-':GROUPS.slice(),'O+':['O+','A+','B+','AB+'],'A-':['A-','A+','AB-','AB+'],'A+':['A+','AB+'],'B-':['B-','B+','AB-','AB+'],'B+':['B+','AB+'],'AB-':['AB-','AB+'],'AB+':['AB+']};
+const getCompatibleDonorTypes=pg=>GROUPS.filter(g=>(CAN_GIVE_TO[g]||[]).includes(pg));
 const CITY={Kakinada:[16.9891,82.2475],Surampalem:[17.0890,82.0640],Peddapuram:[17.0780,82.1380],Samalkot:[17.0530,82.1690],Rajahmundry:[17.0005,81.8040],Amalapuram:[16.5787,82.0061],Pithapuram:[17.1160,82.2530],Visakhapatnam:[17.6868,83.2185]};
 const CITIES=Object.keys(CITY);
 /* safe History API: sandboxed previews (about:srcdoc) throw SecurityError on replaceState/pushState */
@@ -1599,7 +1771,7 @@ document.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closes
 let USERLOC=null;
 const REASONS={accident:'Road accident / trauma',surgery:'Surgery',delivery:'Pregnancy / delivery',gyn:'Heavy menstrual / gynaecological bleeding',thalassemia:'Thalassemia',dengue:'Dengue / low platelets',cancer:'Cancer / chemotherapy',anaemia:'Severe anaemia',burns:'Burns',other:'Other'};
 const COMPONENTS={whole:'Whole blood',prbc:'Packed red cells (PRBC)',platelets:'Platelets',plasma:'Plasma (FFP)'};
-const DB_KEY='bloodbridge-v2', SES_KEY='bloodbridge-session', DAY=86400000;
+const DB_KEY='bloodbridge-live-v1', SES_KEY='bloodbridge-live-session', DAY=86400000;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
@@ -1613,6 +1785,7 @@ const fmtDate=d=>new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'sh
 const fmtDT=d=>new Date(d).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
 
 /* ================= data ================= */
+function emptyDB(){ return {donors:[],patients:[],requests:[],notes:[],reports:[],msgs:[],outbox:[],otplog:[]}; }
 function seed(){
   const jit=()=> (Math.random()-.5)*0.03;
   const d=(name,phone,age,gender,group,city,area,weight,lastDays,available)=>{const c=CITY[city];return {id:uid(),name,phone,age,gender,group,city,area,weight,last:lastDays==null?'':daysAgo(lastDays),available,lat:+(c[0]+jit()).toFixed(5),lng:+(c[1]+jit()).toFixed(5),verified:true,donations:lastDays==null?[]:[{date:daysAgo(lastDays),hospital:'Voluntary camp'}],created:Date.now()-Math.random()*60*DAY,sample:true};};
@@ -1648,11 +1821,19 @@ function seed(){
   return S0;
 }
 let S, session=null;
-function load(){ try{const x=JSON.parse(localStorage.getItem(DB_KEY)); if(x&&x.donors&&x.patients&&x.requests) S=x;}catch(e){} if(!S){S=seed();save();} S.notes=S.notes||[]; ensureDemo(); try{session=JSON.parse(localStorage.getItem(SES_KEY));}catch(e){} if(session&&!me()) session=null; }
-function save(){ try{localStorage.setItem(DB_KEY,JSON.stringify(S));}catch(e){ try{ trimPhotos(); localStorage.setItem(DB_KEY,JSON.stringify(S)); }catch(_){ toast('Browser storage is full. Use Reset demo data in the footer.'); } } }
+function load(){ try{const x=JSON.parse(localStorage.getItem(DB_KEY)); if(x&&x.donors&&x.patients&&x.requests) S=x;}catch(e){} if(!S){S=emptyDB();saveLocal();} S.notes=S.notes||[]; try{session=JSON.parse(sessionStorage.getItem(SES_KEY)||localStorage.getItem(SES_KEY));}catch(e){} session=sanitizeSession(session); }
+function save(){ saveLocal(); try{ livePost(); }catch(e){} try{ fbPush(); }catch(e){} }
+function saveLocal(){ try{localStorage.setItem(DB_KEY,JSON.stringify(S));}catch(e){ try{ trimPhotos(); localStorage.setItem(DB_KEY,JSON.stringify(S)); }catch(_){ toast('Browser storage is full. Ask an admin to clear old data in the footer.'); } } }
 function trimPhotos(){ const old=S.requests.filter(r=>r.status!=='open').sort((a,b)=>a.created-b.created); old.forEach(r=>{ if(r.slip&&!r.sample) r.slip=null; Object.values(r.proofs||{}).forEach(p=>p.img=null); Object.values(r.recv||{}).forEach(p=>p.img=null); }); (S.reports||[]).filter(x=>x.status!=='pending').forEach(x=>x.img=null); }
-function setSession(x){ session=x; try{ x?localStorage.setItem(SES_KEY,JSON.stringify(x)):localStorage.removeItem(SES_KEY);}catch(e){} }
-function me(){ if(!session||!S) return null; return (session.role==='donor'?S.donors:S.patients).find(u=>u.id===session.id)||null; }
+function attachAdmin(x){ if(x) delete x.admin; return x; if(!x||x.role==='admin'||!S) return x; delete x.admin; const u=(x.role==='donor'?S.donors:S.patients).find(q=>q.id===x.id); const m=u&&ADMIN_MAP[normPhone(u.phone)]; if(m) x.admin={name:m.name,team:m.role,phone:m.p10}; return x; }
+function sanitizeSession(x){ if(!x||typeof x!=='object') return null;
+  if(x.role==='admin'){ const k=normPhone(x.phone), m=ADMIN_MAP[k]; if(m) return {role:'admin',id:'admin-'+k,phone:k,name:m.name,team:m.role}; if(x.fs&&k) return {role:'admin',id:'admin-'+k,phone:k,name:String(x.name||'Admin'),team:String(x.team||'Administrator'),fs:true}; return null; }
+  if(x.role!=='donor'&&x.role!=='patient') return null; session=x; if(!me()) return null; return attachAdmin(x); }
+const isAdmin=()=>!!(session&&session.role==='admin');
+const adminInfo=()=>session?(session.role==='admin'?session:session.admin):null;
+function setSession(x){ if(!session||!x||session.id!==x.id){ try{ ['dispatchLog','dalert'].forEach(i=>{ const e=document.getElementById(i); if(e) e.remove(); }); DLid=null; }catch(e){} } try{ const db=cloudDB(), u=window.firebase&&firebase.auth&&firebase.auth().currentUser; if(db&&u){ const ref=db.collection('sessions').doc(u.uid); x?ref.set({role:x.role,id:x.id||null,t:Date.now()},{merge:true}).catch(()=>{}):ref.delete().catch(()=>{}); } }catch(e){}
+  if(x) attachAdmin(x); if(x&&x.admin) cloudSetAdmin(x.admin.phone,x.admin); if(x&&x.role==='admin') cloudSetAdmin(x.phone,{name:x.name,role:x.team}); session=x; try{ x?localStorage.setItem(SES_KEY,JSON.stringify(x)):localStorage.removeItem(SES_KEY);}catch(e){} try{ x?sessionStorage.setItem(SES_KEY,JSON.stringify(x)):sessionStorage.removeItem(SES_KEY);}catch(e){} }
+function me(){ if(!session||!S||session.role==='admin') return null; return (session.role==='donor'?S.donors:S.patients).find(u=>u.id===session.id)||null; }
 
 /* ================= matching ================= */
 const gapDays=d=>d.gender==='F'?120:90;
@@ -1663,7 +1844,7 @@ const isElig=d=>!!d&&d.available&&waitDays(d)===0&&!d.suspended&&!d.hold;
 function coords(x){ return (x.lat!=null&&x.lng!=null&&x.lat!=='')?[+x.lat,+x.lng]:(CITY[x.city]||CITY.Kakinada); }
 function km(a,b){ const R=6371,t=Math.PI/180,dLat=(b[0]-a[0])*t,dLng=(b[1]-a[1])*t; const h=Math.sin(dLat/2)**2+Math.cos(a[0]*t)*Math.cos(b[0]*t)*Math.sin(dLng/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
 const PLASMA={'O+':GROUPS.slice(),'O-':GROUPS.slice(),'A+':['A+','A-','AB+','AB-'],'A-':['A+','A-','AB+','AB-'],'B+':['B+','B-','AB+','AB-'],'B-':['B+','B-','AB+','AB-'],'AB+':['AB+','AB-'],'AB-':['AB+','AB-']};
-const compatFor=r=>['plasma','platelets'].includes(r.component)?PLASMA[r.group]:RECEIVE[r.group];
+const compatFor=r=>['plasma','platelets'].includes(r.component)?PLASMA[r.group]:getCompatibleDonorTypes(r.group);
 function score(d,r){
   if(!compatFor(r).includes(d.group)) return -1;
   let s=d.group===r.group?30:15; const dist=km(coords(d),coords(r));
@@ -1671,11 +1852,39 @@ function score(d,r){
   if(waitDays(d)===0) s+=25; if(d.available) s+=15; return Math.min(100,s);
 }
 function ranked(r,src){ return (src||S).donors.filter(d=>!d.suspended&&!d.hold).map(d=>({d,s:score(d,r),km:km(coords(d),coords(r))})).filter(x=>x.s>=0).sort((a,b)=>b.s-a.s||a.km-b.km); }
-function autoAlert(r,src,mode){ const pick=ranked(r,src).filter(x=>isElig(x.d)&&!r.alerted.includes(x.d.id)&&!(r.responses||{})[x.d.id]&&(mode==='exact'?x.d.group===r.group:true)).slice(0,5); pick.forEach(x=>r.alerted.push(x.d.id)); return pick.map(x=>x.d.id); }
+const RADII=[10,25,50];
+function autoAlert(r,src,mode){
+  const base=ranked(r,src).filter(x=>isElig(x.d)&&!r.alerted.includes(x.d.id)&&!(r.responses||{})[x.d.id]&&(mode==='exact'?x.d.group===r.group:true));
+  let rad=RADII[RADII.length-1]; for(const q of RADII){ if(base.filter(x=>x.km<=q).length>=5){ rad=q; break; } }
+  r.radius=Math.max(r.radius||0,rad);
+  const since=d=>d.last?Date.now()-new Date(d.last).getTime():9e15;
+  const pick=base.filter(x=>x.km<=rad).sort((a,b)=>((a.d.group===r.group)?0:1)-((b.d.group===r.group)?0:1)||((a.d.group==='O-'&&r.group!=='O-')?1:0)-((b.d.group==='O-'&&r.group!=='O-')?1:0)||a.km-b.km||since(b.d)-since(a.d)).slice(0,5);
+  pick.forEach(x=>r.alerted.push(x.d.id)); return pick.map(x=>x.d.id); }
+/* ---- WhatsApp + SMS dispatch (simulated log; set window.bbSendAlert to plug in a real backend) ---- */
+function logSend(e){ e.id=uid(); e.t=Date.now(); e.status='link-ready'; (S.outbox=S.outbox||[]).push(e); if(S.outbox.length>300) S.outbox.splice(0,S.outbox.length-300);
+  try{ if(typeof window.bbSendAlert==='function'){ e.status='queued'; Promise.resolve(window.bbSendAlert(e)).then(()=>{ e.status='sent'; save(); }).catch(()=>{ e.status='failed'; save(); }); } }catch(_){ e.status='failed'; } }
+function alertDonor(r,id,text){ const d=S.donors.find(x=>x.id===id); if(!d) return false;
+  if(!compatFor(r).includes(d.group)) return false; /* never alert a donor whose group cannot be given to this patient */
+  notify('donor',id,text,r.id);
+  sendSmsAndWhatsAppAlert(d,r);
+  return true; }
+/* ---- stage 3: partner hospitals & blood banks (minimum data only, no donor or patient details) ---- */
+function broadcastToPartners(r,why){ if(r.partners||r.status!=='open') return 0; let banks; try{ banks=BANKS; }catch(e){ return 0; }
+  const here=coords(r), types=compatFor(r);
+  const near=banks.filter(b=>b.partner!==false).map(b=>({b,km:km(here,[b.lat,b.lng])})).filter(x=>x.km<=50).sort((a,b)=>a.km-b.km);
+  r.partners=near.map(x=>{ const inv=x.b.inventory||{}; const best=[r.group,...types.filter(g=>g!==r.group)].find(g=>(inv[g]||0)>0);
+    const msg=`Blood Bridge request: ${pretty(r.group)} ${COMPONENTS[r.component]||'blood'}, ${r.units} unit${r.units>1?'s':''}, ${r.urgency}, for ${r.hospital}, ${r.city}. Compatible groups: ${types.map(pretty).join(', ')}. Please reply with units you can provide.`;
+    (x.b.phones.length?x.b.phones:[['','(no number listed)']]).forEach(ph=>['whatsapp','sms'].forEach(ch=>logSend({reqId:r.id,to:'hospital',toId:x.b.name,name:x.b.name,phone:ph[1],channel:ch,dg:'',pg:r.group,text:msg})));
+    return {name:x.b.name,type:x.b.type,addr:x.b.addr,km:x.km,phones:x.b.phones,group:best||'',units:best?Math.min(inv[best],r.units):0,status:best?'confirmed':'no-stock'}; });
+  const ok=r.partners.filter(x=>x.status==='confirmed').length;
+  notify('patient',r.patientId,(why==='low-donors'?'Not enough eligible compatible donors nearby, so ':'No donor has accepted yet, so ')+`your request was sent to ${r.partners.length} partner hospital${r.partners.length===1?'':'s'} and blood bank${r.partners.length===1?'':'s'} within 50 km. ${ok} report${ok===1?'s':''} compatible stock (demo inventory).`,r.id);
+  save(); return r.partners.length; }
 function expandReq(r,why){ if(r.stage!=='exact') return 0; r.stage='compatible'; const ids=autoAlert(r,null,'all');
-  ids.forEach(id=>{ const d=S.donors.find(x=>x.id===id); notify('donor',id,`New ${pretty(r.group)} request at ${r.hospital}, ${r.city} (${r.urgency}). Your ${pretty(d.group)} blood is compatible.`,r.id); });
-  notify('patient',r.patientId,(why==='auto-critical'?'No exact-match donor accepted this critical request within 10 minutes, so ':why==='auto-none'?'No eligible exact-match donor was available, so ':'')+`compatible groups (${compatFor(r).map(pretty).join(', ')}) are now included. ${ids.length} more donor${ids.length===1?'':'s'} alerted.`,r.id); save(); return ids.length; }
-function escalate(){ S.requests.forEach(r=>{ if(r.status==='open'&&r.stage==='exact'&&r.urgency==='critical'&&acceptedIds(r).length===0&&Date.now()-r.created>=10*60000) expandReq(r,'auto-critical'); }); }
+  ids.forEach(id=>{ const d=S.donors.find(x=>x.id===id); alertDonor(r,id,`New ${pretty(r.group)} request at ${r.hospital}, ${r.city} (${r.urgency}). Your ${pretty(d.group)} blood is compatible.`,r.id); });
+  notify('patient',r.patientId,(why==='auto-critical'?'No exact-match donor accepted this request in time, so ':why==='auto-none'?'No eligible exact-match donor was available, so ':'')+`compatible groups (${compatFor(r).map(pretty).join(', ')}) are now included. ${ids.length} more donor${ids.length===1?'':'s'} alerted.`,r.id); save(); return ids.length; }
+function escalate(){ S.requests.forEach(r=>{ if(r.status!=='open') return; const age=Date.now()-r.created, crit=r.urgency==='critical', none=acceptedIds(r).length===0;
+  if(r.stage==='exact'&&none&&age>=(crit?15:30)*60000) expandReq(r,'auto-critical');
+  if(!r.partners&&none&&age>=(crit?30:60)*60000) broadcastToPartners(r,'no-response'); }); }
 const respOf=(r,did)=>r.responses[did]&&r.responses[did].s;
 const acceptedIds=r=>Object.keys(r.responses).filter(id=>['accepted','reported','donated'].includes(r.responses[id].s));
 const donatedCount=r=>Object.values(r.responses).filter(x=>x.s==='donated').length;
@@ -1715,7 +1924,7 @@ function afterChange(r,prev){
 function fillGap(r){ // promote backups / alert new donors until covered
   while(r.status==='open'&&stillNeeded(r)>0&&idsWith(r,'backup').length){ const b=idsWith(r,'backup')[0]; r.responses[b]={s:'accepted',t:Date.now()};
     notify('donor',b,`You are needed now! Please go to ${r.hospital}, ${r.city} to donate for the ${pretty(r.group)} request.`,r.id); notify('patient',r.patientId,`Backup donor ${dName(b)} is now coming.`,r.id); }
-  if(r.status==='open'&&stillNeeded(r)>0){ const nx=ranked(r).filter(x=>isElig(x.d)&&!r.alerted.includes(x.d.id)&&!r.responses[x.d.id]).slice(0,stillNeeded(r)); nx.forEach(x=>{ r.alerted.push(x.d.id); notify('donor',x.d.id,`New ${pretty(r.group)} request matched to you at ${r.hospital}, ${r.city} (${r.urgency}).`,r.id); }); }
+  if(r.status==='open'&&stillNeeded(r)>0){ const nx=ranked(r).filter(x=>isElig(x.d)&&x.km<=50&&!r.alerted.includes(x.d.id)&&!r.responses[x.d.id]).slice(0,stillNeeded(r)); nx.forEach(x=>{ r.alerted.push(x.d.id); alertDonor(r,x.d.id,`New ${pretty(r.group)} request matched to you at ${r.hospital}, ${r.city} (${r.urgency}).`,r.id); }); }
 }
 
 /* ================= maps ================= */
@@ -1805,28 +2014,63 @@ function locate(px){
 }
 
 /* ================= OTP ================= */
-function otpFlow(box,phone,{onOk,onBack}){
-  let code,expires,tries,tick; const iid='otp-'+uid();
-  function send(){ code=String(Math.floor(100000+Math.random()*900000)); expires=Date.now()+5*60000; tries=0; draw(); countdown(30); }
-  function draw(){
-    box.innerHTML=`<div class="otp"><div><h3 class="otp-h"><span class="otp-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 18.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 8.5h6M9 11.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><i>···</i></span>Verify your mobile number</h3><p class="muted small" style="margin-top:4px">We sent a 6-digit code to <b class="mono">+91 ${esc(fmtPhone(phone))}</b>. It expires in 5 minutes.</p></div>
-      <div class="sms" role="note"><div class="small"><b>Demo SMS</b> · real SMS is not connected in this prototype</div><div>Blood Bridge: Your verification code is <span class="code">${code}</span>. Do not share it with anyone.</div></div>
-      <div class="field"><label for="${iid}">Enter OTP</label><input id="${iid}" class="otp-in" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••"></div>
+/* ================= OTP over WhatsApp (default) or SMS: patients, donors and admins =================
+   Live sending: define window.BB_OTP_CONFIG before this script, for example
+     {endpoint:'https://<your-function>/sendOtp', provider:'meta'|'fast2sms'|'twilio'}   -> POST {phone,otp,channel,role,purpose,provider}
+     {send: async ({phone,otp,channel,role,purpose})=>{ ... }}                              -> your own code (e.g. Firebase Phone Auth)
+     add demoPreview:true to keep the on-screen preview while testing a live provider. */
+const OTP_FORM={loginOtp:'loginForm',prOtp:'prForm',drOtp:'drForm'};
+function otpChannelFor(box){ const f=OTP_FORM[box&&box.id]; const r=f&&document.querySelector(`input[name="otpch-${f}"]:checked`); return r&&r.value==='sms'?'sms':'whatsapp'; }
+const chName=c=>c==='sms'?'SMS':'WhatsApp';
+const ph55=p=>{ const d=digits(p); return d.slice(0,5)+'-'+d.slice(5); };
+function otpText(otp,purpose){ return `Blood Bridge Verification: Your 6-digit ${purpose==='signup'?'sign-up':'login'} OTP is ${otp}. Valid for 5 minutes. Do not share.`; }
+function sendOtpMessage(phone,otp,channel,role,purpose){
+  const cfg=window.BB_OTP_CONFIG||null, to='+91'+digits(phone), msg={phone:to,otp:String(otp),channel:channel==='sms'?'sms':'whatsapp',role:role||'user',purpose:purpose||'login',text:otpText(otp,purpose)};
+  if(cfg&&typeof cfg.send==='function'){ return {mode:'live',done:Promise.resolve().then(()=>cfg.send(msg))}; }
+  if(cfg&&cfg.endpoint){ return {mode:'live',done:fetch(cfg.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({provider:cfg.provider||'meta'},msg))}).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); })}; }
+  return {mode:'inapp',done:Promise.resolve()}; }
+function logOtp(e){ try{ e.id=uid(); e.t=Date.now(); (S.otplog=S.otplog||[]).push(e); if(S.otplog.length>500) S.otplog.splice(0,S.otplog.length-500); save(); if(curHash()==='admin'&&isAdmin()) renderOtpLog(); }catch(_){ } }
+function renderOtpLog(){ const tb=$('#otpTable'); if(!tb) return; const o=(S.otplog||[]).slice().reverse(); const c=$('#otpCount'); if(c) c.textContent=o.length+' OTP event'+(o.length===1?'':'s');
+  const cls={sent:'info',resent:'info',verified:'ok','wrong code':'crit',expired:'plan',locked:'crit','send failed':'crit',cancelled:'plan'};
+  tb.innerHTML='<thead><tr><th>Time</th><th>Phone</th><th>Role</th><th>Purpose</th><th>Channel</th><th>Status</th></tr></thead><tbody>'+(o.slice(0,60).map(e=>`<tr><td>${fmtDT(e.t)}</td><td class="mono">+91 ${esc(e.phone)}</td><td>${esc(e.role[0].toUpperCase()+e.role.slice(1))}</td><td>${e.purpose==='signup'?'Sign up':'Log in'}</td><td>${chName(e.channel)}${e.mode==='live'?' <small class="muted">(provider)</small>':' <small class="muted">(in-app)</small>'}</td><td><span class="pill ${cls[e.event]||'info'}">${esc(e.event)}</span></td></tr>`).join('')||'<tr><td colspan="6" class="muted">No OTP events yet.</td></tr>')+'</tbody>'; }
+function otpBanner(o){ let el=$('#otpBanner'); if(!el){ el=document.createElement('div'); el.id='otpBanner'; el.className='otp-banner'; el.setAttribute('role','status'); el.setAttribute('aria-live','assertive'); document.body.appendChild(el); }
+  const wa=o.channel!=='sms', link=wa?`https://wa.me/91${digits(o.phone)}?text=${encodeURIComponent(o.text)}`:`sms:+91${digits(o.phone)}?body=${encodeURIComponent(o.text)}`;
+  el.className='otp-banner '+(wa?'wa':'sm'); clearTimeout(otpBanner.t);
+  el.innerHTML=`<div class="ob-h"><i aria-hidden="true">${wa?'💬':'✉️'}</i><div><b>${wa?'WhatsApp':'Messages'} · Blood Bridge</b><small>${t('now')} · ${t('to')} +91 ${ph55(o.phone)} · ${t('Live OTP')}</small></div><button class="ob-x" type="button" aria-label="${t('Close')}" data-ob="x">✕</button></div>
+   <p class="ob-msg">${esc(o.text).replace(o.otp,`<b class="mono">${o.otp}</b>`)}</p>
+   <div class="ob-a"><button class="btn btn-ok btn-sm" type="button" data-ob="fill">⚡ ${t('Tap to Auto-fill OTP')}</button><a class="btn btn-ghost btn-sm" href="${link}" target="_blank" rel="noopener">${wa?t('Test on WhatsApp'):t('Test by SMS')} ↗</a></div>`;
+  el.querySelector('[data-ob=x]').onclick=()=>el.remove(); el.querySelector('[data-ob=fill]').onclick=()=>{ o.fill(); el.remove(); };
+  otpBanner.t=setTimeout(()=>{ if(el.isConnected) el.remove(); },5*60000); }
+function otpBannerClose(){ const el=$('#otpBanner'); if(el) el.remove(); }
+function otpFlow(box,phone,{onOk,onBack,role,purpose}){
+  role=role||'user'; purpose=purpose||'login';
+  let code,expires,tries,tick,channel=otpChannelFor(box),mode='inapp',exTimer; const iid='otp-'+uid(); const cfg=window.BB_OTP_CONFIG||{};
+  const ev=(event,extra)=>logOtp(Object.assign({phone:maskPh(phone),role,purpose,channel,mode,event},extra||{}));
+  function send(again){ code=String(Math.floor(100000+Math.random()*900000)); expires=Date.now()+5*60000; tries=0;
+    const res=sendOtpMessage(phone,code,channel,role,purpose); mode=res.mode; draw(); countdown(30); ev(again?'resent':'sent');
+    res.done.catch(err=>{ ev('send failed'); const e=box.querySelector('[data-e]'); if(e) e.textContent=`Could not send the OTP on ${chName(channel)} (${err.message}). Try ${channel==='sms'?'WhatsApp':'SMS'}.`; });
+    if(mode==='inapp'||cfg.demoPreview) otpBanner({phone,otp:code,channel,text:otpText(code,purpose),fill:()=>{ const i=box.querySelector('#'+iid); if(i){ i.value=code; i.dispatchEvent(new Event('input')); } }});
+    clearTimeout(exTimer); exTimer=setTimeout(()=>{ if(box.isConnected&&!box.hidden&&code){ ev('expired'); const e=box.querySelector('[data-e]'); if(e) e.textContent='This OTP has expired. Tap Resend.'; } },5*60000+500); }
+  function draw(){ const demo=mode==='inapp'||cfg.demoPreview;
+    box.innerHTML=`<div class="otp"><div><h3 class="otp-h"><span class="otp-ic ${channel==='sms'?'':'wa'}" aria-hidden="true">${channel==='sms'?'✉️':'💬'}</span>${role==='admin'?t('Admin verification'):t('Verify your mobile number')}</h3><p class="muted small" style="margin-top:4px">${t('We sent a 6-digit code on')} <b>${chName(channel)}</b> ${t('to')} <b class="mono">+91 ${esc(ph55(phone))}</b>. ${t('It expires in')} <b class="mono" data-exp>5:00</b>.</p></div>
+      ${demo?`<div class="sms ${channel==='sms'?'':'wa'}" role="note"><div class="small"><b>${chName(channel)} · ${t('message delivered')}</b> · ${t('real-time OTP notification')}</div><div>${esc(otpText(code,purpose)).replace(code,`<span class="code">${code}</span>`)}</div></div>`:''}
+      <div class="field"><label for="${iid}">${t('Enter OTP')}</label><input id="${iid}" class="otp-in" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••"></div>
       <p class="err" data-e></p>
-      <div class="row"><button class="btn btn-primary" type="button" data-v>Verify &amp; continue</button><button class="btn btn-ghost btn-sm" type="button" data-r disabled>Resend OTP</button><button class="btn btn-ghost btn-sm" type="button" data-b>Change details</button></div></div>`;
+      <div class="row"><button class="btn btn-primary" type="button" data-v>${t('Verify & continue')}</button><button class="btn btn-ghost btn-sm" type="button" data-r="whatsapp" disabled>💬 ${t('Resend OTP on WhatsApp')}</button><button class="btn btn-ghost btn-sm" type="button" data-r="sms" disabled>✉️ ${t('Resend by SMS')}</button><button class="btn btn-ghost btn-sm" type="button" data-b>${t('Change details')}</button></div></div>`;
     const inp=box.querySelector('#'+iid); setTimeout(()=>inp.focus(),50);
     inp.addEventListener('input',()=>{ inp.value=inp.value.replace(/\D/g,'').slice(0,6); if(inp.value.length===6) verify(); });
     box.querySelector('[data-v]').addEventListener('click',verify);
-    box.querySelector('[data-r]').addEventListener('click',()=>{ send(); toast('A new OTP has been sent.'); });
-    box.querySelector('[data-b]').addEventListener('click',()=>{ clearInterval(tick); onBack&&onBack(); });
-  }
-  function countdown(n){ clearInterval(tick); const b=box.querySelector('[data-r]'); const t=()=>{ if(!box.contains(b)) return clearInterval(tick); if(n<=0){b.disabled=false;b.textContent='Resend OTP';clearInterval(tick);} else {b.disabled=true;b.textContent=`Resend in ${n}s`;} n--; }; t(); tick=setInterval(t,1000); }
-  function verify(){ const inp=box.querySelector('#'+iid), e=box.querySelector('[data-e]');
-    if(Date.now()>expires){ e.textContent='This OTP has expired. Tap Resend OTP.'; return; }
-    if(tries>=3){ e.textContent='Too many wrong attempts. Tap Resend OTP for a new code.'; return; }
-    if(inp.value!==code){ tries++; e.textContent=inp.value.length<6?'Enter all 6 digits.':`Incorrect OTP. ${3-tries} attempt${3-tries===1?'':'s'} left.`; if(inp.value.length<6) tries--; return; }
-    clearInterval(tick); onOk(); }
-  box.hidden=false; send();
+    box.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{ channel=b.dataset.r; send(true); toast(`${t('A new OTP has been sent on')} ${chName(channel)}.`); }));
+    box.querySelector('[data-b]').addEventListener('click',()=>{ clearInterval(tick); clearTimeout(exTimer); otpBannerClose(); ev('cancelled'); code=null; onBack&&onBack(); }); }
+  function countdown(n){ clearInterval(tick); const bs=[...box.querySelectorAll('[data-r]')], ex=box.querySelector('[data-exp]'); const lab={whatsapp:'💬 '+t('Resend OTP on WhatsApp'),sms:'✉️ '+t('Resend by SMS')};
+    const f=()=>{ if(!bs.length||!box.contains(bs[0])) return clearInterval(tick); const left=Math.max(0,expires-Date.now()); if(ex) ex.textContent=Math.floor(left/60000)+':'+String(Math.floor(left/1000)%60).padStart(2,'0');
+      bs.forEach(b=>{ b.disabled=n>0; b.textContent=n>0?`${lab[b.dataset.r]} (${n}s)`:lab[b.dataset.r]; }); n--; }; f(); tick=setInterval(f,1000); }
+  function verify(){ const inp=box.querySelector('#'+iid), e=box.querySelector('[data-e]'); if(!code) return;
+    if(Date.now()>expires){ e.textContent='This OTP has expired. Tap Resend.'; ev('expired'); return; }
+    if(tries>=3){ e.textContent='Too many wrong attempts. Tap Resend for a new code.'; ev('locked'); return; }
+    if(inp.value!==code){ if(inp.value.length<6){ e.textContent='Enter all 6 digits.'; return; } tries++; e.textContent=`Incorrect OTP. ${3-tries} attempt${3-tries===1?'':'s'} left.`; ev('wrong code'); return; }
+    clearInterval(tick); clearTimeout(exTimer); code=null; otpBannerClose(); ev('verified'); onOk(); }
+  box.hidden=false; send(false);
 }
 function setStep(id,n){ document.querySelectorAll(id+' .stp').forEach((s,i)=>{ s.classList.toggle('on',i===n); s.classList.toggle('done',i<n); }); }
 
@@ -1834,14 +2078,16 @@ function setStep(id,n){ document.querySelectorAll(id+' .stp').forEach((s,i)=>{ s
 const VIEWS={welcome:null,about:null,login:null,'register-patient':null,'register-donor':null,help:null,eligibility:null,admin:null,patient:'patient','find-donors':'patient','new-request':'patient',donor:'donor'};
 function renderNav(v){
   const links=!session?[['welcome','Home'],['about','About us'],['register-patient','Need blood'],['register-donor','Donate'],['eligibility','Eligibility'],['help','Help & First Aid'],['login','Log in / Sign up']]
-    :session.role==='patient'?[['patient','My requests'],['find-donors','Find donors'],['new-request','New request'],['help','Help & Hospitals'],['eligibility','Eligibility'],['about','About us']]
-    :[['donor','Requests for me'],['eligibility','Eligibility'],['help','Help & First Aid'],['about','About us']];
+    :session.role==='patient'?[['welcome','Home'],['patient','My requests'],['new-request','New request'],['help','Help & Hospitals'],['eligibility','Eligibility'],['about','About us']]
+    :[['welcome','Home'],['donor','Requests for me'],['eligibility','Eligibility'],['help','Help & First Aid'],['about','About us']];
+  if(session&&session.role==='admin') links.splice(0,links.length,['admin','Admin dashboard'],['about','About us'],['eligibility','Eligibility'],['help','Help & First Aid']); else if(isAdmin()) links.unshift(['admin','Admin dashboard']);
   $('#nav').innerHTML=links.map(([h,lb])=>`<a href="#${h}"${h===v?' aria-current="page"':''}>${t(lb)}</a>`).join('');
   const u=me(); const mine=u?(S.notes||[]).filter(n=>n.role===session.role&&n.to===u.id):[]; const unread=mine.filter(n=>!n.read).length;
   $('#bellBox').innerHTML=u?`<button class="bell" type="button" data-act="bell" aria-label="Notifications${unread?', '+unread+' unread':''}"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a2.5 2.5 0 0 0 2.5-2.5h-5A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.8V3a1.5 1.5 0 0 0-3 0v1.2A7 7 0 0 0 5 11v5l-2 2v1h18v-1z" fill="currentColor"/></svg>${unread?`<b>${unread>9?'9+':unread}</b>`:''}</button>`:'';
   if(!u) $('#notes').hidden=true;
-  $('#userBox').innerHTML=u?`<span class="userchip"><span class="av">${esc(u.name.trim().slice(0,1).toUpperCase())}</span><span class="nm">${esc(u.name.split(' (')[0])} · ${session.role==='donor'?'Donor':'Patient'}</span><button class="btn btn-ghost btn-sm" type="button" data-act="logout">${t('Log out')}</button></span>`:'';
-  const fab=$('#fab'); fab.hidden=(session&&session.role==='donor')||['register-patient','new-request'].includes(v); fab.href=session?'#new-request':'#register-patient';
+  const ai=adminInfo(); const adminChip=ai?`<span class="userchip admin" title="${esc(ai.name)} · ${esc(ai.team)}"><span class="av">${esc(initials(ai.name))}</span><span class="nm"><b>${esc(ai.name)}</b><small>${esc(ai.team)}</small></span><button class="btn btn-ghost btn-sm" type="button" data-act="logout">${t('Log out')}</button></span>`:'';
+  $('#userBox').innerHTML=session&&session.role==='admin'?adminChip:u?`<span class="userchip"><span class="av">${esc(u.name.trim().slice(0,1).toUpperCase())}</span><span class="nm">${esc(u.name.split(' (')[0])} · ${session.role==='donor'?'Donor':'Patient'}</span><button class="btn btn-ghost btn-sm" type="button" data-act="logout">${t('Log out')}</button></span>${ai?`<span class="userchip admin" title="${esc(ai.name)} · ${esc(ai.team)}"><span class="av">${esc(initials(ai.name))}</span><span class="nm"><b>${esc(ai.name)}</b><small>${esc(ai.team)}</small></span></span>`:''}`:'';
+  const fab=$('#fab'); fab.hidden=(session&&(session.role==='donor'||session.role==='admin'))||['register-patient','new-request'].includes(v); fab.href=session?'#new-request':'#register-patient';
 }
 function fitNav(){ const h=document.querySelector('header.top'), n=$('#nav'); if(!h||!n) return; h.classList.remove('compact'); document.documentElement.style.setProperty('--hdrH',h.getBoundingClientRect().height+'px'); if(innerWidth>=1100 && n.scrollWidth>n.clientWidth+1) h.classList.add('compact'); }
 function navOpen(o){ const h=document.querySelector('header.top'); if(!h) return; h.classList.toggle('open',o); const b=$('#navToggle'); if(b){ b.setAttribute('aria-expanded',String(o)); b.setAttribute('aria-label',o?t('Close menu'):t('Menu')); } if(o) fitNav(); }
@@ -1849,15 +2095,22 @@ document.addEventListener('click',e=>{ if(e.target.closest('#navToggle')){ navOp
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') navOpen(false); });
 window.addEventListener('resize',()=>{ clearTimeout(fitNav.t); fitNav.t=setTimeout(fitNav,80); });
 function route(){
-  let v=curHash(); if(!(v in VIEWS)) v=session?(session.role==='donor'?'donor':'patient'):'welcome';
-  if((v==='welcome'||v==='login')&&session) v=session.role==='donor'?'donor':'patient';
-  const need=VIEWS[v];
+  const home=session?(session.role==='admin'?'admin':session.role==='donor'?'donor':'patient'):'welcome'; let denied=false;
+  let v=curHash(); if(!(v in VIEWS)) v=(session&&session.role==='admin')?'admin':'welcome';
+  if(v==='admin'&&!isAdmin()){ v=home==='admin'?'welcome':home; denied=true; }
+  if(v==='login'&&session) v=session.role==='admin'?'admin':'welcome';
+  let need=VIEWS[v]; if(need&&session&&session.role==='admin'){ v='admin'; need=null; }
   if(need&&(!session||session.role!==need)){ pendingLoginRole=need; v='login'; if(session) toast(`You are logged in as a ${session.role}. Log out to use the ${need} portal.`); }
+  if(!session&&T.step<0&&!GATE_OPEN.includes(v)) v='login';
+  if(v==='find-donors'&&!isAdmin()&&T.step<0){ v=session?(session.role==='donor'?'donor':'patient'):'login'; if(session) toast('Donor details are private. We alert matching donors for you.'); }
+  document.body.classList.toggle('is-admin',isAdmin());
+  document.body.classList.toggle('gated',!session&&T.step<0); if(!session&&T.step<0){ try{ toggleChat(false); }catch(e){} }
   VH=v; if(curHash()!==v) safeHist('replace','#'+v);
   document.querySelectorAll('section.view').forEach(s=>s.hidden=s.dataset.view!==v);
-  navOpen(false); renderNav(v); render(v); fitNav(); renderDemoBar(); window.scrollTo(0,0); setTimeout(showDonorAlert,350);
+  navOpen(false); renderNav(v); render(v); fitNav(); window.scrollTo(0,0); if(denied) toast('Access denied: Admin only'); setTimeout(showDonorAlert,350);
 }
 let pendingLoginRole=null;
+const GATE_OPEN=['login','register-patient','register-donor'];
 function render(v){ v=v||curHash(); try{ escalate(); }catch(e){}
   ({welcome:renderWelcome,login:renderLogin,'register-patient':resetPR,'register-donor':resetDR,patient:renderPatient,'new-request':resetNR,'find-donors':renderFind,donor:renderDonor,admin:renderAdmin,help:renderHelp}[v]||(()=>{}))(); }
 window.addEventListener('hashchange',route);
@@ -1881,7 +2134,7 @@ function renderLive(){
   const pool=ranked(r).slice(0,12);
   $('#lpBlips').innerHTML=pool.map((x,i)=>{ const a=(hash(x.d.id)%360)*Math.PI/180, rr=rad(x.km), cx=(150+Math.cos(a)*rr).toFixed(1), cy=(150+Math.sin(a)*rr).toFixed(1); const ok=isElig(x.d); const hot=top&&x.d.id===top.d.id;
     return `<circle class="blip ${hot?'hot':ok?'':'dim'}" cx="${cx}" cy="${cy}" r="${hot?5.5:4}"/>${hot?`<circle class="blip-ring" cx="${cx}" cy="${cy}" r="5"/>`:''}`; }).join('');
-  $('#lpMatch').innerHTML=top?`<span class="bg lg fill">${pretty(top.d.group)}</span><div><div class="t1">${gname(top.d.group)} · ${esc(top.d.city)} · <span style="white-space:nowrap">${top.km.toFixed(1)} km</span></div><div class="t2">${open[0]?`for ${pretty(r.group)} · ${esc(r.hospital)}`:'Sample match'} · Match ${top.s}</div></div><span class="pill ${r.urgency==='critical'?'crit':'urg'}">${r.urgency==='critical'?t('Critical'):t('Urgent')}</span>`
+  $('#lpMatch').innerHTML=!isAdmin()?`<span class="bg lg fill">${R.length}</span><div><div class="t1">${R.filter(x=>x.km<=25).length} ${t('eligible compatible donors within 25 km')}</div><div class="t2">${open[0]?`${open.length} ${t('open requests')}`:t('Sample match')} · 🔒 ${t('identities hidden')}</div></div><span class="pill info">${t('Private')}</span>`:top?`<span class="bg lg fill">${pretty(top.d.group)}</span><div><div class="t1">${gname(top.d.group)} · ${esc(top.d.city)} · <span style="white-space:nowrap">${top.km.toFixed(1)} km</span></div><div class="t2">${open[0]?`for ${pretty(r.group)} · ${esc(r.hospital)}`:'Sample match'} · Match ${top.s}</div></div><span class="pill ${r.urgency==='critical'?'crit':'urg'}">${r.urgency==='critical'?t('Critical'):t('Urgent')}</span>`
     :`<span class="bg lg">O−</span><div><div class="t1">Searching nearby donors…</div><div class="t2">No eligible match right now</div></div>`;
   const counts=GROUPS.map(g=>({g,n:elig.filter(d=>d.group===g).length})); const mx=Math.max(1,...counts.map(c=>c.n));
   $('#lpBars').innerHTML=counts.map(c=>`<div title="${pretty(c.g)}: ${c.n} eligible"><i class="${c.n?'':'zero'}" style="height:${c.n?Math.round(8+c.n/mx*34):4}px"></i><span>${pretty(c.g)}</span></div>`).join('');
@@ -1890,16 +2143,23 @@ function renderLive(){
 
 /* ================= login ================= */
 function renderLogin(){ $('#loginForm').hidden=false; $('#loginOtp').hidden=true; $('#lgErr').textContent=''; if(pendingLoginRole){ $('#lg-'+pendingLoginRole).checked=true; pendingLoginRole=null; } }
-$('#loginForm').addEventListener('submit',e=>{ e.preventDefault();
+$('#loginForm').addEventListener('submit',async e=>{ e.preventDefault();
   let role=document.querySelector('input[name="lg-role"]:checked').value; const ph=$('#lg-phone').value;
   if(!phoneOk(ph)) return $('#lgErr').textContent='Enter a valid 10-digit Indian mobile number.';
+  const adm=await adminLookup(ph);
+  if(role==='admin'){ if(!adm) return $('#lgErr').textContent='This number is not on the admin list.'; const lk=adminLock(); if(lk) return $('#lgErr').textContent=lk; if(!(await adminPassOk($('#lg-pass').value))){ adminFail(); return $('#lgErr').textContent='Wrong admin passcode.'; } adminLockReset(); $('#lg-pass').value='';
+    $('#lgErr').textContent=''; $('#loginForm').hidden=true;
+    otpFlow($('#loginOtp'),ph,{role:'admin',purpose:'login',onBack:()=>{ $('#loginOtp').hidden=true; $('#loginForm').hidden=false; },
+      onOk:()=>{ setSession({role:'admin',id:'admin-'+adm.phone,phone:adm.phone,name:adm.name,team:adm.team,fs:adm.fs}); toast(`Welcome, ${adm.name} · ${adm.team}`); navTo('#admin'); }});
+    return; }
+  if(adm&&!S.donors.concat(S.patients).some(x=>digits(x.phone)===digits(ph))){ $('#lg-admin').checked=true; $('#lg-passWrap').hidden=false; $('#lg-pass').focus(); return $('#lgErr').textContent='This is an admin number. Enter the admin passcode to continue.'; }
   let list=role==='donor'?S.donors:S.patients; let u=list.find(x=>digits(x.phone)===digits(ph));
   if(!u){ const other=role==='donor'?'patient':'donor', u2=(other==='donor'?S.donors:S.patients).find(x=>digits(x.phone)===digits(ph));
     if(u2){ role=other; u=u2; $('#lg-'+other).checked=true; toast(other==='donor'?'This number belongs to a donor account. Logging you in as a donor.':'This number belongs to a patient account. Logging you in as a patient.'); }
     else { $('#lgErr').textContent=t('No account uses this number yet. Sign up on this page.'); const su=$('#su-phone'); if(su) su.value=digits(ph); const bx=$('#signupBox'); if(bx){ bx.classList.remove('flash'); void bx.offsetWidth; bx.classList.add('flash'); if(innerWidth<820) bx.scrollIntoView({behavior:'smooth',block:'start'}); } return; } }
   $('#loginForm').hidden=true;
-  otpFlow($('#loginOtp'),ph,{onBack:()=>{ $('#loginOtp').hidden=true; $('#loginForm').hidden=false; },
-    onOk:()=>{ setSession({role,id:u.id}); toast(`Welcome back, ${u.name.split(' (')[0]}!`); navTo('#'+(role==='donor'?'donor':'patient')); }});
+  otpFlow($('#loginOtp'),ph,{role,purpose:'login',onBack:()=>{ $('#loginOtp').hidden=true; $('#loginForm').hidden=false; },
+    onOk:()=>{ setSession({role,id:u.id}); toast(`Welcome back, ${u.name.split(' (')[0]}!`); navTo('#welcome'); }});
 });
 
 /* ================= register patient ================= */
@@ -1909,13 +2169,13 @@ $('#prForm').addEventListener('submit',e=>{ e.preventDefault();
   if(!v('#pr-name')) err='Enter your full name.'; else if(!phoneOk(v('#pr-phone'))) err='Enter a valid 10-digit Indian mobile number.'; else if(v('#pr-alt')&&!phoneOk(v('#pr-alt'))) err='The alternate number is not valid.'; else if(S.patients.some(p=>digits(p.phone)===digits(v('#pr-phone')))) err='This number already has a patient account. Log in to raise a new request.'; else if(R.err) err=R.err; else if(!$('#pr-consent').checked) err='Please confirm that the details are true.';
   $('#prErr').textContent=err; if(err) return;
   $('#prForm').hidden=true; setStep('#prSteps',1);
-  otpFlow($('#prOtp'),v('#pr-phone'),{onBack:()=>{ $('#prOtp').hidden=true; $('#prForm').hidden=false; setStep('#prSteps',0); },
+  otpFlow($('#prOtp'),v('#pr-phone'),{role:'patient',purpose:'signup',onBack:()=>{ $('#prOtp').hidden=true; $('#prForm').hidden=false; setStep('#prSteps',0); },
     onOk:()=>{ const p={id:uid(),name:v('#pr-name'),phone:digits(v('#pr-phone')),alt:digits(v('#pr-alt')),relation:v('#pr-relation'),verified:true,created:Date.now()};
       S.patients.push(p); const r=newRequest(p,R.data); setSession({role:'patient',id:p.id}); save();
       $('#prForm').reset(); delete $('#prReq').dataset.m;
       toast(`Mobile verified. ${r.alerted.length} matching donor${r.alerted.length===1?'':'s'} alerted.`); navTo('#patient'); }});
 });
-function newRequest(p,data){ const r={id:uid(),patientId:p.id,...data,contact:p.phone,attendant:p.name,status:'open',created:Date.now(),alerted:[],responses:{},bank:0,stage:'exact'}; autoAlert(r,null,'exact'); r.alerted.forEach(id=>notify('donor',id,`New ${pretty(r.group)} request matched to you at ${r.hospital}, ${r.city} (${r.urgency}). ${r.units} unit${r.units>1?'s':''} needed.`,r.id)); notify('patient',p.id,`Request created. ${r.alerted.length} exact-match ${pretty(r.group)} donor${r.alerted.length===1?'':'s'} alerted first.`,r.id); S.requests.push(r); if(!r.alerted.length) expandReq(r,'auto-none'); save(); return r; }
+function newRequest(p,data){ const r={id:uid(),patientId:p.id,...data,contact:p.phone,attendant:p.name,status:'open',created:Date.now(),alerted:[],responses:{},bank:0,stage:'exact'}; autoAlert(r,null,'exact'); r.alerted.forEach(id=>alertDonor(r,id,`New ${pretty(r.group)} request matched to you at ${r.hospital}, ${r.city} (${r.urgency}). ${r.units} unit${r.units>1?'s':''} needed.`,r.id)); notify('patient',p.id,`Request created. ${r.alerted.length} exact-match ${pretty(r.group)} donor${r.alerted.length===1?'':'s'} alerted first.`,r.id); S.requests.push(r); if(!r.alerted.length) expandReq(r,'auto-none'); if(ranked(r).filter(x=>isElig(x.d)&&x.km<=50).length<r.units) broadcastToPartners(r,'low-donors'); save(); return r; }
 
 /* ================= new request ================= */
 function resetNR(){ mountReq($('#nrReq'),'nr'); $('#nrErr').textContent=''; applySelf('nr'); }
@@ -1929,9 +2189,9 @@ $('#drForm').addEventListener('submit',e=>{ e.preventDefault();
   if(!v('#dr-name')) err='Enter your full name.'; else if(!phoneOk(v('#dr-phone'))) err='Enter a valid 10-digit Indian mobile number.'; else if(S.donors.some(d=>digits(d.phone)===digits(v('#dr-phone')))) err='This number is already registered as a donor. Log in instead.'; else if(!(age>=18&&age<=65)) err='Donors must be 18 to 65 years old.'; else if(!(w>=45)) err='Minimum weight to donate is 45 kg.'; else if(v('#dr-last')&&new Date(v('#dr-last'))>new Date()) err='Last donation date cannot be in the future.'; else if(v('#dr-pin')&&!/^\d{6}$/.test(v('#dr-pin'))) err='PIN code must have 6 digits.'; else if($('#dr-gender').value==='F'&&!$('#dr-h3').checked) err='Please confirm the declaration about pregnancy, delivery and breastfeeding.'; else if(!$('#dr-h1').checked||!$('#dr-h2').checked) err='Please confirm both health declarations. If one does not apply to you, check the Eligibility page first.'; else if(!$('#dr-consent').checked) err='Please agree to share your contact after you accept a request.';
   $('#drErr').textContent=err; if(err) return;
   $('#drForm').hidden=true; setStep('#drSteps',1);
-  otpFlow($('#drOtp'),v('#dr-phone'),{onBack:()=>{ $('#drOtp').hidden=true; $('#drForm').hidden=false; setStep('#drSteps',0); },
-    onOk:()=>{ const L=LOC.dr; const d={id:uid(),name:v('#dr-name'),phone:digits(v('#dr-phone')),email:v('#dr-email'),age,gender:v('#dr-gender'),group:v('#dr-group'),weight:w,city:v('#dr-city'),area:v('#dr-area'),pin:v('#dr-pin'),lat:L?L[0]:null,lng:L?L[1]:null,last:v('#dr-last'),available:$('#dr-avail').checked,verified:true,donations:v('#dr-last')?[{date:v('#dr-last'),hospital:'Earlier donation'}]:[],created:Date.now()};
-      S.donors.push(d); setSession({role:'donor',id:d.id}); save(); $('#drForm').reset(); $('#dr-avail').checked=true; LOC.dr=null; genderToggle('#dr-gender','#drForm','#dr-gaphint');
+  otpFlow($('#drOtp'),v('#dr-phone'),{role:'donor',purpose:'signup',onBack:()=>{ $('#drOtp').hidden=true; $('#drForm').hidden=false; setStep('#drSteps',0); },
+    onOk:()=>{ const L=LOC.dr; const d={id:uid(),name:v('#dr-name'),phone:digits(v('#dr-phone')),email:v('#dr-email'),age,gender:v('#dr-gender'),group:v('#dr-group'),weight:w,city:v('#dr-city'),area:v('#dr-area'),pin:v('#dr-pin'),lat:L?L[0]:null,lng:L?L[1]:null,last:v('#dr-last'),available:$('#dr-avail').checked,smsOptIn:$('#dr-sms').checked,whatsappOptIn:$('#dr-wa').checked,verified:true,donations:v('#dr-last')?[{date:v('#dr-last'),hospital:'Earlier donation'}]:[],created:Date.now()};
+      S.donors.push(d); setSession({role:'donor',id:d.id}); save(); $('#drForm').reset(); $('#dr-avail').checked=true; $('#dr-sms').checked=true; $('#dr-wa').checked=true; LOC.dr=null; genderToggle('#dr-gender','#drForm','#dr-gaphint');
       toast(`Thank you, ${d.name}! You're registered as a ${pretty(d.group)} donor.`); navTo('#donor'); }});
 });
 
@@ -1951,7 +2211,7 @@ function renderPatient(){
   $('#ptPast').innerHTML=past.map(r=>`<div class="card"><span class="bg">${pretty(r.group)}</span><div><h3>${esc(r.units)} unit${r.units>1?'s':''} · ${esc(r.hospital)}</h3><div class="meta"><span>${esc(REASONS[r.reason])}</span><span>${fmtDT(r.created)}</span><span>${donatedCount(r)} donated</span></div></div><div class="actions">${r.status==='fulfilled'?'<span class="pill ok">Fulfilled</span>':'<span class="pill off">Cancelled</span>'}</div></div>`).join('');
 }
 function reqPanel(r){
-  const acc=[...acceptedIds(r),...idsWith(r,'backup')].map(id=>S.donors.find(d=>d.id===id)).filter(Boolean);
+  const acc=[...acceptedIds(r),...(isAdmin()?idsWith(r,'backup'):[])].map(id=>S.donors.find(d=>d.id===id)).filter(Boolean);
   const list=ranked(r).filter(x=>!r.responses[x.d.id]).slice(0,8); const cov=isCovered(r);
   const cls=r.urgency==='critical'?'crit':r.urgency==='urgent'?'urg':'';
   return `<div class="panel ${cls}" style="${cls?`border-left:4px solid var(--${cls==='crit'?'accent':'warn'})`:''}">
@@ -1960,7 +2220,7 @@ function reqPanel(r){
       <p class="muted small" style="margin-top:4px">Raised ${ago(r.created)} · Needed by ${r.requiredBy?fmtDT(r.requiredBy):'as soon as possible'}</p>
       <dl class="kv"><div><dt>Reason</dt><dd>${esc(REASONS[r.reason])}${r.reasonDetail?' · '+esc(r.reasonDetail):''}</dd></div><div><dt>Hospital</dt><dd>${esc(r.hospital)}, ${esc(r.city)}</dd></div><div><dt>Donor groups alerted</dt><dd class="mono">${r.stage==='exact'?pretty(r.group)+' only':compatFor(r).map(pretty).join(' ')}</dd></div><div><dt>Donors</dt><dd>${r.alerted.length} alerted · ${idsWith(r,'backup').length} backup</dd></div></dl>${unitMeter(r)}</div></div>
     ${tracker(r)}
-    ${stageRow(r)}${bankCard(r)}
+    ${stageRow(r)}${partnerCard(r)}${bankCard(r)}
     <div class="maprow">
       <a class="btn btn-primary btn-sm" href="${mapsDir(dest(r))}" target="_blank" rel="noopener">${IC_MAP} ${t('Navigate to hospital')}</a>
       <a class="btn btn-ghost btn-sm" href="${mapsNear('blood bank',r)}" target="_blank" rel="noopener">${t('Nearby blood banks')}</a>
@@ -1973,11 +2233,11 @@ function reqPanel(r){
     </div>
     <div style="margin-top:18px;display:grid;gap:12px">
       ${r.flagged?'<div class="banner warn">A donor reported this request. An admin is checking the hospital slip. New alerts are paused until then.</div>':''}${cov?'<div class="banner ok">✓ Enough donors are confirmed for this request. New donors are told no more blood is needed. If someone cancels, a backup donor is called automatically.</div>':''}
-      ${r.alerted.length?`<div class="row" style="justify-content:space-between;gap:8px"><span class="pill info">📩 ${r.alerted.length===1?t('Alert sent to 1 matching donor'):`Alert sent to ${r.alerted.length} matching donors`}</span><button class="btn btn-ghost btn-sm" type="button" data-act="alert-msgs" data-id="${r.id}">${t('See alert messages')}</button></div>`:''}
+      ${r.alerted.length?`<div class="row" style="justify-content:space-between;gap:8px"><span class="pill info">📩 ${r.alerted.length===1?t('Alert sent to 1 matching donor'):`Alert sent to ${r.alerted.length} matching donors`}</span>${isAdmin()?`<button class="btn btn-ghost btn-sm" type="button" data-act="alert-msgs" data-id="${r.id}">${t('See alert messages')}</button>`:''}</div>`:''}
       <h3>${t('Donors coming')}</h3>
       ${acc.length?acc.map(d=>{ const st=respOf(r,d.id); return `<div class="card acc"><span class="bg lg">${pretty(d.group)}</span><div><div class="row" style="gap:8px"><h3>${esc(d.name)}</h3>${st==='donated'?'<span class="pill ok">Unit received</span>':st==='reported'?(r.proofs&&r.proofs[d.id]?'<span class="pill ok">Proof uploaded · AI check passed</span><span class="pill wait">Please confirm</span>':'<span class="pill wait">Donor says donated · please confirm</span>'):st==='backup'?'<span class="pill plan">Backup donor</span>':`<span class="pill info">On the way</span><span class="eta"><i aria-hidden="true"></i>Donor en route · ETA about ${etaMin(d,r)} min</span>`}</div><div class="meta"><span class="mono">${fmtPhone(d.phone)}</span><span>${esc(d.city)}${d.area?' · '+esc(d.area):''}</span><span>${km(coords(d),coords(r)).toFixed(1)} km away</span><span>Accepted ${ago(r.responses[d.id].t)}</span></div></div><div class="actions"><a class="btn btn-primary btn-sm" href="tel:${d.phone}">Call</a><button class="btn btn-ghost btn-sm" type="button" data-copy="${d.phone}">Copy number</button>${r.proofs&&r.proofs[d.id]?`<button class="btn btn-ghost btn-sm" type="button" data-act="proof-view" data-id="${r.id}" data-d="${d.id}">${t('View proof')}</button>`:''}${st==='accepted'||st==='reported'?`<button class="btn btn-ok btn-sm" type="button" data-act="mark-donated" data-id="${r.id}" data-d="${d.id}">${t('Mark unit received')}</button><button class="btn btn-ghost btn-sm" type="button" data-act="report-donor" data-id="${r.id}" data-d="${d.id}">${t('Report a problem')}</button>`:''}</div></div>`; }).join(''):'<p class="muted small">No donor has accepted yet. Alerted donors see your request on their dashboard.</p>'}
-      <div class="row" style="justify-content:space-between"><h3>${t('Smart Match recommendations')}</h3><button class="btn btn-ghost btn-sm" type="button" data-act="alert-more" data-id="${r.id}" ${cov?'disabled':''}>${cov?t('No more donors needed'):t('Alert next 5 donors')}</button></div>
-      ${list.length?list.map(x=>donorCard(x.d,{km:x.km,score:x.s,r})).join(''):'<p class="muted small">No more compatible donors registered. Use the blood bank search above.</p>'}
+      <div class="row" style="justify-content:space-between"><h3>${isAdmin()?t('Smart Match recommendations'):t('Matching donors')}</h3><button class="btn btn-ghost btn-sm" type="button" data-act="alert-more" data-id="${r.id}" ${cov?'disabled':''}>${cov?t('No more donors needed'):t('Alert next 5 donors')}</button></div>
+      ${isAdmin()?(list.length?list.map(x=>donorCard(x.d,{km:x.km,score:x.s,r})).join(''):'<p class="muted small">No more compatible donors registered. Use the blood bank search above.</p>'):anonMatch(r,list)}
     </div>
   </div>`;
 }
@@ -2031,10 +2291,49 @@ function act(label,href,ext){ return {label,href,ext}; }
 const TE_KW=[[/అంబులెన్స్|అత్యవసర నంబర్/g,' ambulance '],[/టాటూ|కుట్టించ/g,' tattoo '],[/అర్హ|ఇవ్వొచ్చా|ఇవ్వవచ్చా|దానం చేయవచ్చా/g,' eligible '],[/దాత/g,' donor '],[/బ్లడ్ బ్యాంక్|రక్తనిధి/g,' blood bank near '],[/ఆసుపత్రి|హాస్పిటల్/g,' hospital near '],[/మద్యం|మందు తాగ/g,' alcohol '],[/పీరియడ్|నెలసరి/g,' period '],[/గర్భ|ప్రసవ/g,' pregnant '],[/జ్వరం|జలుబు/g,' fever '],[/షుగర్|మధుమేహ|డయాబెట/g,' diabetes '],[/బీపీ|రక్తపోటు/g,' bp '],[/రక్తస్రావ|గాయం/g,' bleeding '],[/శ్వాస|సీపీఆర్/g,' cpr '],[/కాలిన/g,' burn '],[/నమస్కారం|హలో|హాయ్/g,' hi '],[/ధన్యవాద|థాంక్స్/g,' thanks '],[/స్థితి|ఏమైంది/g,' status of my request '],[/నమోదు|రిజిస్టర్/g,' register '],[/ఏమి తినాలి|ఆహారం/g,' what to eat '],[/ప్లేట్‌లెట్|ప్లాస్మా/g,' platelet '],[/సురక్షిత|నొప్పి/g,' safe '],[/తలసీమియా/g,' thalassemia '],[/పొగ/g,' smoke '],[/ఎంత సమయం|ఎంతసేపు/g,' how long '],[/ఎవరు ఇవ్వొచ్చు|ఎవరికి/g,' who can donate to '],[/వెతక|కావాలి/g,' find donor '],[/పాజిటివ్/g,'+'],[/నెగటివ్/g,'-']];
 const HI_KW=[[/एम्बुलेंस|आपातकाल/g,' ambulance '],[/टैटू/g,' tattoo '],[/योग्य|दे सकता|दे सकती/g,' eligible '],[/दाता|डोनर/g,' donor '],[/ब्लड बैंक|रक्त बैंक/g,' blood bank near '],[/अस्पताल/g,' hospital near '],[/शराब/g,' alcohol '],[/गर्भ/g,' pregnant '],[/बुखार/g,' fever '],[/शुगर|डायबिटीज़|मधुमेह/g,' diabetes '],[/खून बह|चोट/g,' bleeding '],[/सांस|CPR/g,' cpr '],[/जल गया|जलना/g,' burn '],[/नमस्ते|हैलो/g,' hi '],[/धन्यवाद|शुक्रिया/g,' thanks '],[/रजिस्टर/g,' register '],[/क्या खाएं|खाना/g,' what to eat '],[/प्लेटलेट|प्लाज़्मा/g,' platelet '],[/खून चाहिए|रक्त चाहिए/g,' how do i request blood '],[/पॉज़िटिव/g,'+'],[/नेगेटिव/g,'-']];
 function teToEn(q){ let x=q; TE_KW.forEach(([re,en])=>{ x=x.replace(re,en); }); HI_KW.forEach(([re,en])=>{ x=x.replace(re,en); }); ML_KW.forEach(([re,en])=>{ x=x.replace(re,en); }); return x; }
+/* ---- structured action output: parse the JSON block and turn it into website buttons ---- */
+const BBUI={};
+function uiAct(label,j){ const k='u'+uid(); BBUI[k]=j; return {label,act:'bb-ui',id:k}; }
+const cleanBotText=x=>String(x||'').replace(/```(?:json)?[\s\S]*$/i,'').replace(/\{\s*"intent"[\s\S]*$/,'').trim();
+function splitAction(text){ const m=String(text).match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```\s*$/i)||String(text).match(/(\{\s*"intent"[\s\S]*\})\s*$/); if(!m) return {text:cleanBotText(text),j:null};
+  let j=null; try{ j=JSON.parse(m[1]); }catch(e){} return {text:cleanBotText(text),j}; }
+function actsFromJson(j){ if(!j||typeof j!=='object') return []; const a=[]; const ui=String(j.ui_action||'NONE').toUpperCase(), it=String(j.intent||'').toUpperCase();
+  if(it==='EMERGENCY'||ui==='NAVIGATE_SOS'){ a.push({label:'Call 108',href:'tel:108'},{label:'Call 112',href:'tel:112'}); }
+  if(ui==='OPEN_PATIENT_FORM') a.push(uiAct('Open blood request form',j));
+  else if(ui==='OPEN_DONOR_FORM') a.push(uiAct('Open donor form',j));
+  else if(ui==='OPEN_ELIGIBILITY') a.push(uiAct('Check eligibility',j));
+  else if(ui==='NAVIGATE_SOS') a.push(uiAct('Help & first aid',j));
+  return a; }
+async function runUi(j){ if(!j) return; const ui=String(j.ui_action||'').toUpperCase(), pf=j.prefill||{};
+  if(ui==='NAVIGATE_SOS'){ await go('help'); return; }
+  if(ui==='OPEN_ELIGIBILITY'){ await go('eligibility'); return; }
+  const donor=ui==='OPEN_DONOR_FORM';
+  if(donor) await go('register-donor'); else if(ui==='OPEN_PATIENT_FORM') await go(session&&session.role==='patient'?'new-request':'register-patient'); else return;
+  await wait(250); const px=donor?'dr':pxNR(); const set=(id,v)=>{ const el=$('#'+id); if(!el||v==null||v==='') return false; if(el.tagName==='SELECT'&&![...el.options].some(o=>o.value===v)) return false; el.value=v; el.dispatchEvent(new Event('change',{bubbles:true})); el.dispatchEvent(new Event('input',{bubbles:true})); return true; };
+  const g=pf.blood_group?parseGroup(String(pf.blood_group).replace('−','-')):null; if(g) set(px+'-group',g);
+  if(!donor){ const u=String(pf.urgency||'').toLowerCase(); if(['critical','urgent','planned'].includes(u)) set(px+'-urgency',u);
+    if(pf.units) set(px+'-units',String(pf.units));
+    const w=pf.city_or_hospital?String(pf.city_or_hospital):''; if(w){ const c=CITIES.find(x=>w.toLowerCase().includes(x.toLowerCase())); if(c) set(px+'-city',c); const h=w.replace(new RegExp(c||'$^','i'),'').replace(/[,\s]+$/,'').trim(); if(h) set(px+'-hospital',h); } }
+  const f=$('#'+px+'-group'); if(f) f.scrollIntoView({block:'center'}); }
+document.addEventListener('click',e=>{ const b=e.target.closest('#chatBody [data-act="bb-ui"]'); if(!b) return; e.preventDefault(); e.stopPropagation(); const j=BBUI[b.dataset.id]; if(window.innerWidth<900) toggleChat(false); runUi(j); },true);
+/* ---- offline triage mirrors the three tiers when no AI is connected ---- */
+function botTriage(t,q,g,city){ const out=(text,acts,j)=>({text,acts:[...(acts||[]),...actsFromJson(j)]});
+  const emerg=/(heavy|severe|too much|a lot of)\s+bleed|bleeding (a lot|heavily|won'?t stop)|accident|unconscious|not breathing|collapsed|seizure|chest pain|head injury|(pregnan|labou?r|delivery).{0,25}(bleed|pain|complication|emergency)|\bicu\b|operation theat|surgery.{0,20}(now|today|tonight|hours?)|(blood|unit).{0,25}(immediately|right now|within (an? )?hours?)|life.?threatening/.test(t);
+  const units=(t.match(/(\d{1,2})\s*(units?|bags?|bottles?|pints?)/)||[])[1]||null;
+  const urg=emerg||/critical|immediately|right now|asap/.test(t)?'CRITICAL':/urgent|today|tonight|tomorrow/.test(t)?'URGENT':/planned|next (week|month)|scheduled|thalass/.test(t)?'PLANNED':null;
+  const hosp=(q.match(/\b(?:at|in|@)\s+([A-Za-z][A-Za-z .'-]{2,40}?)(?=\s*(?:,|\.|$|\b(?:urgent|today|tonight|need|for|critical|planned)\b))/i)||[])[1]||null; const place=hosp||city||null;
+  const wantsBlood=/(need|needs|require|required|want|arrange|looking for|get)\b.{0,25}blood|blood.{0,15}(needed|required|urgently)|\b[abo]b?[+\-−]\s*(blood)?\b.*\bneeded?\b/.test(t)&&!/donat|eligib/.test(t);
+  if(emerg){ const miss=[!g&&'blood group',!units&&'units',!place&&'hospital or city'].filter(Boolean);
+    return out('Call 108 (ambulance) or 112 now.\n1. Press firmly on the wound with a clean cloth.\n2. Raise the injured limb and keep pressing.\n3. Keep the person warm and lying down.\n'+(miss.length?`Need blood? Tell me the ${miss.join(', ')}.`:'I opened the blood request for you.'),[],{intent:'EMERGENCY',prefill:{blood_group:g,units,city_or_hospital:place,urgency:'CRITICAL'},ui_action:'OPEN_PATIENT_FORM'}); }
+  if(wantsBlood){ const miss=[!g&&'blood group',!units&&'number of units',!place&&'hospital or city',!urg&&'urgency (critical, urgent or planned)'].filter(Boolean);
+    if(miss.length) return out(`Please tell me the ${miss.join(', ')}.`);
+    return out(`Got it: ${pretty(g)}, ${units} unit${units>1?'s':''}, ${place}, ${urg.toLowerCase()}. Tap below to send the request.`,[],{intent:'FIND_BLOOD',prefill:{blood_group:g,units,city_or_hospital:place,urgency:urg},ui_action:'OPEN_PATIENT_FORM'}); }
+  return null; }
 function botLocal(q){ q=teToEn(q);
   const t=q.toLowerCase(), u=me(), role=session&&session.role, g=parseGroup(q), city=CITIES.find(c=>t.includes(c.toLowerCase()))||(u&&u.city)||null;
   const myReq=role==='patient'?S.requests.filter(r=>r.patientId===u.id&&r.status==='open').sort((a,b)=>b.created-a.created)[0]:null;
   const out=(text,acts)=>({text,acts:acts||[]});
+  const tri=botTriage(t,q,g,city); if(tri) return tri;
   const pre=botPre(t,u,role); if(pre) return pre;
   if(/^\s*(hi|hello|hey|namaste|namaskaram|good (morning|evening|afternoon))\b/.test(t)) return out(`Hello${u?' '+firstName(u.name):''}! I'm the Blood Bridge assistant. I can find donors, explain blood group compatibility, check donation eligibility, share emergency numbers and open Google Maps for blood banks and hospitals. What do you need?`);
   if(/thank|thanks|dhanyavad/.test(t)) return out('You are welcome. Wishing the patient a quick recovery. Ask me anytime.');
@@ -2051,7 +2350,8 @@ function botLocal(q){ q=teToEn(q);
     const tgt=myReq?{...myReq,group:g}:(city?{group:g,city}:{group:g,...HOME()});
     const L=ranked(tgt).filter(x=>isElig(x.d)).slice(0,5);
     if(!L.length) return out(`I couldn't find an eligible donor who can give to ${pretty(g)} right now. Call nearby blood banks and alert more donors.`,[act('Blood banks',mapsNear('blood bank',tgt),1)]);
-    const show=role==='patient';
+    if(!isAdmin()){ const all=ranked(tgt).filter(x=>isElig(x.d)); return out(`${all.length} eligible donor${all.length===1?'':'s'} can give to ${pretty(g)} (accepts ${RECEIVE[g].map(pretty).join(', ')}); ${all.filter(x=>x.km<=25).length} within 25 km. Donor names and numbers are private: raise a request and we alert them for you. You see a donor's details once they accept.`,[act('New blood request',role==='patient'?'#new-request':'#register-patient')]); }
+    const show=isAdmin();
     return out(`Top donors who can give to ${pretty(g)} (accepts ${RECEIVE[g].map(pretty).join(', ')}):\n`+L.map((x,i)=>`${i+1}. ${x.d.name} – ${pretty(x.d.group)}, ${x.d.city}, ${x.km.toFixed(1)} km${show?' · '+fmtPhone(x.d.phone):''}`).join('\n')+(show?'':'\nLog in as a patient to see their phone numbers.'),[show?act('Open Find donors','#find-donors'):act('Register as patient','#register-patient')]);
   }
   if(/universal/.test(t)) return out('O− is the universal red-cell donor: anyone can receive O− red cells. AB+ is the universal recipient: AB+ patients can receive red cells from every group. For plasma it is the reverse: AB plasma suits everyone.');
@@ -2078,15 +2378,30 @@ function botLocal(q){ q=teToEn(q);
   const more=botMore(t,u,role); if(more) return more;
   return {text:"I can help with: finding donors (try \"Find B+ donors in Kakinada\"), blood group compatibility, donation eligibility, emergency numbers, first aid, and nearby blood banks or hospitals on Google Maps. What would you like to know?",acts:[],tiles:true};
 }
+const BB_PROMPT=`You are **Blood Bridge AI**, a fast, calm, life-saving emergency and blood donation assistant built for India.
+CORE RULES
+- Safety first: you are NOT a doctor. Never diagnose or prescribe. If the user describes active heavy bleeding, trauma, unconsciousness, pregnancy complications or any life-threatening emergency, FIRST tell them to call 108 (Ambulance) or 112 (National Emergency), then give 3 crisp first-aid steps (for example firm direct pressure with a clean cloth, elevate the limb, keep the patient warm).
+- Speed and brevity: users are stressed. Keep replies under 60 words, short sentences or bullets. Put the action or answer in the first sentence.
+- Language mirroring: reply in the exact language and script the user writes in (English, Hindi, Telugu, Tamil and so on). Keep medical terms simple.
+THREE-TIER INTENT TRIAGE (classify every message)
+1. EMERGENCY / SOS: active bleeding, accident, ICU or surgery blood needed within hours. Output the 108 / 112 call prompt, first aid, and trigger the donor-request form.
+2. FIND BLOOD / DONATE (slot filling): extract blood_group (A+, A-, B+, B-, AB+, AB-, O+, O-), units, hospital_or_city and urgency (Critical / Urgent / Planned). If a critical slot is missing, ask ONLY for the missing fields in one short question instead of sending the user to a blank form.
+3. ELIGIBILITY and EDUCATION: check donor eligibility interactively per NBTC guidelines (age 18-65, weight at least 45 kg, haemoglobin at least 12.5 g/dL, 90-day gap since the last whole-blood donation for men and 120 days for women, no recent fever or infection, no tattoo in the last 6 months). Answer blood compatibility accurately (O- is the universal red-cell donor, AB+ the universal recipient).
+STRUCTURED ACTION OUTPUT
+Whenever a UI route or form pre-fill applies, end the reply with a JSON block so the website can fill forms or trigger buttons:
+\`\`\`json
+{"intent":"EMERGENCY | FIND_BLOOD | DONATE | ELIGIBILITY | VERIFY_CERT","prefill":{"blood_group":"O-","city_or_hospital":null,"urgency":"CRITICAL"},"ui_action":"NAVIGATE_SOS | OPEN_PATIENT_FORM | OPEN_DONOR_FORM | OPEN_ELIGIBILITY | NONE"}
+\`\`\`
+Use null for unknown values. Plain text only otherwise, no markdown headings or tables.`;
 function contextFor(){
   const u=me(), role=session?session.role:'visitor';
-  const donors=S.donors.slice(0,40).map(d=>`${d.name}|${d.group}|${d.city}${d.area?'/'+d.area:''}|${waitDays(d)?'eligible in '+waitDays(d)+'d':'eligible'}|${d.available?'available':'unavailable'}${role==='patient'?'|'+fmtPhone(d.phone):''}`).join('\n');
-  const reqs=S.requests.filter(r=>r.status==='open').map(r=>`${r.group} x${r.units} ${COMPONENTS[r.component]}|${REASONS[r.reason]}|${r.hospital}, ${r.city}|${r.urgency}|accepted ${acceptedIds(r).length}`).join('\n');
+  const donors=!isAdmin()?`(private: ${S.donors.filter(isElig).length} eligible donors registered. Never reveal donor names, phone numbers or other patients' requests to this user.)`:S.donors.slice(0,40).map(d=>`${d.name}|${d.group}|${d.city}${d.area?'/'+d.area:''}|${waitDays(d)?'eligible in '+waitDays(d)+'d':'eligible'}|${d.available?'available':'unavailable'}${role==='patient'?'|'+fmtPhone(d.phone):''}`).join('\n');
+  const reqs=S.requests.filter(r=>r.status==='open'&&(isAdmin()||(role==='donor'&&u&&compatFor(r).includes(u.group))||(role==='patient'&&u&&r.patientId===u.id))).map(r=>`${r.group} x${r.units} ${COMPONENTS[r.component]}|${REASONS[r.reason]}|${r.hospital}, ${r.city}|${r.urgency}|accepted ${acceptedIds(r).length}`).join('\n');
   let mine='';
   if(role==='patient'){ const m=S.requests.filter(r=>r.patientId===u.id&&r.status==='open'); mine='Viewer\'s own open requests:\n'+(m.map(r=>`${r.group} x${r.units} at ${r.hospital}, ${r.city}; alerted ${r.alerted.length}, accepted ${acceptedIds(r).length}, donated ${donatedCount(r)}`).join('\n')||'none'); }
   if(role==='donor') mine=`Viewer is donor ${u.name}, group ${u.group}, city ${u.city}, last donated ${u.last||'never'}, ${waitDays(u)?'can donate again on '+fmtDate(eligibleOn(u)):'eligible now'}, ${u.available?'available':'unavailable'}.`;
-  return `You are "Blood Bridge Assistant", the helpful chatbot inside the Blood Bridge website (Smart Emergency & Blood Donor network for Kakinada district, Andhra Pradesh, India). Today is ${new Date().toDateString()}.
-Rules: Reply in ${LANG_INFO[CHATLANG].en} (the language the user picked), even if they type in another language. Be warm, short (under 120 words) and practical. Plain text only, no markdown headings or tables; simple numbered or "•" lists are fine. Never diagnose or prescribe; for medical decisions say the blood bank doctor decides. For life-threatening situations always tell them to call 108 (ambulance) or 112 first. Use Indian blood donation rules: age 18–65, weight ≥45 kg, Hb ≥12.5 g/dL, 90-day gap for men and 120-day for women, tattoo/major surgery 12-month deferral, no alcohol in 24 h. Red-cell compatibility: O− gives to all; AB+ receives from all.
+  return `${BB_PROMPT}
+Today is ${new Date().toDateString()}. You run inside the Blood Bridge website (Kakinada district, Andhra Pradesh, India).
 Website features you can point to: Register as patient (OTP, reason, location), Register as donor, Find donors (patients only, shows full donor details), New blood request, Requests for me (donors), Eligibility checker, Help & First Aid (helplines, Google Maps for blood banks and hospitals). Only mention donors listed below; do not invent people or phone numbers.
 Viewer role: ${role}${u?', name '+firstName(u.name):''}.
 ${mine}
@@ -2103,14 +2418,15 @@ function renderChips(){ $('#chatChips').innerHTML=chipsFor().map(c=>`<button cla
 function toggleChat(open){ const c=$('#chat'); open=open??c.hidden; c.hidden=!open; $('#chatFab').hidden=open; $('#chatFab').setAttribute('aria-expanded',String(open));
   if(open&&!chatInit){ chatInit=true; const u=me(); addMsg('bot',`Hi${u?' '+firstName(u.name):''}! I'm the Blood Bridge assistant. Ask me about donors, blood group compatibility, eligibility, first aid or the nearest blood bank.`); const gm=addMsg('bot','Hi! I am your helper. What do you want? Tap a picture.'); gm.insertAdjacentHTML('beforeend',guideTiles('chat-guide')); trTiles(gm); addMsg('bot','Tap 🎤 to talk to me. Pick your language with 🌐 above.'); $('#chatBody').scrollTop=1e9; }
   if(open){ renderChips(); setTimeout(()=>$('#chatIn').focus(),50); } }
+function chipsOpen(o){ const c=$('#chat'), b=$('#chatSugg'); if(!c) return; c.classList.toggle('chips-off',!o); if(b){ b.setAttribute('aria-expanded',String(o)); const a=b.querySelector('[aria-hidden]'); if(a) a.textContent=o?' ▾':' ▸'; } }
 async function ask(q){
-  q=q.trim(); if(!q||chatBusy) return; addMsg('me',q); $('#chatIn').value='';
+  q=q.trim(); if(!q||chatBusy) return; if(!ask.collapsed){ ask.collapsed=true; chipsOpen(false); } addMsg('me',q); $('#chatIn').value='';
   const local=botLocal(q);
   if(!chatAI){ setTimeout(()=>{ const m=addMsg('bot',local.text,local.acts); if(local.tiles){ m.insertAdjacentHTML('beforeend',guideTiles('chat-guide')); trTiles(m); } chatSpeak(m.querySelector('.mtxt').textContent); $('#chatBody').scrollTop=1e9; },250); CHAT.push({role:'user',content:q},{role:'assistant',content:local.text}); return; }
   chatBusy=true; const m=addMsg('bot','Thinking…'); m.classList.add('typing'); chatCtl=new AbortController();
   CHAT.push({role:'user',content:q}); const turns=[{role:'user',content:contextFor()},...CHAT.slice(-10)];
-  try{ const {text}=await chatAI(turns,{modelTier:'quick',cache:false,signal:chatCtl.signal,onText:({text})=>{ m.classList.remove('typing'); m.textContent=text; $('#chatBody').scrollTop=1e9; }});
-    m.remove(); addMsg('bot',text,local.acts); CHAT.push({role:'assistant',content:text}); }
+  try{ const {text}=await chatAI(turns,{modelTier:'quick',cache:false,signal:chatCtl.signal,onText:({text})=>{ m.classList.remove('typing'); m.textContent=cleanBotText(text); $('#chatBody').scrollTop=1e9; }});
+    m.remove(); const sp=splitAction(text), ja=actsFromJson(sp.j); addMsg('bot',sp.text||text,ja.length?ja:local.acts); CHAT.push({role:'assistant',content:sp.text||text}); }
   catch(e){ m.remove(); if(['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(e.code)){ chatAI=null; $('#chatMode').textContent='Smart assistant (offline mode)'; }
     addMsg('bot',local.text,local.acts); CHAT.push({role:'assistant',content:local.text}); }
   finally{ chatBusy=false; }
@@ -2160,10 +2476,9 @@ const GFLOWS={
    {t:'Is there blood? Press on the cut with a clean cloth.'},
    {t:'Ask a grown-up to stay with the person.'},
    {t:'Does the hospital need blood? Tap I need blood.',next:'need',end:true}]},
- find:{icon:'🔍',label:'Find a donor',start:()=>go('find-donors'),steps:[
-   {t:'I opened the donor list.'},
-   {t:'Pick the blood group the patient needs.',el:()=>pick('#fd-group')},
-   {t:'Tap Call to talk to a donor.',el:()=>pick('#fdList a[href^="tel:"]','#fdList .btn','#fdList'),end:true}]},
+ find:{icon:'🔍',label:'Find a donor',start:()=>go('new-request'),steps:[
+   {t:'Donor details are private. Raise a request and we alert matching donors for you.'},
+   {t:'Fill the form and tap the big button. You see a donor\'s name and number once they accept.',el:()=>pick('#nrForm button[type=submit]','#nrForm','#loginForm'),end:true}]},
  hosp:{icon:'🏥',label:'Find a hospital',start:()=>{},steps:[
    {t:'Tap the button to see hospitals on the map.',acts:[['🗺️','Open map',()=>mapsNear('hospital',me()||{city:'Kakinada'})]],end:true}]}
 };
@@ -2212,7 +2527,8 @@ function loadSlip(px,file){ if(!file) return; if(!/^image\//.test(file.type)){ t
   const fr=new FileReader(); fr.onload=()=>{ const img=new Image(); img.onload=()=>{ const sc=Math.min(1,600/img.width); const c=document.createElement('canvas'); c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc); c.getContext('2d').drawImage(img,0,0,c.width,c.height); const chk=aiCheck({c,w:img.width,h:img.height},file,{recent:false}); if(!chk.ok){ const bad=chk.checks.find(x=>!x[0]); toast(t('Photo not accepted:')+' '+t(bad[1])); $('#'+px+'-slip').value=''; return; } SLIP[px]=c.toDataURL('image/jpeg',0.6); SLIPH[px]=chk.hash; showSlip(px); }; img.onerror=()=>toast('Could not read that image. Try another photo.'); img.src=fr.result; }; fr.readAsDataURL(file); }
 function showSlip(px){ const b=$('#'+px+'-slipprev'); if(!b) return; if(!SLIP[px]){ b.hidden=true; b.innerHTML=''; return; }
   b.hidden=false; b.innerHTML=`<img src="${SLIP[px]}" alt="Hospital requisition slip preview"><div style="display:grid;gap:6px"><span class="pill ok">✓ ${t('Hospital Slip Attached')}</span><span class="hint">AI photo check passed: clear and new. Donors will see this badge and can view the slip.</span><button class="btn btn-ghost btn-sm" type="button" data-slipremove="${px}">Remove photo</button></div>`; }
-const slipBadge=r=>r.slip?`<button class="pill ok" style="border:none;cursor:pointer" type="button" data-act="slip" data-id="${r.id}" title="View hospital slip">✓ ${t('Hospital Slip Attached')}</button>`:'';
+const canSlip=r=>isAdmin()||(session&&session.role==='patient'&&r.patientId===session.id);
+const slipBadge=r=>r.slip&&!canSlip(r)?`<span class="pill ok">✓ ${t('Hospital Slip Attached')}</span>`:r.slip?`<button class="pill ok" style="border:none;cursor:pointer" type="button" data-act="slip" data-id="${r.id}" title="View hospital slip">✓ ${t('Hospital Slip Attached')}</button>`:'';
 function sampleSlip(){ const c=document.createElement('canvas'); c.width=700; c.height=900; const g=c.getContext('2d'); g.fillStyle='#fffdf7'; g.fillRect(0,0,700,900); g.strokeStyle='#888'; g.lineWidth=3; g.strokeRect(20,20,660,860);
   g.fillStyle='#222'; g.font='bold 30px sans-serif'; g.textAlign='center'; g.fillText('BLOOD REQUISITION FORM',350,90); g.font='20px sans-serif'; g.fillText('SAMPLE · FOR DEMO ONLY',350,124);
   g.textAlign='left'; g.font='22px sans-serif'; const L=[['Patient','Demo Patient'],['Age / Sex','34 / M'],['Blood group','B+ (Rh positive)'],['Component','Whole blood'],['Units','2'],['Diagnosis','Road traffic accident'],['Ward / Bed','Emergency · 4'],['Urgency','Immediate']];
@@ -2226,10 +2542,14 @@ function stageRow(r){ if(r.status!=='open'||isCovered(r)) return '';
   if(r.stage==='exact') return `<div class="stage"><span><b>Step 1 · Exact match:</b> only ${pretty(r.group)} donors were alerted.${extra.length?` ${r.urgency==='critical'?'Critical requests expand automatically if no donor accepts within 10 minutes.':''}`:''}</span>${extra.length?`<button class="btn btn-primary btn-sm" type="button" data-act="expand" data-id="${r.id}">${t('Expand to compatible donors')} (${extra.map(pretty).join(', ')})</button>`:''}</div>`;
   return `<div class="stage"><span><b>Step 2 · Compatible groups included:</b> ${compatFor(r).map(pretty).join(', ')} for ${COMPONENTS[r.component].toLowerCase()}. The blood bank cross-matches every unit before transfusion.</span></div>`; }
 const BANKS=[
-  {name:'Government General Hospital Blood Bank, Kakinada',type:'Government',addr:'GGH campus, Main Road (R R Road), Kakinada',city:'Kakinada',lat:16.9600,lng:82.2390,phones:[]},
-  {name:'Indian Red Cross Society Blood Bank, Kakinada',type:'Red Cross',addr:'D.No 8-14-39, Red Cross Street, Gandhi Nagar, Kakinada 533004',city:'Kakinada',lat:16.97006,lng:82.227656,phones:[['08842385800','0884 238 5800'],['9848071868','98480 71868']]},
-  {name:'Government General Hospital Blood Bank, Rajamahendravaram',type:'Government',addr:'GGH campus, Rajamahendravaram',city:'Rajahmundry',lat:17.0005,lng:81.8040,phones:[]},
-  {name:'GSL Medical College General Hospital Blood Bank',type:'Medical college',addr:'No-16, Lakshmipuram, Rajanagaram, Rajahmundry 533296',city:'Rajahmundry',lat:17.0640,lng:81.8650,phones:[['08832484999','0883 248 4999']]}];
+  {name:'Government General Hospital Blood Bank, Kakinada',type:'Government',addr:'GGH campus, Main Road (R R Road), Kakinada',city:'Kakinada',lat:16.9600,lng:82.2390,phones:[],partner:true,inventory:{'O-':2,'O+':6,'A+':4,'B+':5,'AB+':1}},
+  {name:'Indian Red Cross Society Blood Bank, Kakinada',type:'Red Cross',addr:'D.No 8-14-39, Red Cross Street, Gandhi Nagar, Kakinada 533004',city:'Kakinada',lat:16.97006,lng:82.227656,phones:[['08842385800','0884 238 5800'],['9848071868','98480 71868']],partner:true,inventory:{'O-':1,'O+':8,'A+':5,'B+':7,'B-':1,'AB+':2}},
+  {name:'Government General Hospital Blood Bank, Rajamahendravaram',type:'Government',addr:'GGH campus, Rajamahendravaram',city:'Rajahmundry',lat:17.0005,lng:81.8040,phones:[],partner:true,inventory:{'O+':4,'A+':3,'B+':2,'A-':1}},
+  {name:'GSL Medical College General Hospital Blood Bank',type:'Medical college',addr:'No-16, Lakshmipuram, Rajanagaram, Rajahmundry 533296',city:'Rajahmundry',lat:17.0640,lng:81.8650,phones:[['08832484999','0883 248 4999']],partner:true,inventory:{'O-':1,'O+':3,'B+':4,'AB+':2}}];
+function partnerCard(r){ if(!r.partners||!r.partners.length||r.status!=='open') return '';
+  return `<div class="bankcard"><h3>🏥 Partner hospitals & blood banks alerted</h3><p class="small">Sent within 50 km because nearby compatible donors were not enough. Only the blood group, units and urgency were shared.</p>
+  ${r.partners.map(b=>`<div class="bank"><div><div class="row" style="gap:8px"><b>${esc(b.name)}</b><span class="pill ${b.status==='confirmed'?'ok':'plan'}">${b.status==='confirmed'?`${b.units} unit${b.units>1?'s':''} ${pretty(b.group)} reported`:'No compatible stock reported'}</span></div><div class="meta"><span>${esc(b.addr)}</span><span>${b.km.toFixed(1)} km</span>${(b.phones||[]).map(p=>`<span class="mono">${p[1]}</span>`).join('')}</div></div><div class="actions">${(b.phones||[]).map(p=>`<a class="btn btn-primary btn-sm" href="tel:${p[0]}">Call ${p[1]}</a>`).join('')}</div></div>`).join('')}
+  <p class="hint">Stock figures come from demo inventory data. Confirm with the blood bank before travelling.</p></div>`; }
 function bankCard(r){ if(r.status!=='open'||r.urgency!=='critical'||acceptedIds(r).length>0) return '';
   const here=coords(r); const list=BANKS.map(b=>({...b,km:km(here,[b.lat,b.lng])})).sort((a,b)=>a.km-b.km).filter(b=>b.km<=80);
   return `<div class="bankcard"><h3>🚨 ${t('Nearby Blood Banks (Direct Call)')}</h3><p class="small">${t('No donor has accepted this critical request yet. Call a blood bank directly while we keep searching.')}</p>
@@ -2295,6 +2615,8 @@ const XADD6={"hi": {"Log in / Sign up": "लॉग इन / साइन अप"
 Object.keys(XADD6).forEach(l=>{ if(l==="te") Object.assign(TE2,XADD6[l]); else if(DICTS[l]) Object.assign(DICTS[l],XADD6[l]); });
 const XADD7={"hi": {"Helped design the graphics of the website.": "वेबसाइट के ग्राफ़िक्स डिज़ाइन करने में मदद की।", "Problem Discovery & Ideation Lead": "समस्या खोज और विचार प्रमुख", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "खून पाने में मुख्य कमियों की पहचान की और पास के दाता जल्दी ढूंढने का मूल समाधान ढांचा तय किया।", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "मेडिकल सुरक्षा जांच, दाता स्वास्थ्य योग्यता नियम और प्रमाणपत्र जांच के मानक तैयार किए।", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "अनुरोध जांच की सुरक्षा और एडमिन समीक्षा प्रक्रिया बनाई ताकि झूठी आपात सूचनाएं न जाएं।", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "बहुभाषी और आपात प्रवाहों की जांच की, प्रोजेक्ट रिपोर्ट तैयार कीं और कैंपस जागरूकता अभियान चलाया।"}, "te": {"Helped design the graphics of the website.": "వెబ్‌సైట్ గ్రాఫిక్స్ డిజైన్‌లో సహాయం చేశారు.", "Problem Discovery & Ideation Lead": "సమస్య గుర్తింపు & ఆలోచన నాయకత్వం", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "రక్తం అందుబాటులో ఉన్న ముఖ్య లోపాలను గుర్తించి, దగ్గరి దాతలను త్వరగా కనుగొనే ప్రధాన పరిష్కార రూపకల్పన చేశారు.", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "వైద్య భద్రతా తనిఖీలు, దాత ఆరోగ్య అర్హత నియమాలు, సర్టిఫికెట్ ధృవీకరణ ప్రమాణాలను రూపొందించారు.", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "తప్పుడు అత్యవసర హెచ్చరికలు రాకుండా అభ్యర్థన ధృవీకరణ రక్షణలు, అడ్మిన్ సమీక్ష విధానాలను అమలు చేశారు.", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "బహుభాషా, అత్యవసర ప్రక్రియలను పరీక్షించి, ప్రాజెక్ట్ నివేదికలు తయారు చేసి, క్యాంపస్ అవగాహన కార్యక్రమాలకు నాయకత్వం వహించారు."}, "ta": {"Helped design the graphics of the website.": "இணையதளத்தின் வரைகலை வடிவமைப்பில் உதவினார்.", "Problem Discovery & Ideation Lead": "பிரச்சனை கண்டறிதல் & யோசனைத் தலைவர்", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "இரத்தம் கிடைப்பதில் உள்ள முக்கிய இடைவெளிகளைக் கண்டறிந்து, அருகிலுள்ள தானம் செய்பவர்களை விரைவாகக் கண்டறியும் தீர்வுக் கட்டமைப்பை வரையறுத்தார்.", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "மருத்துவப் பாதுகாப்புச் சோதனைகள், தானம் செய்பவர் உடல்நலத் தகுதி விதிகள், சான்றிதழ் சரிபார்ப்புத் தரங்களை வடிவமைத்தார்.", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "தவறான அவசர அறிவிப்புகளைத் தடுக்கக் கோரிக்கைச் சரிபார்ப்புப் பாதுகாப்புகளையும் நிர்வாகப் பரிசீலனை முறைகளையும் செயல்படுத்தினார்.", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "பன்மொழி மற்றும் அவசர ஓட்டங்களைச் சோதித்து, திட்ட அறிக்கைகளைத் தயாரித்து, வளாக விழிப்புணர்வுப் பணிகளை வழிநடத்தினார்."}, "kn": {"Helped design the graphics of the website.": "ವೆಬ್‌ಸೈಟ್‌ನ ಗ್ರಾಫಿಕ್ಸ್ ವಿನ್ಯಾಸದಲ್ಲಿ ಸಹಾಯ ಮಾಡಿದರು.", "Problem Discovery & Ideation Lead": "ಸಮಸ್ಯೆ ಗುರುತಿಸುವಿಕೆ & ಆಲೋಚನಾ ನಾಯಕ", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "ರಕ್ತ ಲಭ್ಯತೆಯ ಮುಖ್ಯ ಕೊರತೆಗಳನ್ನು ಗುರುತಿಸಿ, ಹತ್ತಿರದ ದಾನಿಗಳನ್ನು ಬೇಗ ಹುಡುಕುವ ಪರಿಹಾರ ಚೌಕಟ್ಟನ್ನು ರೂಪಿಸಿದರು.", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "ವೈದ್ಯಕೀಯ ಸುರಕ್ಷತಾ ಪರಿಶೀಲನೆಗಳು, ದಾನಿ ಆರೋಗ್ಯ ಅರ್ಹತಾ ನಿಯಮಗಳು ಮತ್ತು ಪ್ರಮಾಣಪತ್ರ ಪರಿಶೀಲನಾ ಮಾನದಂಡಗಳನ್ನು ರಚಿಸಿದರು.", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "ಸುಳ್ಳು ತುರ್ತು ಸೂಚನೆಗಳನ್ನು ತಡೆಯಲು ವಿನಂತಿ ಪರಿಶೀಲನಾ ರಕ್ಷಣೆಗಳು ಮತ್ತು ಅಡ್ಮಿನ್ ಪರಿಶೀಲನಾ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ಜಾರಿಗೊಳಿಸಿದರು.", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "ಬಹುಭಾಷಾ ಮತ್ತು ತುರ್ತು ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ಪರೀಕ್ಷಿಸಿ, ಯೋಜನಾ ವರದಿಗಳನ್ನು ಸಿದ್ಧಪಡಿಸಿ, ಕ್ಯಾಂಪಸ್ ಜಾಗೃತಿ ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ಮುನ್ನಡೆಸಿದರು."}, "ml": {"Helped design the graphics of the website.": "വെബ്സൈറ്റിന്റെ ഗ്രാഫിക്സ് രൂപകൽപ്പനയിൽ സഹായിച്ചു.", "Problem Discovery & Ideation Lead": "പ്രശ്ന കണ്ടെത്തൽ & ആശയ നേതൃത്വം", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "രക്തലഭ്യതയിലെ പ്രധാന വിടവുകൾ കണ്ടെത്തി, അടുത്തുള്ള ദാതാക്കളെ വേഗം കണ്ടെത്താനുള്ള പരിഹാര ചട്ടക്കൂട് നിർവചിച്ചു.", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "വൈദ്യ സുരക്ഷാ പരിശോധനകൾ, ദാതാവിന്റെ ആരോഗ്യ യോഗ്യതാ നിയമങ്ങൾ, സർട്ടിഫിക്കറ്റ് പരിശോധനാ മാനദണ്ഡങ്ങൾ എന്നിവ രൂപപ്പെടുത്തി.", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "തെറ്റായ അടിയന്തര അറിയിപ്പുകൾ തടയാൻ അഭ്യർത്ഥന പരിശോധനാ സുരക്ഷകളും അഡ്മിൻ അവലോകന പ്രക്രിയകളും നടപ്പാക്കി.", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "ബഹുഭാഷാ, അടിയന്തര പ്രക്രിയകൾ പരിശോധിച്ചു, പ്രോജക്റ്റ് റിപ്പോർട്ടുകൾ തയ്യാറാക്കി, ക്യാമ്പസ് ബോധവൽക്കരണം നയിച്ചു."}, "mr": {"Helped design the graphics of the website.": "वेबसाइटचे ग्राफिक्स डिझाइन करण्यात मदत केली.", "Problem Discovery & Ideation Lead": "समस्या शोध आणि कल्पना प्रमुख", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "रक्त मिळण्यातील मुख्य त्रुटी ओळखल्या आणि जवळचे दाते लवकर शोधण्याची मूळ उपाय रचना ठरवली.", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "वैद्यकीय सुरक्षा तपासण्या, दात्यांचे आरोग्य पात्रता नियम आणि प्रमाणपत्र पडताळणी मानके तयार केली.", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "खोट्या आपत्कालीन सूचना टाळण्यासाठी विनंती पडताळणी सुरक्षा आणि अॅडमिन पुनरावलोकन प्रक्रिया राबवली.", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "बहुभाषिक आणि आपत्कालीन प्रक्रियांची चाचणी केली, प्रकल्प अहवाल तयार केले आणि कॅम्पस जनजागृतीचे नेतृत्व केले."}, "bn": {"Helped design the graphics of the website.": "ওয়েবসাইটের গ্রাফিক্স ডিজাইনে সাহায্য করেছেন।", "Problem Discovery & Ideation Lead": "সমস্যা চিহ্নিতকরণ ও ভাবনা প্রধান", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "রক্ত পাওয়ার মূল ঘাটতিগুলো চিহ্নিত করে কাছের দাতা দ্রুত খোঁজার মূল সমাধান কাঠামো ঠিক করেছেন।", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "চিকিৎসা নিরাপত্তা পরীক্ষা, দাতার স্বাস্থ্য যোগ্যতার নিয়ম ও সার্টিফিকেট যাচাইয়ের মান সাজিয়েছেন।", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "ভুয়া জরুরি সতর্কবার্তা ঠেকাতে অনুরোধ যাচাইয়ের সুরক্ষা ও অ্যাডমিন পর্যালোচনা প্রক্রিয়া চালু করেছেন।", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "বহুভাষিক ও জরুরি প্রক্রিয়া পরীক্ষা করেছেন, প্রকল্প রিপোর্ট তৈরি করেছেন এবং ক্যাম্পাসে সচেতনতা কার্যক্রমে নেতৃত্ব দিয়েছেন।"}, "gu": {"Helped design the graphics of the website.": "વેબસાઇટના ગ્રાફિક્સ ડિઝાઇન કરવામાં મદદ કરી.", "Problem Discovery & Ideation Lead": "સમસ્યા શોધ અને વિચાર પ્રમુખ", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "લોહી મેળવવાની મુખ્ય ખામીઓ ઓળખી અને નજીકના દાતા ઝડપથી શોધવાનું મૂળ ઉકેલ માળખું નક્કી કર્યું.", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "તબીબી સુરક્ષા તપાસ, દાતા આરોગ્ય યોગ્યતા નિયમો અને પ્રમાણપત્ર ચકાસણીના ધોરણો ઘડ્યા.", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "ખોટી ઇમરજન્સી ચેતવણીઓ રોકવા માટે વિનંતી ચકાસણી સુરક્ષા અને એડમિન સમીક્ષા પ્રક્રિયા લાગુ કરી.", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "બહુભાષી અને ઇમરજન્સી પ્રક્રિયાઓનું પરીક્ષણ કર્યું, પ્રોજેક્ટ અહેવાલ તૈયાર કર્યા અને કેમ્પસ જાગૃતિનું નેતૃત્વ કર્યું."}, "pa": {"Helped design the graphics of the website.": "ਵੈੱਬਸਾਈਟ ਦੇ ਗ੍ਰਾਫ਼ਿਕਸ ਡਿਜ਼ਾਈਨ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕੀਤੀ।", "Problem Discovery & Ideation Lead": "ਸਮੱਸਿਆ ਖੋਜ ਅਤੇ ਵਿਚਾਰ ਮੁਖੀ", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "ਖ਼ੂਨ ਮਿਲਣ ਦੀਆਂ ਮੁੱਖ ਘਾਟਾਂ ਦੀ ਪਛਾਣ ਕੀਤੀ ਅਤੇ ਨੇੜਲੇ ਦਾਨੀ ਜਲਦੀ ਲੱਭਣ ਦਾ ਮੂਲ ਹੱਲ ਢਾਂਚਾ ਤੈਅ ਕੀਤਾ।", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "ਮੈਡੀਕਲ ਸੁਰੱਖਿਆ ਜਾਂਚਾਂ, ਦਾਨੀ ਸਿਹਤ ਯੋਗਤਾ ਨਿਯਮ ਅਤੇ ਸਰਟੀਫਿਕੇਟ ਜਾਂਚ ਦੇ ਮਿਆਰ ਤਿਆਰ ਕੀਤੇ।", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "ਝੂਠੀਆਂ ਐਮਰਜੈਂਸੀ ਸੂਚਨਾਵਾਂ ਰੋਕਣ ਲਈ ਬੇਨਤੀ ਜਾਂਚ ਸੁਰੱਖਿਆ ਅਤੇ ਐਡਮਿਨ ਸਮੀਖਿਆ ਪ੍ਰਕਿਰਿਆ ਲਾਗੂ ਕੀਤੀ।", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "ਬਹੁ-ਭਾਸ਼ੀ ਅਤੇ ਐਮਰਜੈਂਸੀ ਪ੍ਰਕਿਰਿਆਵਾਂ ਦੀ ਜਾਂਚ ਕੀਤੀ, ਪ੍ਰੋਜੈਕਟ ਰਿਪੋਰਟਾਂ ਤਿਆਰ ਕੀਤੀਆਂ ਅਤੇ ਕੈਂਪਸ ਜਾਗਰੂਕਤਾ ਦੀ ਅਗਵਾਈ ਕੀਤੀ।"}, "or": {"Helped design the graphics of the website.": "ୱେବସାଇଟର ଗ୍ରାଫିକ୍ସ ଡିଜାଇନରେ ସାହାଯ୍ୟ କଲେ।", "Problem Discovery & Ideation Lead": "ସମସ୍ୟା ଚିହ୍ନଟ ଓ ଭାବନା ମୁଖ୍ୟ", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "ରକ୍ତ ପାଇବାରେ ମୁଖ୍ୟ ଅଭାବ ଚିହ୍ନଟ କରି ପାଖର ଦାତାଙ୍କୁ ଶୀଘ୍ର ଖୋଜିବାର ମୂଳ ସମାଧାନ ଢାଞ୍ଚା ସ୍ଥିର କଲେ।", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "ଚିକିତ୍ସା ସୁରକ୍ଷା ଯାଞ୍ଚ, ଦାତାଙ୍କ ସ୍ୱାସ୍ଥ୍ୟ ଯୋଗ୍ୟତା ନିୟମ ଓ ପ୍ରମାଣପତ୍ର ଯାଞ୍ଚ ମାନକ ପ୍ରସ୍ତୁତ କଲେ।", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "ମିଛ ଜରୁରୀ ସୂଚନା ରୋକିବାକୁ ଅନୁରୋଧ ଯାଞ୍ଚ ସୁରକ୍ଷା ଓ ଆଡମିନ ସମୀକ୍ଷା ପ୍ରକ୍ରିୟା କାର୍ଯ୍ୟକାରୀ କଲେ।", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "ବହୁଭାଷୀ ଓ ଜରୁରୀ ପ୍ରକ୍ରିୟା ପରୀକ୍ଷା କଲେ, ପ୍ରକଳ୍ପ ରିପୋର୍ଟ ପ୍ରସ୍ତୁତ କଲେ ଓ କ୍ୟାମ୍ପସ ସଚେତନତାର ନେତୃତ୍ୱ ନେଲେ।"}, "ur": {"Helped design the graphics of the website.": "ویب سائٹ کے گرافکس ڈیزائن کرنے میں مدد کی۔", "Problem Discovery & Ideation Lead": "مسئلے کی دریافت اور خیال کے سربراہ", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "خون تک رسائی کی اہم کمیوں کی نشاندہی کی اور قریبی عطیہ دہندگان کو جلد تلاش کرنے کا بنیادی حل تیار کیا۔", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "طبی حفاظتی جانچ، عطیہ دہندگان کی صحت کی اہلیت کے اصول اور سرٹیفکیٹ تصدیق کے معیار مرتب کیے۔", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "جھوٹی ہنگامی اطلاعات روکنے کے لیے درخواست کی تصدیق کے تحفظات اور ایڈمن جائزے کا طریقہ نافذ کیا۔", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "کثیر لسانی اور ہنگامی عمل کی جانچ کی، پروجیکٹ رپورٹس تیار کیں اور کیمپس آگاہی مہم کی قیادت کی۔"}, "as": {"Helped design the graphics of the website.": "ৱেবছাইটৰ গ্ৰাফিক্স ডিজাইন কৰাত সহায় কৰিছিল।", "Problem Discovery & Ideation Lead": "সমস্যা চিনাক্তকৰণ আৰু ধাৰণা মুৰব্বী", "Identified key blood-access gaps and defined the core solution framework for rapid local donor discovery.": "তেজ পোৱাৰ মূল অভাৱবোৰ চিনাক্ত কৰি ওচৰৰ দাতাক সোনকালে বিচাৰি পোৱাৰ মূল সমাধান কাঠামো নিৰ্ধাৰণ কৰিছিল।", "Structured medical safety checks, donor health eligibility rules and certificate verification standards.": "চিকিৎসা সুৰক্ষা পৰীক্ষা, দাতাৰ স্বাস্থ্য যোগ্যতাৰ নিয়ম আৰু প্ৰমাণপত্ৰ সত্যাপনৰ মানদণ্ড প্ৰস্তুত কৰিছিল।", "Implemented request verification safeguards and admin review workflows to prevent false emergency alerts.": "ভুৱা জৰুৰী সতৰ্কবাণী ৰোধ কৰিবলৈ অনুৰোধ সত্যাপনৰ সুৰক্ষা আৰু এডমিন পৰ্যালোচনা প্ৰক্ৰিয়া প্ৰয়োগ কৰিছিল।", "Tested multi-language and emergency flows, prepared project reports and led campus awareness outreach.": "বহুভাষিক আৰু জৰুৰী প্ৰক্ৰিয়া পৰীক্ষা কৰিছিল, প্ৰকল্প প্ৰতিবেদন প্ৰস্তুত কৰিছিল আৰু কেম্পাছ সজাগতাৰ নেতৃত্ব দিছিল।"}};
 Object.keys(XADD7).forEach(l=>{ if(l==="te") Object.assign(TE2,XADD7[l]); else if(DICTS[l]) Object.assign(DICTS[l],XADD7[l]); });
+const XADD8={"hi": {"Suggestions": "सुझाव", "Ask about donors, eligibility...": "डोनर, योग्यता के बारे में पूछें..."}, "te": {"Suggestions": "సూచనలు", "Ask about donors, eligibility...": "దాతలు, అర్హత గురించి అడగండి..."}, "ta": {"Suggestions": "பரிந்துரைகள்", "Ask about donors, eligibility...": "தானம் செய்பவர்கள், தகுதி பற்றிக் கேளுங்கள்..."}, "kn": {"Suggestions": "ಸಲಹೆಗಳು", "Ask about donors, eligibility...": "ದಾನಿಗಳು, ಅರ್ಹತೆ ಬಗ್ಗೆ ಕೇಳಿ..."}, "ml": {"Suggestions": "നിർദ്ദേശങ്ങൾ", "Ask about donors, eligibility...": "ദാതാക്കൾ, യോഗ്യത എന്നിവയെക്കുറിച്ച് ചോദിക്കൂ..."}, "mr": {"Suggestions": "सूचना", "Ask about donors, eligibility...": "दाते, पात्रतेबद्दल विचारा..."}, "bn": {"Suggestions": "পরামর্শ", "Ask about donors, eligibility...": "দাতা, যোগ্যতা নিয়ে জিজ্ঞাসা করুন..."}, "gu": {"Suggestions": "સૂચનો", "Ask about donors, eligibility...": "દાતાઓ, યોગ્યતા વિશે પૂછો..."}, "pa": {"Suggestions": "ਸੁਝਾਅ", "Ask about donors, eligibility...": "ਦਾਨੀਆਂ, ਯੋਗਤਾ ਬਾਰੇ ਪੁੱਛੋ..."}, "or": {"Suggestions": "ପରାମର୍ଶ", "Ask about donors, eligibility...": "ଦାତା, ଯୋଗ୍ୟତା ବିଷୟରେ ପଚାରନ୍ତୁ..."}, "ur": {"Suggestions": "تجاویز", "Ask about donors, eligibility...": "عطیہ دہندگان، اہلیت کے بارے میں پوچھیں..."}, "as": {"Suggestions": "পৰামৰ্শ", "Ask about donors, eligibility...": "দাতা, যোগ্যতাৰ বিষয়ে সোধক..."}};
+Object.keys(XADD8).forEach(l=>{ if(l==="te") Object.assign(TE2,XADD8[l]); else if(DICTS[l]) Object.assign(DICTS[l],XADD8[l]); });
 function DICT(l){ return l==='te'?TE2:(DICTS[l]||null); }
 function monthIn(l,m){ if(l==='te') return MONTHS[m]||m; const a=MONTHS_L[l]; if(!a) return m; const i=MON3.indexOf(m==='Sept'?'Sep':m); return i<0?m:a[i]; }
 const tr=(en,l)=>{ l=l||LANG; if(l==='en') return en; const v=lookup(en,l); return v==null?en:v; };
@@ -2837,7 +3159,7 @@ const TOUR=[
  {t:'14 · Request fulfilled',b:'When the last unit arrives the request closes and every waiting donor is told not to go. The bell shows notifications for every change.',btn:'Receive last unit & open bell',run:async()=>{ await clickBtn(`#ptActive [data-act=mark-donated][data-id="${T.rid}"]`); await wait(150); await clickBtn('[data-act=bell]'); }},
  {t:'15 · Donor certificate',b:'Divya\'s dashboard now shows a thank-you banner, her new eligibility date and a "Download Appreciation Certificate" button.',btn:'Open Divya\'s certificate',run:async()=>{ $('#notes').hidden=true; await asDonor('9000000009'); await clickBtn('#dnAccepted [data-act=cert]'); }},
  {t:'16 · AI assistant',b:'The assistant answers questions about donors, eligibility, first aid and nearby blood banks. Try typing your own question.',btn:'Ask the assistant',run:async()=>{ closeModal(); await asPatient(); toggleChat(true); await wait(100); ask('Can I donate after a tattoo?'); }},
- {t:'Demo complete',b:'You have seen the full flow. Explore freely: Find donors, Eligibility (try Female to see extra questions), the language button, Help & Hospitals and the Admin dashboard. Restart the demo anytime.',btn:'Finish',run:async()=>{ endTour(); }}
+ {t:'Demo complete',b:'You have seen the full flow. Explore freely: Find donors, Eligibility (try Female to see extra questions), the language button, and Help & Hospitals. Restart the demo anytime.',btn:'Finish',run:async()=>{ endTour(); }}
 ];
 function drawTour(){ const el=$('#tour'), st=TOUR[T.step]; if(!st){ el.hidden=true; return; }
   el.innerHTML=`<div class="row" style="justify-content:space-between"><span class="tstep">Guided demo · ${T.step+1} of ${TOUR.length}</span><button class="btn btn-ghost btn-sm" type="button" data-tour="close" aria-label="Close demo">✕</button></div>
@@ -2857,8 +3179,9 @@ function renderDonor(){
   $('#dnProfile').innerHTML=`<span class="bg xl ${d.available&&!w?'fill':''}">${pretty(d.group)}</span>
     <div style="display:grid;gap:8px"><div class="row" style="gap:8px"><h2 style="font-size:1.35rem">${esc(d.name)}</h2>${eligPill(d)}<span class="pill info">Verified</span></div>
       <div class="meta"><span>${esc(d.city)}${d.area?' · '+esc(d.area):''}</span><span class="mono">${fmtPhone(d.phone)}</span><span>${d.donations.length} donation${d.donations.length===1?'':'s'}</span><span>Last donated: ${d.last?fmtDate(d.last):'never'}</span>${w?`<span>Can donate again on <b>${fmtDate(eligibleOn(d))}</b></span>`:''}</div>
-      <div class="row"><label class="toggle"><input type="checkbox" id="dn-avail" ${d.available?'checked':''}> Available for requests</label><button class="btn btn-ghost btn-sm" type="button" data-act="notif-on"><span aria-hidden="true">🔔 </span><span>Alert notifications</span></button><button class="btn btn-ghost btn-sm" type="button" data-locate-donor>📍 Update my location</button><button class="btn btn-ghost btn-sm" type="button" data-act="idcard"><span aria-hidden="true">🪪 </span><span>Emergency ID card</span></button><span class="locst small" id="dn-locst">${d.lat!=null&&d.lat!==''?'Using your saved location for distances.':'Using your town centre for distances.'}</span></div></div>`;
+      <div class="row"><label class="toggle"><input type="checkbox" id="dn-avail" ${d.available?'checked':''}> Available for requests</label><label class="toggle"><input type="checkbox" id="dn-sms" ${wantSms(d)?'checked':''}> <span data-i18n>Receive SMS Alerts</span></label><label class="toggle"><input type="checkbox" id="dn-wa" ${wantWa(d)?'checked':''}> <span data-i18n>Receive WhatsApp Alerts</span></label><button class="btn btn-ghost btn-sm" type="button" data-act="notif-on"><span aria-hidden="true">🔔 </span><span>Alert notifications</span></button><button class="btn btn-ghost btn-sm" type="button" data-locate-donor>📍 Update my location</button><button class="btn btn-ghost btn-sm" type="button" data-act="idcard"><span aria-hidden="true">🪪 </span><span>Emergency ID card</span></button><span class="locst small" id="dn-locst">${d.lat!=null&&d.lat!==''?'Using your saved location for distances.':'Using your town centre for distances.'}</span></div></div>`;
   $('#dnImpact').innerHTML=impactHTML(d);
+  ['sms','wa'].forEach(k=>{ const c=$('#dn-'+k); if(c) c.addEventListener('change',e=>{ d[k==='sms'?'smsOptIn':'whatsappOptIn']=e.target.checked; save(); toast((k==='sms'?'SMS':'WhatsApp')+' alerts '+(e.target.checked?'on':'off')+' for +91 '+fmtPhone(d.phone)+'.'); }); });
   $('#dn-avail').addEventListener('change',e=>{ if(d.suspended){ e.target.checked=false; toast('Your account is paused after a verified report.'); return; } d.available=e.target.checked; save(); toast(d.available?'You will now see and get alerts for requests.':'You are marked unavailable.'); renderDonor(); });
   const closed=S.requests.filter(r=>respOf(r,d.id)==='released'||(respOf(r,d.id)==='accepted'&&r.status!=='open'));
   const newCert=d.donations.map((x,i)=>({x,i})).filter(o=>o.x.confirmed&&!o.x.seen).pop();
@@ -2911,7 +3234,9 @@ function runElig(){ const age=+$('#e-age').value, w=+$('#e-weight').value, g=$('
 $('#eligForm').addEventListener('submit',e=>{e.preventDefault();runElig();});
 
 let pendingDel=null, pendingReset=false;
-function renderAdmin(){ $('#adStats').innerHTML=statTiles()+`<div class="stat"><div class="n">${S.patients.length}</div><div class="l">Patient accounts</div></div>`;
+function renderOutbox(){ try{ renderOtpLog(); }catch(e){} const o=(S.outbox||[]).slice().reverse(); $('#outCount').textContent=o.length+' alert'+(o.length===1?'':'s'); const ico={whatsapp:'WhatsApp',sms:'SMS'};
+  $('#outTable').innerHTML='<thead><tr><th>Time</th><th>To</th><th>Match</th><th>Channel</th><th>Status</th></tr></thead><tbody>'+(o.slice(0,40).map(e=>`<tr><td>${fmtDT(e.t)}</td><td>${esc(e.name)}<div class="muted small mono">${esc(e.phone)}</div></td><td>${e.to==='donor'?`${pretty(e.dg)} → ${pretty(e.pg)}`:`Hospital · ${pretty(e.pg)}`}</td><td>${ico[e.channel]||e.channel}</td><td>${esc(e.status)}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">No alerts sent yet.</td></tr>')+'</tbody>'; }
+function renderAdmin(){ if(!isAdmin()) return; renderOutbox(); const ai=adminInfo(); $('#adGreet').hidden=false; $('#adGreet').innerHTML=`<span class="av">${esc(initials(ai.name))}</span><div><b>Welcome, ${esc(ai.name)}</b><small>${esc(ai.team)} · Blood Bridge team</small></div>`; $('#adStats').innerHTML=statTiles()+`<div class="stat"><div class="n">${S.patients.length}</div><div class="l">Patient accounts</div></div>`;
   const counts=GROUPS.map(g=>({g,n:S.donors.filter(d=>d.group===g).length,e:S.donors.filter(d=>d.group===g&&isElig(d)).length}));
   const max=Math.max(4,...counts.map(c=>c.n)), W=420,H=220,pl=28,pb=26,pt=18,bw=(W-pl)/GROUPS.length, y=v=>H-pb-(v/max)*(H-pb-pt);
   let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Donors by blood group">`; const step=Math.ceil(max/4);
@@ -2920,13 +3245,14 @@ function renderAdmin(){ $('#adStats').innerHTML=statTiles()+`<div class="stat"><
   $('#groupChart').innerHTML=svg+'</svg>';
   const rows=GROUPS.map(g=>({g,need:S.requests.filter(r=>r.status==='open'&&r.group===g).reduce((a,r)=>a+stillNeeded(r),0),sup:S.donors.filter(d=>d.available&&waitDays(d)===0&&canGive(d.group,g)).length})).filter(r=>r.need>0);
   $('#shortTable').innerHTML='<thead><tr><th>Group</th><th>Units needed</th><th>Eligible donors</th><th>Status</th></tr></thead><tbody>'+(rows.length?rows.map(r=>`<tr><td><span class="bg">${pretty(r.g)}</span></td><td class="mono">${r.need}</td><td class="mono">${r.sup}</td><td>${r.sup>=r.need?'<span class="pill ok">Covered</span>':r.sup>0?'<span class="pill wait">Low</span>':'<span class="pill crit">Shortage</span>'}</td></tr>`).join(''):'<tr><td colspan="4" class="muted">No open requests.</td></tr>')+'</tbody>';
-  $('#reqTable').innerHTML='<thead><tr><th>Group</th><th>Patient</th><th>Reason</th><th>Hospital</th><th>Urgency</th><th>Alerted / Accepted / Donated</th><th>Status</th><th>Raised</th></tr></thead><tbody>'+S.requests.slice().sort((a,b)=>b.created-a.created).map(r=>`<tr><td><span class="bg">${pretty(r.group)}</span></td><td>${esc(r.pname)}</td><td>${esc(REASONS[r.reason])}</td><td>${esc(r.hospital)}, ${esc(r.city)}</td><td>${urgPill(r.urgency)}</td><td class="mono">${r.alerted.length} / ${acceptedIds(r).length} / ${donatedCount(r)}</td><td>${r.status==='open'?'<span class="pill info">Open</span>':r.status==='fulfilled'?'<span class="pill ok">Fulfilled</span>':'<span class="pill off">Cancelled</span>'}</td><td>${ago(r.created)}</td></tr>`).join('')+'</tbody>';
+  $('#reqTable').innerHTML='<thead><tr><th>Group</th><th>Patient</th><th>Reason</th><th>Hospital</th><th>Urgency</th><th>Alerted / Accepted / Donated</th><th>Status</th><th>Raised</th><th>Contact</th><th>Slip</th><th>Alerts</th></tr></thead><tbody>'+S.requests.slice().sort((a,b)=>b.created-a.created).map(r=>`<tr><td><span class="bg">${pretty(r.group)}</span></td><td>${esc(r.pname)}</td><td>${esc(REASONS[r.reason])}</td><td>${esc(r.hospital)}, ${esc(r.city)}</td><td>${urgPill(r.urgency)}</td><td class="mono">${r.alerted.length} / ${acceptedIds(r).length} / ${donatedCount(r)}</td><td>${r.status==='open'?'<span class="pill info">Open</span>':r.status==='fulfilled'?'<span class="pill ok">Fulfilled</span>':'<span class="pill off">Cancelled</span>'}</td><td>${ago(r.created)}</td><td class="mono">${esc(r.attendant?r.attendant.split(' (')[0]:'')}<br>${fmtPhone(r.contact)}</td><td>${r.slip?`<button class="btn btn-ghost btn-sm" type="button" data-act="slip" data-id="${r.id}">View</button>`:'—'}</td><td><button class="btn btn-ghost btn-sm" type="button" data-act="alert-msgs" data-id="${r.id}">Log</button></td></tr>`).join('')+'</tbody>';
   $('#donorCount').textContent=S.donors.length+' total'; renderReports();
+  renderPatientsTable();
   $('#donorTable').innerHTML='<thead><tr><th>Name</th><th>Group</th><th>City</th><th>Phone</th><th>Status</th><th>Donations</th><th>Success</th><th></th></tr></thead><tbody>'+S.donors.slice().sort((a,b)=>b.created-a.created).map(d=>`<tr><td>${esc(d.name)}</td><td><span class="bg">${pretty(d.group)}</span></td><td>${esc(d.city)}</td><td class="mono">${fmtPhone(d.phone)}</td><td>${eligPill(d)}</td><td class="mono">${d.donations.length}</td><td>${successLine(d)}</td><td><button class="btn btn-ghost btn-sm" data-act="del" data-d="${d.id}" type="button">${pendingDel===d.id?'Confirm remove':'Remove'}</button></td></tr>`).join('')+'</tbody>';
 }
 
 /* ================= demo accounts: always present, one tap ================= */
-function ensureDemo(){ if(!S) return; S.reports=S.reports||[]; S.msgs=S.msgs||[]; let ch=false;
+function ensureDemo(){ if(!S) return; S.reports=S.reports||[]; S.msgs=S.msgs||[]; if(T.step<0) return; let ch=false;
   if(!S.patients.some(p=>digits(p.phone)==='9000000101')){ const id=S.patients.some(p=>p.id==='p1')?uid():'p1'; S.patients.push({id,name:'Suresh (sample attendant)',phone:'9000000101',alt:'',relation:'family',verified:true,created:Date.now(),sample:true}); ch=true; }
   if(!S.donors.some(d=>digits(d.phone)==='9000000001')){ const c=CITY.Kakinada; S.donors.push({id:uid(),name:'Ravi Kumar (sample)',phone:'9000000001',age:24,gender:'M',group:'O+',city:'Kakinada',area:'Jagannaickpur',weight:68,last:daysAgo(140),available:true,lat:c[0],lng:c[1],verified:true,donations:[{date:daysAgo(140),hospital:'Voluntary camp'}],created:Date.now(),sample:true}); ch=true; }
   if(ch) save(); }
@@ -3088,7 +3414,7 @@ function voicesFor(L){ if(!('speechSynthesis' in window)) return []; const vs=sp
 function voiceUI(){ const b=$('#chatVoice'); if(!b) return; b.setAttribute('aria-pressed',String(chatVoice)); $('#chatVoiceLb').textContent=chatVoice?'Voice on':'Voice off';
   const st=$('#chatVoiceSt'); if(!st) return; if(!('speechSynthesis' in window)){ st.innerHTML='<span class="voice-badge">⚠ <span>Voice is not supported in this browser.</span></span>'; return; }
   const all=speechSynthesis.getVoices()||[]; if(!all.length){ st.innerHTML=''; return; } const v=voicesFor(CHATLANG)[0];
-  st.innerHTML=v?`<span class="voice-badge ok" title="${esc(v.name)}">✓ <span data-notr>${esc(bcp(CHATLANG))}</span> · <span data-notr>${esc(v.name.slice(0,40))}</span></span>`:'<span class="voice-badge">⚠ <span>No voice for this language on this device.</span></span>'; }
+  st.innerHTML=v?'':'<span class="voice-badge">⚠ <span>No voice for this language on this device.</span></span>'; b.title=v?bcp(CHATLANG)+' · '+v.name:''; $('#chat').classList.toggle('cv-err',!v); }
 function voicesReady(){ return new Promise(res=>{ if(!('speechSynthesis' in window)) return res([]); const v=speechSynthesis.getVoices(); if(v&&v.length) return res(v); let done=false; const fin=()=>{ if(done) return; done=true; res(speechSynthesis.getVoices()||[]); }; try{ speechSynthesis.addEventListener('voiceschanged',fin,{once:true}); }catch(_){ } setTimeout(fin,1200); }); }
 async function chatSpeak(text){ if(!chatVoice||!('speechSynthesis' in window)||!text) return; await voicesReady(); try{ const all=speechSynthesis.getVoices()||[]; const v=voicesFor(CHATLANG)[0];
   if(all.length&&!v){ if(chatSpeak.warned!==CHATLANG){ chatSpeak.warned=CHATLANG; addMsg('bot','This device has no voice for this language, so I will not read aloud with the wrong pronunciation. To add one: on Android open Settings › Text-to-speech › Google › Install voice data. On Windows open Settings › Time & language › Speech.'); } return; }
@@ -3103,7 +3429,7 @@ function micToggle(){ if(!SR){ toast('Voice typing is not supported in this brow
   rec.onend=()=>{ recOn=false; micUI(); const q=(fin||$('#chatIn').value||'').trim(); if(q) ask(q); };
   try{ rec.start(); recOn=true; micUI(); }catch(e){ recOn=false; micUI(); } }
 function initChatVoice(){ const sel=$('#chatLang'); if(!sel) return; sel.innerHTML=LANGS.map(([c,n,,e])=>`<option value="${c}"${c===CHATLANG?' selected':''}>${c==='en'?'English':n+' · '+e}</option>`).join('');
-  const tools=sel.parentElement; if(tools&&!$('#chatVoiceSt')) tools.insertAdjacentHTML('beforeend','<span class="small muted" id="chatVoiceSt" style="flex-basis:100%"></span>');
+  const tools=sel.parentElement; if(tools&&!$('#chatVoiceSt')) tools.insertAdjacentHTML('beforeend','<span class="cv-st" id="chatVoiceSt"></span>');
   sel.addEventListener('change',()=>{ CHATLANG=sel.value; try{ localStorage.setItem('bloodbridge-chatlang',CHATLANG); }catch(_){ } chatSpeak.warned=null; loadFont(CHATLANG); retranslateChat(); voiceUI(); if(recOn) try{ rec.stop(); }catch(_){ } const m=addMsg('bot','I will talk in this language now. Tap 🎤 and speak.'); chatSpeak(m.querySelector('.mtxt').textContent); $('#chatBody').scrollTop=1e9; });
   loadFont(CHATLANG); voiceUI(); if('speechSynthesis' in window){ try{ speechSynthesis.addEventListener('voiceschanged',voiceUI); }catch(_){ } } }
 /* keywords so the assistant understands every site language (typed or spoken) */
@@ -3125,15 +3451,15 @@ function botPre(t,u,role){ const out=(text,acts,tiles)=>({text,acts:acts||[],til
   if(/contact|feedback|complain|suggestion|email you|reach you/.test(t)) return out('You can send us a message from the Contact us form on the About us page. In a medical emergency, call 108 or 112 first.',[A('Contact us','#about'),A('Call 108','tel:108',1)]);
   if(/\bvoice\b|\bmic\b|microphone|speak|talk to you|read aloud|pronunc/.test(t)) return out('Tap 🎤 and speak your question. I answer on screen and read it aloud in the language you picked with 🌐. Tap 🔊 to turn my voice on or off, and 🔁 to hear the last answer again.');
   if(/language|translate|bhasha|telugu|hindi|tamil|kannada|malayalam|marathi|bengali|gujarati|punjabi|odia|urdu|assamese/.test(t)) return out('Change the website language with the globe button at the top. You can also keep English with help in your language below. To change my language, use the 🌐 menu at the top of this chat.');
-  if(/demo|test account|sample account|try it/.test(t)) return out('Demo accounts for testing: patient 9000000101 and donor 9000000001. On the Log in page, tap one of them. The demo fills the OTP for you.',[A('Log in','#login')]);
+  if(/demo|test account|sample account|try it/.test(t)) return out('Sign up on the Log in / Sign up page with your mobile number. We send a 6-digit OTP on WhatsApp or SMS to verify it.',[A('Log in / Sign up','#login')]);
   if(/report|fake|fraud|false|scam|no.?show|did ?n.?t come|cheat/.test(t)) return out('If a donor does not come or a proof photo looks wrong, the family taps "Report a problem". If a request looks fake, a donor taps "Report request". The person under review gets no new alerts until an admin checks the photos and decides.');
   if(/proof|certificate|receipt|verify (my )?donation|upload/.test(t)) return out('After you donate, tap "I have donated" and upload a photo of the blood bank receipt or donation certificate with its receipt or bag number. I check that the photo is clear, new, recent and not used before. Then the family confirms, and your certificate unlocks.',role==='donor'?[A('Requests for me','#donor')]:[]);
   if(/success|impact|score|badge|lives (saved|helped)|my stats|reliab|trust level/.test(t)){ if(role==='donor'){ const s=donorStats(u); return {text:['Your success measures:',{p:'• ',k:'Donations',s:': '+s.total},{p:'• ',k:'Lives helped (up to)',s:': '+s.lives},{p:'• ',k:'Response rate',s:': '+(s.rate==null?'—':s.rate+'%')},{p:'• ',k:'Promise kept',s:': '+(s.kept==null?'—':s.kept+'%')},{p:'• ',k:'Success score',s:': '+s.score+'/100'},{p:'• ',k:s.level}],acts:[A('Requests for me','#donor')]}; }
     return out('Every donor profile shows success measures: donations, lives helped, response rate, promise kept, average response time and a success score. Families see a trust badge on each donor card.'); }
   if(/slip|requisition|doctor'?s note/.test(t)) return out('A photo of the hospital requisition slip or doctor\'s note is required for every request. It stops false alerts. Donors see a green badge and can view the slip.');
-  if(/\botp\b|code (not|did)|verification code/.test(t)) return out('The 6-digit code appears in the Demo SMS box in this prototype. If it expires, tap Resend OTP after 30 seconds.');
+  if(/\botp\b|code (not|did)|verification code/.test(t)) return out('We send the 6-digit code on WhatsApp (or SMS if you pick it). It is valid for 5 minutes. If it does not arrive, tap Resend after 30 seconds, or switch to SMS.');
   if(/cancel/.test(t)) return out(role==='donor'?'Open Requests for me and tap "Can\'t make it". A backup or another donor is called automatically.':'Open My requests and tap Cancel request, then tap again to confirm. All donors are told they do not need to go.',[role==='donor'?A('Requests for me','#donor'):A('My requests','#patient')]);
-  if(/privacy|private|my data|share my number|safe to share/.test(t)) return out('Your number is shared only with the family of a request you accept. Data stays in this browser in this prototype. Cover ID numbers before uploading photos.');
+  if(/privacy|private|my data|share my number|safe to share/.test(t)) return out('Your number is shared only with the family of a request you accept. Patient numbers stay hidden from donors until they accept, and only admins see the full records. Cover ID numbers before uploading photos.');
   return null; }
 function botMore(t,u,role){ const out=(text,acts,tiles)=>({text,acts:acts||[],tiles:!!tiles}); const A=(l,h,x)=>({label:l,href:h,ext:x});
   if(/backup|standby/.test(t)) return out('When a request already has enough donors, you can join as a backup. You are called only if a confirmed donor cancels.');
@@ -3148,15 +3474,11 @@ function botMore(t,u,role){ const out=(text,acts,tiles)=>({text,acts:acts||[],ti
 (function(){ const f=$('#abForm'); if(!f) return; f.addEventListener('submit',e=>{ e.preventDefault(); const n=$('#ab-name').value.trim(), m=$('#ab-msg').value.trim();
   if(!n||!m){ $('#abErr').textContent='Please write your name and message.'; return; } $('#abErr').textContent='';
   S.msgs=S.msgs||[]; S.msgs.push({id:uid(),name:n,from:$('#ab-email').value.trim(),subject:$('#ab-subj').value.trim(),msg:m,t:Date.now()}); save(); f.reset();
-  toast('Thank you! Your feedback is saved. In this prototype, messages stay in this browser.'); }); })();
+  toast('Thank you! Your feedback is saved and sent to the Blood Bridge team.'); }); })();
 
 /* ================= live ETA, demo roles, reset ================= */
 const etaMin=(d,r)=>Math.max(5,Math.round(km(coords(d),coords(r))/25*60+4));
-function renderDemoBar(){ const bar=$('#demoBar'); if(!bar) return; let off=false; try{ off=localStorage.getItem('bloodbridge-demobar')==='off'; }catch(_){ }
-  bar.hidden=off; if(off) return; const v=curHash(); const cur=session?session.role:(v==='admin'?'admin':'');
-  const B=(r,l)=>`<button class="btn btn-ghost btn-sm" type="button" data-act="demo-role" data-role="${r}" aria-pressed="${cur===r}">${t(l)}</button>`;
-  bar.innerHTML=`<b>${t('Demo mode')}</b><span>${t('Switch role:')}</span>${B('patient','Patient')}${B('donor','Donor')}${B('admin','Admin')}<button class="btn btn-ghost btn-sm" type="button" data-act="reset-demo">${t('Reset demo data')}</button><button class="btn btn-ghost btn-sm x" type="button" data-act="demo-hide" aria-label="${t('Hide demo bar')}">✕</button>`; }
-function demoRole(role){ if(role==='admin'){ setSession(null); navTo('#admin'); route(); toast(t('Admin dashboard (demo). Check reports, donors and requests here.')); return; } demoLogin(role); }
+function demoRole(role){ if(role!=='patient'&&role!=='donor') return; demoLogin(role); }
 function resetDemo(){ S=seed(); ensureDemo(); relocateSamples(); save(); setSession(null); toast('Demo data restored.'); if(('#'+curHash())==='#welcome') route(); else navTo('#welcome'); }
 
 /* ================= 3D tilt for logos ================= */
@@ -3179,8 +3501,9 @@ const QA_CHIPS=['Find O− donors near me','Verify my donor certificate','First 
 function quickAction(q){ toggleChat(true); addMsg('me',chatTr(q)); const u=me(), role=session&&session.role; const A=(l,h,x)=>({label:l,href:h,ext:x});
   const say=(text,acts)=>{ const m=addMsg('bot',text,acts); chatSpeak(m.querySelector('.mtxt').textContent); $('#chatBody').scrollTop=1e9; return m; };
   if(q===QA_CHIPS[0]){ const tgt=USERLOC?{group:'O-',...HOME(),where:'hospital',hospital:HOME().city}:{group:'O-',city:'Kakinada',lat:16.9600,lng:82.2390,where:'hospital',hospital:'Government General Hospital (GGH)'}; const L=ranked(tgt).filter(x=>isElig(x.d)).slice(0,5);
-    if(role==='patient'){ try{ $('#fd-group').value='O-'; $('#fd-city').value=''; }catch(_){ } navTo('#find-donors'); setTimeout(()=>{ try{ $('#fd-group').value='O-'; renderFind(); }catch(_){ } },120); }
+    if(isAdmin()){ try{ $('#fd-group').value='O-'; $('#fd-city').value=''; }catch(_){ } navTo('#find-donors'); setTimeout(()=>{ try{ $('#fd-group').value='O-'; renderFind(); }catch(_){ } },120); }
     if(!L.length) return say('No eligible O− donor is free right now. Call the GGH blood bank or e-RaktKosh.',[A('Nearby blood banks',mapsNear('blood bank',tgt),1)]);
+    if(!isAdmin()) return say(`${ranked(tgt).filter(x=>isElig(x.d)).length} eligible donors can give O− ${USERLOC?'near you':'near GGH Kakinada'}. Names and numbers stay private: raise a request and we alert them for you.`,[A('New blood request',role==='patient'?'#new-request':'#register-patient'),A('Nearby blood banks',mapsNear('blood bank',tgt),1)]);
     return say([USERLOC?'Top O− donors near you:':'Top O− donors near GGH Kakinada:',...L.map((x,i)=>`${i+1}. ${x.d.name} – ${pretty(x.d.group)}, ${x.d.city}, ${x.km.toFixed(1)} km${role==='patient'?' · '+fmtPhone(x.d.phone):''}`)],role==='patient'?[A('Find donors','#find-donors')]:[{label:'Log in as patient',act:'demo-role'},A('Nearby blood banks',mapsNear('blood bank',tgt),1)]); }
   if(q===QA_CHIPS[1]){ if(role!=='donor') return say('Certificate check is for donors. Log in as a donor, accept a request, donate, then tap "I have donated".',[{label:'Log in as donor',act:'demo-role'}]);
     const acc=S.requests.find(r=>r.status==='open'&&respOf(r,u.id)==='accepted'); const rep=S.requests.find(r=>r.status==='open'&&respOf(r,u.id)==='reported');
@@ -3214,7 +3537,7 @@ async function idCard(){ const u=me(); if(!u){ toast(t('Log in to see your emerg
   g.fillStyle=INK; g.font='700 22px system-ui,sans-serif'; g.fillText('Mobile: +91 '+fmtPhone(u.phone),280,375);
   g.fillStyle=RED; g.font='800 20px system-ui,sans-serif'; g.fillText('EMERGENCY CONTACTS',60,440); g.fillStyle=INK; g.font='600 22px system-ui,sans-serif';
   g.fillText('108 · Ambulance      112 · National emergency',60,476); g.fillText(u.alt?('Alternate: +91 '+fmtPhone(u.alt)):'Blood bank: e-RaktKosh (eraktkosh.mohfw.gov.in)',60,510);
-  g.fillStyle=MUT; g.font='500 16px system-ui,sans-serif'; g.fillText('Prototype card · Design Thinking using AI · Issued '+new Date().toLocaleDateString('en-IN'),60,580);
+  g.fillStyle=MUT; g.font='500 16px system-ui,sans-serif'; g.fillText('Blood Bridge · Verified donor card · Issued '+new Date().toLocaleDateString('en-IN'),60,580);
   try{ const txt=`BLOOD BRIDGE EMERGENCY ID\nName: ${nm.replace(/[^\x20-\x7e]/g,'')}\nBlood group: ${grp||'-'}\nRole: ${role}\nMobile: +91 ${u.phone}\n${u.alt?'Alt: +91 '+u.alt+'\n':''}Emergency: 108 / 112`;
     const q=qrcode(0,'M'); q.addData(txt); q.make(); const n=q.getModuleCount(), S2=230, cell=Math.floor(S2/n), size=cell*n, ox=W-60-size, oy=150;
     rr(ox-16,oy-16,size+32,size+32,18); g.fillStyle='#fff'; g.fill(); g.strokeStyle='#F3C4CB'; g.lineWidth=2; g.stroke(); g.fillStyle='#111';
@@ -3275,25 +3598,31 @@ function bankFallback(here){ return `<div class="bank"><div><b>${t('No listed bl
 const isAlertNote=n=>n.role==='donor'&&n.reqId&&/^New /.test(n.text||'');
 function beep(){ try{ const A=window.AudioContext||window.webkitAudioContext; if(!A) return; const c=beep.c||(beep.c=new A()); [0,0.22].forEach(off=>{ const o=c.createOscillator(), g=c.createGain(); o.type='sine'; o.frequency.value=880; g.gain.setValueAtTime(0.0001,c.currentTime+off); g.gain.exponentialRampToValueAtTime(0.25,c.currentTime+off+0.02); g.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+off+0.18); o.connect(g); g.connect(c.destination); o.start(c.currentTime+off); o.stop(c.currentTime+off+0.2); }); }catch(e){} }
 function daClose(){ const x=$('#dalert'); if(x) x.remove(); }
-function showDonorAlert(){ try{ if(!session||session.role!=='donor'||T.step>=0) return; const d=me(); if(!d) return;
-  const notes=(S.notes||[]).filter(n=>n.to===d.id&&isAlertNote(n)&&!n.popped).sort((a,b)=>b.t-a.t); if(!notes.length) return;
-  notes.forEach(n=>n.popped=true); save();
-  const r=S.requests.find(q=>q.id===notes[0].reqId); if(!r||r.status!=='open'||respOf(r,d.id)) return;
-  const k=km(coords(d),coords(r)).toFixed(1); daClose();
-  const el=document.createElement('div'); el.className='dalert'; el.id='dalert'; el.setAttribute('role','alertdialog'); el.setAttribute('aria-label',t('Emergency blood request'));
-  el.innerHTML=`<div class="da-h"><i aria-hidden="true">🚨</i><div><b>${t('Emergency blood request')}</b><div class="small muted">${notes.length>1?`+${notes.length-1} · `:''}${ago(notes[0].t)}</div></div><button class="da-x" type="button" data-act="da-close" aria-label="${t('Close')}">✕</button></div>
-   <div class="row" style="gap:8px"><span class="bg lg fill">${pretty(r.group)}</span><div><b>${esc(r.units)} unit${r.units>1?'s':''} · ${esc(r.hospital)}</b><div class="meta"><span>${esc(r.city)} · ${k} km</span>${urgPill(r.urgency)}${slipBadge(r)}</div></div></div>
-   <div class="row"><button class="btn btn-primary" type="button" data-act="da-view" data-id="${r.id}">${t('View & accept')}</button><button class="btn btn-ghost" type="button" data-act="da-close">${t('Later')}</button></div>`;
+let REQ_FORCED=false;
+function showDonorAlert(){ try{ if(!session||session.role!=='donor'||T.step>=0||document.body.classList.contains('gated')) return; const d=me(); if(!d) return;
+  sweepOpen(d);
+  let notes=(S.notes||[]).filter(n=>n.to===d.id&&isAlertNote(n)&&!n.popped).sort((a,b)=>b.t-a.t);
+  let r=null;
+  if(REQ_PARAM&&!REQ_FORCED){ REQ_FORCED=true; r=S.requests.find(q=>q.id===REQ_PARAM&&q.status==='open'&&compatFor(q).includes(d.group)&&!respOf(q,d.id))||null; }
+  if(!r){ if(!notes.length) return; notes.forEach(n=>n.popped=true); save(); r=S.requests.find(q=>q.id===notes[0].reqId); if(!r||r.status!=='open'||respOf(r,d.id)) return; }
+  else { notes.forEach(n=>n.popped=true); save(); }
+  const k=km(coords(d),coords(r)).toFixed(1), hp=hospPhone(r), from=d.lat!=null&&d.lat!==''?d.lat+','+d.lng:''; daClose();
+  const el=document.createElement('div'); el.className='dalert'+(r.urgency==='critical'?' crit':''); el.id='dalert'; el.setAttribute('role','alertdialog'); el.setAttribute('aria-label',t('Emergency blood request'));
+  el.innerHTML=`<div class="da-h"><i aria-hidden="true">🚨</i><div><b>${r.urgency==='critical'?t('Critical'):''} ${t('Emergency blood request')}</b><div class="small muted">${notes.length>1?`+${notes.length-1} · `:''}${ago(r.created||Date.now())} · ${t('Your blood group is compatible')}</div></div><button class="da-x" type="button" data-act="da-close" aria-label="${t('Close')}">✕</button></div>
+   <div class="row" style="gap:10px;align-items:center"><span class="bg lg fill">${pretty(r.group)}</span><div><b>${esc(r.units)} unit${r.units>1?'s':''} · ${esc(r.hospital)}</b><div class="meta"><span>${esc(r.city)} · <b>${k} km</b></span>${urgPill(r.urgency)}${slipBadge(r)}</div></div></div>
+   <div class="da-act"><button class="btn btn-ok" type="button" data-act="da-accept" data-id="${r.id}">✅ <span>${t('I Can Donate (Accept)')}</span></button>
+   <a class="btn btn-ghost btn-sm" href="${mapsDir(dest(r),from)}" target="_blank" rel="noopener">📍 <span>${t('Open in Google Maps')}</span></a>
+   <span class="pill plan" title="${t('number shown after you accept')}">📞 +91 ${maskPh(r.contact)} · ${t('number shown after you accept')}</span>${hp?`<a class="btn btn-ghost btn-sm" href="tel:${hp.length===10?'+91'+hp:hp}">🏥 <span>${t('Call hospital')}</span></a>`:''}
+   <button class="btn btn-ghost btn-sm" type="button" data-act="da-view" data-id="${r.id}">${t('Details')}</button><button class="btn btn-ghost btn-sm" type="button" data-act="da-close">${t('Later')}</button></div>`;
   document.body.appendChild(el); beep(); try{ navigator.vibrate&&navigator.vibrate([220,120,220]); }catch(e){}
+  try{ renderNav(curHash()); const bl=document.querySelector('#bellBox .bell'); if(bl){ bl.classList.remove('ring'); void bl.offsetWidth; bl.classList.add('ring'); } }catch(e){}
   try{ if('Notification' in window&&Notification.permission==='granted'&&document.hidden){ new Notification('Blood Bridge · '+t('Emergency blood request'),{body:`${pretty(r.group)} · ${r.units} · ${r.hospital}, ${r.city} · ${k} km`,tag:'bb-'+r.id}); } }catch(e){}
-  srSay(t('Emergency blood request')+'. '+pretty(r.group)+', '+r.hospital); }catch(e){} }
+  srSay(t('Emergency blood request')+'. '+pretty(r.group)+', '+r.hospital); }catch(e){ console.warn(e); } }
 function srSay(x){ const l=$('#srLive'); if(l){ l.textContent=''; setTimeout(()=>l.textContent=x,50); } }
 async function notifOn(){ if(!('Notification' in window)){ toast(t('Notifications are blocked in this browser.')); return; } try{ const p=await Notification.requestPermission(); toast(p==='granted'?t('Alerts are on. You will get a notification for new requests.'):t('Notifications are blocked in this browser.')); }catch(e){ toast(t('Notifications are blocked in this browser.')); } }
 // another tab (for example the patient) changed the data: refresh this view live
-window.addEventListener('storage',e=>{ if(e.key!==DB_KEY||!e.newValue) return; try{ const x=JSON.parse(e.newValue); if(x&&x.donors){ S=x; const v=curHash(); renderNav(v); render(v); showDonorAlert(); } }catch(_){ } });
-function alertMsgs(rid){ const r=S.requests.find(q=>q.id===rid); if(!r) return; const txt=shareText(r); const sms=`Blood Bridge: ${r.units} unit(s) of ${pretty(r.group)} blood needed at ${r.hospital}, ${r.city} (${r.urgency}). Open Blood Bridge to accept.`;
-  const rows=r.alerted.map(id=>S.donors.find(d=>d.id===id)).filter(Boolean).map(d=>`<div class="smsbox"><div class="row" style="justify-content:space-between;gap:6px"><b>${esc(d.name)} · ${pretty(d.group)}</b><span class="mono small">+91 ${fmtPhone(d.phone)}</span></div><div class="sm">${esc(sms)}</div><div class="row"><span class="pill ${respOf(r,d.id)?'ok':'info'}">${respOf(r,d.id)?t('Seen'):t('Delivered in app')}</span><a class="btn btn-ok btn-sm" href="https://wa.me/91${digits(d.phone)}?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">${t('Send on WhatsApp')}</a><a class="btn btn-ghost btn-sm" href="sms:+91${digits(d.phone)}?body=${encodeURIComponent(sms)}">SMS</a></div></div>`).join('');
-  openModal(t('Alert messages'),`<div style="display:grid;gap:10px"><p class="small">${t('Every alerted donor sees a pop-up with a sound in the app. Real SMS is not connected in this prototype, so you can also send the message on WhatsApp or SMS.')}</p>${rows||'<p class="muted small">—</p>'}</div>`); }
+
+function alertMsgs(rid){ showDispatch(rid); }
 function signupGo(role){ const ph=digits(($('#su-phone')||{}).value||''); navTo(role==='donor'?'#register-donor':'#register-patient');
   setTimeout(()=>{ if(role==='donor'){ if(ph) $('#dr-phone').value=ph; const n=$('#dr-name'); if(n) n.focus(); } else { const rel=$('#pr-relation'); if(rel){ rel.value=role==='staff'?'staff':'family'; applySelf('pr'); } if(ph) $('#pr-phone').value=ph; const n=$('#pr-name'); if(n) n.focus(); } },150); }
 
@@ -3309,6 +3638,117 @@ function signupGo(role){ const ph=digits(($('#su-phone')||{}).value||''); navTo(
   const q=()=>{ if(!raf) raf=requestAnimationFrame(check); };
   addEventListener('scroll',q,{passive:true}); addEventListener('resize',q); addEventListener('hashchange',()=>setTimeout(q,60)); setInterval(q,1200); setTimeout(q,300); })();
 
+/* ================= SMS & WhatsApp alert dispatch (demo simulation + live API ready) =================
+   Live: set window.BB_ALERTS={endpoint:'https://<region>-<project>.cloudfunctions.net/sendAlert',provider:'twilio'|'fast2sms'|'meta'}
+   (or BB_FIREBASE.alerts). The endpoint receives {provider,to,channels,sms,whatsapp,requestId,donorId} with the user's Firebase ID token. */
+const ALERT_API=()=>window.BB_ALERTS||(window.BB_FIREBASE&&window.BB_FIREBASE.alerts)||null;
+const wantSms=d=>!!d&&d.smsOptIn!==false, wantWa=d=>!!d&&d.whatsappOptIn!==false;
+const REQ_PARAM=(()=>{ try{ return new URLSearchParams(location.search).get('req'); }catch(e){ return null; } })();
+/* compatible (ABO/Rh) + currently eligible donors for a request, best match first */
+function matchEligibleDonors(r){ return ranked(r).filter(x=>isElig(x.d)); }
+function reqLink(r){ let base='https://bloodbridge.app/'; try{ if(/^https?:/.test(location.protocol)) base=location.origin+location.pathname; }catch(e){} return base+'?req='+encodeURIComponent(r.id)+'#donor'; }
+function hospPhone(r){ try{ const n=String(r.hospital||'').toLowerCase().trim(); if(!n||typeof BANKS==='undefined') return ''; const b=BANKS.find(b=>{ const m=String(b.name||'').toLowerCase(); return m&&(m.includes(n)||n.includes(m.split(',')[0])); }); return b&&b.phones&&b.phones[0]?b.phones[0][0]:''; }catch(e){ return ''; } }
+function alertText(r,d){ const k=d?km(coords(d),coords(r)).toFixed(1):null;
+  return `🩸 *Blood Bridge – ${String(r.urgency||'urgent').toUpperCase()} blood request*\nBlood group needed: *${pretty(r.group)}*\nUnits needed: ${r.units}\nHospital: ${r.hospital}, ${r.haddr?r.haddr+', ':''}${r.city}${k?` (${k} km from you)`:''}\nContact: ${hospPhone(r)?'Hospital '+hospPhone(r):'+91 '+maskPh(r.contact)+' (full number in the app after you accept)'}\nLocation: ${mapsSearch(dest(r))}\nAccept the request: ${reqLink(r)}`; }
+function smsText(r){ return `Blood Bridge ${String(r.urgency||'urgent').toUpperCase()}: ${r.units} unit(s) ${pretty(r.group)} needed at ${r.hospital}, ${r.city}. ${hospPhone(r)?'Call hospital '+hospPhone(r)+'.':'Patient contact shown after you accept.'} Accept: ${reqLink(r)}`; }
+const waLink=(d,txt)=>`https://wa.me/91${digits(d.phone)}?text=${encodeURIComponent(txt)}`;
+const smsLink=(d,txt)=>`sms:+91${digits(d.phone)}?body=${encodeURIComponent(txt)}`;
+const maskPh=p=>{ const x=digits(p); return x.length===10?`${x.slice(0,2)}XXX X${x.slice(6)}`:x; };
+/* one donor, one request: send (live) or simulate (demo). Returns the dispatch record. */
+function sendSmsAndWhatsAppAlert(donor,request){
+  const api=ALERT_API(), out={};
+  [['whatsapp',wantWa(donor),alertText(request,donor)],['sms',wantSms(donor),smsText(request)]].forEach(([ch,on,text])=>{ if(!on) return;
+    const e={reqId:request.id,to:'donor',toId:donor.id,name:donor.name.split(' (')[0],phone:'+91'+digits(donor.phone),channel:ch,dg:donor.group,pg:request.group,text}; logSend(e); out[ch]=e;
+    if(api&&api.endpoint&&typeof window.bbSendAlert!=='function'){ e.status='queued'; (async()=>{ let ok=false; try{ const u=window.firebase&&firebase.auth&&firebase.auth().currentUser; const tok=u?await u.getIdToken():''; const res=await fetch(api.endpoint,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},tok?{Authorization:'Bearer '+tok}:{}),body:JSON.stringify({provider:api.provider||'twilio',channel:ch,to:e.phone,text,requestId:request.id,donorId:donor.id})}); ok=res.ok; }catch(err){ console.warn('[alerts]',err); } e.status=ok?'sent':'failed'; try{ save(); dispatchPanelRefresh(); }catch(_){ } })(); } });
+  queueDispatch(donor.id,request.id); return out; }
+let DQ=[], DQt=0, NO_DISPATCH=false;
+function queueDispatch(to,reqId){ if(NO_DISPATCH) return; DQ.push([to,reqId]); clearTimeout(DQt); DQt=setTimeout(flushDispatch,0); }
+function flushDispatch(){ const q=DQ; DQ=[]; const touched=new Set();
+  q.forEach(([to,rid])=>{ const r=(S.requests||[]).find(x=>x.id===rid); if(r) touched.add(r); });
+  if(!touched.size) return; save();
+  if(T.step>=0||!session) return; const mine=isAdmin()?[...touched]:[]; if(mine.length) showDispatch(mine[mine.length-1].id); }
+const stLabel=s=>({'link-ready':'Link ready ✓',simulated:'Link ready ✓',sent:'Sent ✓',sending:'Sending…',queued:'Sending…',failed:'Failed ✕',off:'Off'}[s]||s);
+const stCls=s=>s==='sent'||s==='simulated'||s==='link-ready'?'ok':s==='failed'?'crit':s==='off'?'plan':'info';
+function dispatchRows(r,limit){ const ob=(S.outbox||[]).filter(e=>e.reqId===r.id&&e.to==='donor'); const ids=[...new Set([...(r.alerted||[]),...ob.map(e=>e.toId)])]; const st=(id,ch)=>{ const e=ob.filter(x=>x.toId===id&&x.channel===ch).pop(); return e?e.status:'off'; }; const recs=ids.map(id=>({to:id,wa:st(id,'whatsapp'),sms:st(id,'sms'),mode:ob.some(x=>x.status==='sent')?'live':'demo'}));
+  const sms=smsText(r);
+  return recs.slice(0,limit||99).map(x=>{ const d=S.donors.find(y=>y.id===x.to); if(!d) return ''; const wa=alertText(r,d);
+    return `<details class="dl-item"><summary><span class="bg">${pretty(d.group)}</span><span class="dl-who"><b>${esc(d.name.split(' (')[0])}</b><span class="mono small">+91 ${fmtPhone(d.phone)}</span></span><span class="pill ${stCls(x.wa)}" title="WhatsApp">WA · ${stLabel(x.wa)}</span><span class="pill ${stCls(x.sms)}" title="SMS">SMS · ${stLabel(x.sms)}</span>${respOf(r,d.id)?`<span class="pill ok">${t('Seen')}</span>`:''}</summary>
+      <div class="dl-msg wa"><div class="dl-cap">WhatsApp → +91 ${fmtPhone(d.phone)}</div><pre>${esc(wa)}</pre></div>
+      <div class="dl-msg sm"><div class="dl-cap">SMS → +91 ${fmtPhone(d.phone)}</div><pre>${esc(sms)}</pre></div>
+      <div class="row"><a class="btn btn-ok btn-sm" href="${waLink(d,wa)}" target="_blank" rel="noopener" ${x.wa==='off'?'aria-disabled="true" title="Donor turned WhatsApp alerts off"':''}>${t('Send on WhatsApp')}</a><a class="btn btn-ghost btn-sm" href="${smsLink(d,sms)}" ${x.sms==='off'?'aria-disabled="true" title="Donor turned SMS alerts off"':''}>SMS</a></div></details>`; }).join(''); }
+let DLid=null;
+function showDispatch(rid){ if(!isAdmin()){ toast('Alert logs are visible to admins only.'); return; } const r=S.requests.find(q=>q.id===rid); if(!r) return; DLid=rid; let el=$('#dispatchLog'); if(!el){ el=document.createElement('aside'); el.id='dispatchLog'; el.className='dlog'; el.setAttribute('role','status'); el.setAttribute('aria-live','polite'); document.body.appendChild(el); }
+  const ob=(S.outbox||[]).filter(e=>e.reqId===r.id&&e.to==='donor'); const n=new Set([...(r.alerted||[]),...ob.map(e=>e.toId)]).size, live=ob.some(e=>e.status==='sent'||e.status==='queued');
+  el.innerHTML=`<div class="dl-h"><i aria-hidden="true">📲</i><div><b>${t('SMS & WhatsApp Alert Dispatch')}</b><div class="small muted">${pretty(r.group)} · ${esc(r.hospital)} · ${n} ${t('matched donors')} · ${live?t('Live API'):t('WhatsApp & SMS links')}</div></div><button class="da-x" type="button" data-act="dl-close" aria-label="${t('Close')}">✕</button></div>
+   <p class="small muted" style="margin:0">${t('Only donors whose blood group is compatible and who are eligible to donate today were alerted.')}</p>
+   <div class="dl-list">${dispatchRows(r)||`<p class="muted small">${t('No eligible compatible donor found yet. Try the blood banks list.')}</p>`}</div>`; }
+function dispatchPanelRefresh(){ if(DLid&&$('#dispatchLog')) showDispatch(DLid); }
+/* a logged-in donor gets alerts for every open compatible request, not only for new ones */
+function sweepOpen(d){ if(!d||!isElig(d)) return 0; let n=0; NO_DISPATCH=true;
+  try{ (S.requests||[]).forEach(r=>{ if(r.status!=='open'||r.flagged||isCovered(r)||respOf(r,d.id)||(r.alerted||[]).includes(d.id)) return; if(!compatFor(r).includes(d.group)) return; const k=km(coords(d),coords(r)); if(k>80&&d.city!==r.city) return;
+    r.alerted.push(d.id); notify('donor',d.id,`New ${pretty(r.group)} request at ${r.hospital}, ${r.city} (${r.urgency}). Your ${pretty(d.group)} blood is compatible.`,r.id); n++; }); }finally{ NO_DISPATCH=false; }
+  if(n){ save(); try{ renderNav(curHash()); }catch(e){} } return n; }
+setInterval(()=>{ try{ showDonorAlert(); }catch(e){} },3000);
+
+/* login gate + Firebase auth state: restore the signed-in user on a new device/tab, follow sign-out */
+(function(){ let hooked=false; function hook(){ if(hooked) return; try{ if(!(window.firebase&&firebase.apps&&firebase.apps.length&&firebase.auth)) return; hooked=true;
+  firebase.auth().onAuthStateChanged(async u=>{ try{ if(!u){ return; } const db=cloudDB(); if(!db||session) return; const sd=await db.collection('sessions').doc(u.uid).get(); if(sd.exists){ const x=sd.data(); if(x&&x.role){ session=x.role==='admin'?null:{role:x.role,id:x.id}; if(session){ try{ localStorage.setItem(SES_KEY,JSON.stringify(session)); }catch(_){ } route(); } } } }catch(e){} }); }catch(e){} }
+  window.addEventListener('bb-cloud-ready',hook); setTimeout(hook,600); setTimeout(hook,3000); })();
+
+/* ================= RBAC: admin passcode login + privacy helpers =================
+   Change the admin passcode: put the SHA-256 hex of the new passcode in ADMIN_PASS_SHA256
+   (or set window.BB_ADMIN_PASS_SHA256 before this script). Default passcode: BBAdmin@2026 */
+const ADMIN_PASS_SHA256=(window.BB_ADMIN_PASS_SHA256||'becb6aa1db3140069892aef625704b7a3c639cdf53890be8101461b28473f09f').toLowerCase();
+function sha256hex(str){ const b=new TextEncoder().encode(str); const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]; const l=b.length, n=((l+9+63)>>6)<<6, m=new Uint8Array(n); m.set(b); m[l]=0x80; const dv=new DataView(m.buffer); dv.setUint32(n-4,l*8); dv.setUint32(n-8,Math.floor(l/0x20000000));
+  const W=new Uint32Array(64), R=(x,s)=>(x>>>s)|(x<<(32-s));
+  for(let o=0;o<n;o+=64){ for(let i=0;i<16;i++) W[i]=dv.getUint32(o+i*4); for(let i=16;i<64;i++){ const s0=R(W[i-15],7)^R(W[i-15],18)^(W[i-15]>>>3), s1=R(W[i-2],17)^R(W[i-2],19)^(W[i-2]>>>10); W[i]=(W[i-16]+s0+W[i-7]+s1)>>>0; }
+    let [a,bb,c,d,e,f,g,h]=H; for(let i=0;i<64;i++){ const t1=(h+(R(e,6)^R(e,11)^R(e,25))+((e&f)^(~e&g))+K[i]+W[i])>>>0, t2=((R(a,2)^R(a,13)^R(a,22))+((a&bb)^(a&c)^(bb&c)))>>>0; h=g; g=f; f=e; e=(d+t1)>>>0; d=c; c=bb; bb=a; a=(t1+t2)>>>0; }
+    H=H.map((x,i)=>(x+[a,bb,c,d,e,f,g,h][i])>>>0); }
+  return H.map(x=>x.toString(16).padStart(8,'0')).join(''); }
+async function adminPassOk(p){ p=String(p||''); if(!p) return false; let hx=''; try{ if(window.crypto&&crypto.subtle){ const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p)); hx=[...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join(''); } }catch(e){} if(!hx) hx=sha256hex(p); return hx===ADMIN_PASS_SHA256; }
+const ALK='bloodbridge-adminlock';
+function adminLock(){ try{ const x=JSON.parse(localStorage.getItem(ALK)||'{}'); if(x.until&&Date.now()<x.until) return `Too many wrong passcodes. Try again in ${Math.ceil((x.until-Date.now())/60000)} min.`; }catch(e){} return ''; }
+function adminFail(){ try{ const x=JSON.parse(localStorage.getItem(ALK)||'{}'); x.n=(x.n||0)+1; if(x.n>=5){ x.until=Date.now()+5*60000; x.n=0; } localStorage.setItem(ALK,JSON.stringify(x)); }catch(e){} }
+function adminLockReset(){ try{ localStorage.removeItem(ALK); }catch(e){} }
+(function(){ const sync=()=>{ const a=document.getElementById('lg-admin'), w=document.getElementById('lg-passWrap'); if(a&&w) w.hidden=!a.checked; };
+  document.addEventListener('change',e=>{ if(e.target&&e.target.name==='lg-role') sync(); }); setTimeout(sync,0); })();
+/* patients see counts only: who and how many could still be alerted, never names or numbers */
+function anonMatch(r,list){ const el=list.filter(x=>isElig(x.d)), near=el.filter(x=>x.km<=25).length;
+  return `<div class="anon-match"><div class="stat"><div class="n">${el.length}</div><div class="l">${t('eligible compatible donors not yet alerted')}</div></div><div class="stat"><div class="n">${near}</div><div class="l">${t('within 25 km of the hospital')}</div></div><div class="stat"><div class="n">${r.alerted.length}</div><div class="l">${t('donors notified so far')}</div></div><p class="muted small">🔒 ${t("Donor names and phone numbers stay private. A donor's name and number appear under Donors coming as soon as they accept your request.")}</p></div>`; }
+function renderPatientsTable(){ const tb=$('#patientTable'); if(!tb) return; const P=S.patients.slice().sort((a,b)=>(b.created||0)-(a.created||0)); $('#patientCount').textContent=P.length+' patient account'+(P.length===1?'':'s');
+  tb.innerHTML='<thead><tr><th>Name</th><th>Phone</th><th>Relation</th><th>Requests (open / total)</th><th>Joined</th></tr></thead><tbody>'+(P.map(p=>{ const R=S.requests.filter(r=>r.patientId===p.id); return `<tr><td>${esc(p.name)}</td><td class="mono">${fmtPhone(p.phone)}</td><td>${esc(p.relation||'')}</td><td class="mono">${R.filter(r=>r.status==='open').length} / ${R.length}</td><td>${p.created?ago(p.created):'—'}</td></tr>`; }).join('')||'<tr><td colspan="5" class="muted">No patient accounts yet.</td></tr>')+'</tbody>'; }
+
+/* ================= LIVE REAL-TIME SYNC ENGINE =================
+   1. Same device, every tab/window: BroadcastChannel('blood_bridge_live_sync') + the 'storage' event (<1 s).
+   2. Every device: Firebase Firestore onSnapshot listeners, active when firebaseConfig (top of this file) has real keys. */
+var BC=null, TAB=Math.random().toString(36).slice(2), FS=null, FB_ON=false, LAST={}, fbTimer=0, liveT=0;
+const LCOLS=['donors','patients','requests','notes','reports','outbox','otplog','msgs'];
+try{ BC=new BroadcastChannel('blood_bridge_live_sync'); BC.onmessage=e=>{ if(e.data&&e.data.from!==TAB) livePull(); }; }catch(e){ BC=null; }
+window.addEventListener('storage',e=>{ if(e.key===DB_KEY) livePull(); });
+const FORM_VIEWS=['new-request','register-patient','register-donor','login'];
+function livePull(){ clearTimeout(liveT); liveT=setTimeout(()=>{ try{ const x=JSON.parse(localStorage.getItem(DB_KEY)); if(x&&x.donors){ S=x; liveRefresh(); } }catch(_){ } },30); }
+function liveRefresh(){ try{ if(session&&session.role!=='admin'&&!me()) return; const v=curHash(); renderNav(v); if(!FORM_VIEWS.includes(v)) render(v); showDonorAlert(); dispatchPanelRefresh(); }catch(e){ console.warn('[live]',e); } }
+function livePost(){ try{ BC&&BC.postMessage({from:TAB,t:Date.now()}); }catch(e){} }
+function fbConfigured(){ const c=window.BB_FIREBASE||{}; return !!(c.apiKey&&!/YOUR_|REPLACE/i.test(c.apiKey)&&c.projectId); }
+function fbLoad(){ if(window.firebase&&firebase.firestore) return Promise.resolve(); const v='10.12.2'; return ['app','auth','firestore'].reduce((p,m)=>p.then(()=>new Promise((res,rej)=>{ const sc=document.createElement('script'); sc.src=`https://www.gstatic.com/firebasejs/${v}/firebase-${m}-compat.js`; sc.onload=res; sc.onerror=()=>rej(new Error('Firebase SDK could not load')); document.head.appendChild(sc); })),Promise.resolve()); }
+async function fbStart(){ netPill(); if(!fbConfigured()) return;
+  try{ await fbLoad(); if(!firebase.apps.length) firebase.initializeApp(window.BB_FIREBASE); FS=firebase.firestore(); window.db=FS;
+    try{ if(!firebase.auth().currentUser) await firebase.auth().signInAnonymously(); }catch(e){ console.warn('[live] Enable Anonymous sign-in in Firebase Authentication.',e.message); }
+    LCOLS.forEach(c=>{ LAST[c]={}; FS.collection(c).onSnapshot(snap=>{ let ch=false;
+      snap.docChanges().forEach(x=>{ if(x.doc.metadata.hasPendingWrites) return; const id=x.doc.id, d=x.doc.data(), arr=S[c]||(S[c]=[]), i=arr.findIndex(y=>String(y.id)===id);
+        if(x.type==='removed'){ delete LAST[c][id]; if(i>=0){ arr.splice(i,1); ch=true; } return; }
+        const j=JSON.stringify(d); LAST[c][id]=j; if(i>=0&&JSON.stringify(arr[i])===j) return; if(i>=0) arr[i]=d; else arr.push(d); ch=true; });
+      if(ch){ saveLocal(); livePost(); liveRefresh(); } },e=>console.warn('[live]',c,e.message)); });
+    FB_ON=true; netPill(); window.dispatchEvent(new Event('bb-cloud-ready')); setTimeout(fbPush,1500);
+  }catch(e){ console.warn('[live] cloud sync off:',e.message); netPill(); } }
+function fbPush(){ if(!FS) return; clearTimeout(fbTimer); fbTimer=setTimeout(()=>{ const ops=[];
+  LCOLS.forEach(c=>{ const seen={}; (S[c]||[]).forEach(it=>{ if(!it||it.id==null) return; const id=String(it.id); seen[id]=1; const j=JSON.stringify(it); if(LAST[c]&&LAST[c][id]===j) return; (LAST[c]=LAST[c]||{})[id]=j; ops.push(b=>b.set(FS.collection(c).doc(id),JSON.parse(j))); });
+    Object.keys(LAST[c]||{}).forEach(id=>{ if(!seen[id]){ delete LAST[c][id]; ops.push(b=>b.delete(FS.collection(c).doc(id))); } }); });
+  for(let i=0;i<ops.length;i+=400){ const b=FS.batch(); ops.slice(i,i+400).forEach(f=>f(b)); b.commit().catch(e=>console.warn('[live] write',e.message)); } },120); }
+function netPill(){ const el=document.getElementById('liveNet'); if(!el) return; el.classList.toggle('cloud',FB_ON); el.title=FB_ON?'Live: real-time sync across all devices (Firebase Firestore)':'Live: real-time sync across every tab and window on this device. Add your Firebase keys (firebaseConfig) to sync across devices.'; }
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) livePull(); });
+
 /* ================= actions ================= */
 document.addEventListener('click',e=>{
   if(e.target.id==='modal') closeModal();
@@ -3321,7 +3761,7 @@ document.addEventListener('click',e=>{
   if(ds.locate) return locate(ds.locate);
   if('locateDonor' in ds){ const d=me(); LOC.dn=null; const st=$('#dn-locst'); if(!navigator.geolocation){st.textContent='Location is not available on this device.';return;} st.textContent='Getting your location…';
     try{navigator.geolocation.getCurrentPosition(p=>{ d.lat=+p.coords.latitude.toFixed(6); d.lng=+p.coords.longitude.toFixed(6); save(); toast('Location updated.'); renderDonor(); },()=>{ st.textContent='Could not get your location. Distances use your town centre.'; },{timeout:10000});}catch(err){ st.textContent='Location is not available here.'; } return; }
-  if(ds.demo){ demoLogin(ds.demo); return; }
+  if(ds.demo){ return; }
   switch(ds.act){
     case 'bell': { const pn=$('#notes'); if(!pn.hidden){ pn.hidden=true; break; } const u=me(); const mine=S.notes.filter(n=>n.role===session.role&&n.to===u.id).sort((a,b)=>b.t-a.t).slice(0,40);
       pn.innerHTML=`<h3>Notifications</h3>`+(mine.length?mine.map(n=>`<div class="note-i ${n.read?'':'new'}"><span>${esc(n.text)}</span><small>${ago(n.t)}</small></div>`).join(''):'<p class="muted small" style="padding:14px">No notifications yet. Updates about requests and units will appear here.</p>');
@@ -3339,11 +3779,11 @@ document.addEventListener('click',e=>{
     case 'lang': { const m=$('#langMenu'); const open=m.hidden; m.hidden=!open; b.setAttribute('aria-expanded',String(open)); if(open){ const cur=m.querySelector('[aria-checked=true]')||m.querySelector('[data-lang]'); setTimeout(()=>cur.focus(),20); } break; }
     case 'pick-lang': { $('#langMenu').hidden=true; $('#langBtn').setAttribute('aria-expanded','false'); if(ds.lang!==langVal()) setLang(ds.lang); $('#langBtn').focus(); break; }
     case 'expand': { const r=R(ds.id); const n=expandReq(r,'manual'); toast(n?`${n} compatible donor${n>1?'s':''} alerted (${compatFor(r).filter(g=>g!==r.group).map(pretty).join(', ')}).`:'Compatible groups included. No more eligible donors right now; please call a blood bank.'); renderPatient(); renderNav('patient'); break; }
-    case 'slip': { const r=R(ds.id); if(r&&r.slip) openModal('Hospital requisition slip',`<img src="${r.slip}" alt="Hospital requisition slip for ${esc(r.pname)}"><p class="muted small">Uploaded by the patient's attendant for the ${pretty(r.group)} request at ${esc(r.hospital)}.</p>`); break; }
+    case 'slip': { const r=R(ds.id); if(r&&!canSlip(r)){ toast('Hospital slips are visible to admins only.'); break; } if(r&&r.slip) openModal('Hospital requisition slip',`<img src="${r.slip}" alt="Hospital requisition slip for ${esc(r.pname)}"><p class="muted small">Uploaded by the patient's attendant for the ${pretty(r.group)} request at ${esc(r.hospital)}.</p>`); break; }
     case 'cert': { const d=me(); const x=d.donations[+ds.i]; if(x){ x.seen=true; save(); showCert(d,x); } break; }
     case 'cert-save': saveCert(); break;
     case 'modal-close': closeModal(); break;
-    case 'logout': setSession(null); toast('Logged out.'); navTo('#welcome'); route(); break;
+    case 'logout': setSession(null); try{ toggleChat(false); }catch(e){} toast('Logged out.'); navTo('#login'); route(); break;
     case 'share': copy(shareText(R(ds.id))); break;
     case 'fulfil': { const r=R(ds.id), pv=snap(r); r.status='fulfilled'; afterChange(r,pv); toast('Marked as fulfilled. Waiting donors have been told not to come.'); renderPatient(); renderNav('patient'); break; }
     case 'bank': { const r=R(ds.id), pv=snap(r); if(received(r)>=r.units){ toast('All units are already received.'); break; } r.bank=bankUnits(r)+1; notify('patient',r.patientId,`1 unit recorded from the blood bank. ${Math.max(0,r.units-received(r))} unit(s) still to receive.`,r.id); afterChange(r,pv); toast(received(r)>=r.units?'All units received. Request closed.':'Blood bank unit recorded.'); renderPatient(); renderNav('patient'); break; }
@@ -3365,7 +3805,6 @@ document.addEventListener('click',e=>{
     case 'proof-sample': { PROOF.sample=sampleReceipt(); PROOF.file=null; const pv=$('#pf-prev'); if(pv){ pv.hidden=false; pv.innerHTML=`<img src="${PROOF.sample}" alt="Sample certificate"><span class="hint">${t('Sample receipt added (demo only).')}</span>`; } const u=me()||{}; const set=(id,v)=>{ const x=$(id); if(x) x.value=v; }; set('#pf-code',PROOF.sampleCode||('KKD-'+Math.floor(100000+Math.random()*899999))); set('#pf-name',(u.name||'').split(' (')[0]); set('#pf-group',u.group||''); set('#pf-date',new Date().toISOString().slice(0,10)); const ok=$('#pf-ok'); if(ok) ok.checked=true; break; }
     case 'reset-demo': { const b2=b; if(!b2.dataset.armed){ b2.dataset.armed=1; b2.textContent=t('Tap again to reset'); setTimeout(()=>{ delete b2.dataset.armed; b2.textContent=t('Reset demo data'); },4000); break; } delete b2.dataset.armed; b2.textContent=t('Reset demo data'); resetDemo(); break; }
     case 'demo-role': demoRole(ds.role); break;
-    case 'demo-hide': { try{ localStorage.setItem('bloodbridge-demobar','off'); }catch(_){ } renderDemoBar(); break; }
     case 'idcard': idCard(); break;
     case 'idcard-save': saveIdCard(); break;
     case 'qa': quickAction(ds.q); break;
@@ -3373,6 +3812,8 @@ document.addEventListener('click',e=>{
     case 'signup-go': signupGo(ds.role); break;
     case 'notif-on': notifOn(); break;
     case 'alert-msgs': alertMsgs(ds.id); break;
+    case 'da-accept': { const id=ds.id; daClose(); navTo('#donor'); setTimeout(()=>{ const b=document.querySelector(`#dnList [data-act="accept"][data-id="${id}"]`); if(b) b.click(); else toast('Open the request below to accept it.'); },350); break; }
+    case 'dl-close': { const x=$('#dispatchLog'); if(x) x.remove(); DLid=null; break; }
     case 'da-view': { const id=ds.id; daClose(); navTo('#donor'); setTimeout(()=>{ const el=document.querySelector(`#dnList [data-id="${id}"]`); if(el){ const c=el.closest('.card'); (c||el).scrollIntoView({behavior:'smooth',block:'center'}); if(c){ c.classList.add('flash'); } } },300); break; }
     case 'da-close': daClose(); break;
     case 'loc-gps': detectGPS(true); break;
@@ -3382,6 +3823,7 @@ document.addEventListener('click',e=>{
     case 'about-start': { navTo(session?(session.role==='donor'?'#donor':'#new-request'):'#register-patient'); break; }
     case 'chat-voice': { chatVoice=!chatVoice; try{ localStorage.setItem('bloodbridge-chatvoice',chatVoice?'on':'off'); }catch(_){ } if(!chatVoice) try{ speechSynthesis.cancel(); }catch(_){ } voiceUI(); break; }
     case 'chat-mic': micToggle(); break;
+    case 'chat-sugg': chipsOpen($('#chat').classList.contains('chips-off')); break;
     case 'chat-repeat': { const ms=[...document.querySelectorAll('#chatBody .msg.bot .mtxt')]; const m=ms.pop(); if(m){ const was=chatVoice; chatVoice=true; chatSpeak(m.textContent); chatVoice=was; } break; }
     case 'accept': { const r=R(ds.id), d=me(), pv=snap(r); if(d.suspended||d.hold){ toast(d.suspended?'Your account is paused after a verified report.':'A report about you is being checked. You can accept again after the check.'); break; } d.acc=(d.acc||0)+1; if(isCovered(r)||r.status!=='open'){ toast('This request already has enough donors.'); renderDonor(); break; } r.responses[d.id]={s:'accepted',t:Date.now()}; notify('patient',r.patientId,`${d.name.split(' (')[0]} (${pretty(d.group)}) accepted and is coming. ${stillNeeded(r)} unit(s) still need a donor.`,r.id); afterChange(r,pv); let mw=null; if(e.isTrusted&&T.step<0){ try{ mw=window.open(mapsDir(dest(r),d.lat!=null&&d.lat!==''?d.lat+','+d.lng:''),'_blank'); if(mw) mw.opener=null; }catch(_){} } toast(mw?'Opening Google Maps with directions to the hospital…':'Thank you! The attendant can now see your number. Use Navigate to reach the hospital.'); renderDonor(); window.scrollTo({top:0,behavior:'smooth'}); break; }
     case 'decline': { const r=R(ds.id); r.responses[me().id]={s:'declined',t:Date.now()}; save(); toast('Request hidden.'); renderDonor(); break; }
@@ -3392,8 +3834,8 @@ document.addEventListener('click',e=>{
   }
 });
 function recordDonation(r,d){ if(!d) return; r.responses[d.id]={s:'donated',t:Date.now()}; const today=new Date().toISOString().slice(0,10); d.last=today; d.donations.push({date:today,hospital:r.hospital+', '+r.city,reqId:r.id,group:d.group,confirmed:true,seen:false,proof:!!((r.proofs&&r.proofs[d.id])||(r.recv&&r.recv[d.id])),certNo:'BB-'+today.replace(/-/g,'')+'-'+uid().slice(0,4).toUpperCase()}); save(); }
-$('#resetBtn').addEventListener('click',()=>{ const b=$('#resetBtn'); if(!pendingReset){ pendingReset=true; b.textContent='Click again to reset'; setTimeout(()=>{pendingReset=false;b.textContent='Reset demo data';},4000); return; }
-  pendingReset=false; b.textContent='Reset demo data'; S=seed(); ensureDemo(); save(); setSession(null); toast('Demo data restored.'); renderNav('admin'); renderAdmin(); });
+$('#resetBtn').addEventListener('click',()=>{ const b=$('#resetBtn'); if(!pendingReset){ pendingReset=true; b.textContent='Click again to reset'; setTimeout(()=>{pendingReset=false;b.textContent="Clear this device's data";},4000); return; }
+  pendingReset=false; b.textContent="Clear this device's data"; S=emptyDB(); save(); setSession(null); toast('Local data cleared.'); renderNav('admin'); renderAdmin(); });
 
 $('#themeBtn').addEventListener('click',()=>{ const root=document.documentElement; const cur=root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); root.dataset.theme=cur==='dark'?'light':'dark'; try{localStorage.setItem(DB_KEY+'-theme',root.dataset.theme);}catch(e){} });
 try{ const t=localStorage.getItem(DB_KEY+'-theme'); if(t) document.documentElement.dataset.theme=t; }catch(e){}
@@ -3404,7 +3846,7 @@ function genderToggle(selId,scope,hintId){ const g=$(selId).value; document.quer
 $('#e-gender').addEventListener('change',()=>{ genderToggle('#e-gender','#eligForm','#e-gaphint'); runElig(); }); genderToggle('#e-gender','#eligForm','#e-gaphint');
 { const el=$('#dr-pin'), go=debounce(()=>pinFill('dr',false),140); el.addEventListener('input',()=>{ el.value=el.value.replace(/\D/g,'').slice(0,6); if(el.value.length===6) pinFill('dr',false); else go(); }); }
 $('#dr-gender').addEventListener('change',()=>genderToggle('#dr-gender','#drForm','#dr-gaphint')); genderToggle('#dr-gender','#drForm','#dr-gaphint');
-load(); try{ relocateSamples(); }catch(e){} applyLang(); runElig(); route(); startTranslator(); try{ startQuotes(); }catch(e){} try{ initChatVoice(); }catch(e){}
+load(); try{ relocateSamples(); }catch(e){} applyLang(); runElig(); route(); try{ fbStart(); }catch(e){} startTranslator(); try{ startQuotes(); }catch(e){} try{ initChatVoice(); }catch(e){}
 window.__bb={setLang,toggleChat,setSession,closeModal,get S(){return S;},me:()=>me(),slip:()=>{ SLIP.pr=sampleSlip(); showSlip('pr'); },stats:d=>donorStats(d),speakable,voicesFor};
 })();
 </script>
